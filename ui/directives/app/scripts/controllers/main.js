@@ -1,10 +1,5 @@
 'use strict';
 
-angular.module('chartingApp')
+angular.module('rhqApp')
   .controller('MainCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
   });
