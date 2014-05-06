@@ -3,7 +3,7 @@
 describe('Directive: rhqChart', function () {
 
   // load the directive's module
-  beforeEach(module('chartingApp'));
+  beforeEach(module('rhqApp'));
 
   var element,
     scope;
