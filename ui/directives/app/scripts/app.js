@@ -1,3 +1,3 @@
 'use strict';
 
-angular.module('rhqApp', []);
+angular.module('chartingApp', []);

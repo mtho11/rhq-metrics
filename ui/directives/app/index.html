@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="styles/d3Chart.css">
     <!-- endbuild -->
   </head>
-  <body ng-app="rhqApp">
+  <body ng-app="chartingApp">
 
 <!-- TODO: get rid of this HTML dependency for hovers -->
   <div id="singleValueTooltip" class="hidden">
@@ -69,7 +69,7 @@
   </div>
 
     <!-- Add your site or application content here -->
-    <div class="container" ng-include="'views/main.html'" ng-controller="MainCtrl"></div>
+    <div class="container" ng-include="'views/chart.html'" ng-controller="ChartController"></div>
 
     <!--[if lt IE 9]>
     <script src="bower_components/es5-shim/es5-shim.js"></script>
@@ -87,8 +87,10 @@
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
-        <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/rhq-utils.js"></script>
         <script src="scripts/directives/rhqchart.js"></script>
+        <script src="scripts/controllers/chart-controller.js"></script>
+        <script src="scripts/services/chart-data-service.js"></script>
         <!-- endbuild -->
 </body>
 </html>

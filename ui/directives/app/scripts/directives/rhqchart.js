@@ -6,7 +6,7 @@
  * @name metricsStackedBarChart
  * @param {expression} metricsStackedBarChart
  */
-angular.module('rhqApp')
+angular.module('chartingApp')
     .directive('metricsStackedBarChart', function ($timeout) {
         function link(scope, element, attribute) {
 
