@@ -1,9 +1,13 @@
 <!doctype html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-  <head>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title></title>
@@ -17,80 +21,81 @@
     <!-- endbuild -->
     <!-- build:css({.tmp,app}) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="styles/d3Chart.css">
+    <link rel="stylesheet" href="styles/d3-chart.css">
     <!-- endbuild -->
-  </head>
-  <body ng-app="chartingApp">
+</head>
+<body ng-app="chartingApp">
 
 <!-- TODO: get rid of this HTML dependency for hovers -->
-  <div id="singleValueTooltip" class="hidden">
-      <div><span id="singleValueTooltipTimeLabel"></span><span>: </span><span id="singleValueTooltipTimeValue"></span>
-      </div>
-      <div><span id="singleValueTooltipDateLabel"></span><span>: </span><span id="singleValueTooltipDateValue"></span>
-      </div>
-      <hr>
-      <div><span id="singleValueTooltipValueLabel"></span><span>: </span><span id="singleValueTooltipValue"></span></div>
-  </div>
-  <div id="noDataTooltip" class="hidden">
-      <div><span id="noDataTooltipTimeLabel"></span><span>: </span><span id="noDataTooltipTimeValue"></span></div>
-      <div><span id="noDataTooltipDateLabel"></span><span>: </span><span id="noDataTooltipDateValue"></span></div>
-      <hr>
-      <div id="noDataLabel"></div>
-  </div>
-  <div id="metricGraphTooltip" class="hidden">
-      <div><span id="metricGraphTooltipTimeLabel"></span><span>: </span><span id="metricGraphTooltipTimeValue"></span>
-      </div>
-      <div><span id="metricGraphTooltipDateLabel"></span><span>: </span><span id="metricGraphTooltipDateValue"></span>
-      </div>
-      <div><span id="metricGraphTooltipDurationLabel"></span><span>: </span><span
-              id="metricGraphTooltipDurationValue"></span>
+<div id="singleValueTooltip" class="hidden">
+    <div><span id="singleValueTooltipTimeLabel"></span><span>: </span><span id="singleValueTooltipTimeValue"></span>
+    </div>
+    <div><span id="singleValueTooltipDateLabel"></span><span>: </span><span id="singleValueTooltipDateValue"></span>
+    </div>
+    <hr>
+    <div><span id="singleValueTooltipValueLabel"></span><span>: </span><span id="singleValueTooltipValue"></span></div>
+</div>
+<div id="noDataTooltip" class="hidden">
+    <div><span id="noDataTooltipTimeLabel"></span><span>: </span><span id="noDataTooltipTimeValue"></span></div>
+    <div><span id="noDataTooltipDateLabel"></span><span>: </span><span id="noDataTooltipDateValue"></span></div>
+    <hr>
+    <div id="noDataLabel"></div>
+</div>
+<div id="metricGraphTooltip" class="hidden">
+    <div><span id="metricGraphTooltipTimeLabel"></span><span>: </span><span id="metricGraphTooltipTimeValue"></span>
+    </div>
+    <div><span id="metricGraphTooltipDateLabel"></span><span>: </span><span id="metricGraphTooltipDateValue"></span>
+    </div>
+    <div><span id="metricGraphTooltipDurationLabel"></span><span>: </span><span
+            id="metricGraphTooltipDurationValue"></span>
 
-          <div>
-              <hr>
-              <div><span id="metricGraphTooltipMaxLabel"></span><span> : </span><span
-                      id="metricGraphTooltipMaxValue"></span>
+        <div>
+            <hr>
+            <div><span id="metricGraphTooltipMaxLabel"></span><span> : </span><span
+                    id="metricGraphTooltipMaxValue"></span>
 
-                  <div>
-                      <div><span id="metricGraphTooltipAvgLabel"></span><span> : </span><span
-                              id="metricGraphTooltipAvgValue"></span>
+                <div>
+                    <div><span id="metricGraphTooltipAvgLabel"></span><span> : </span><span
+                            id="metricGraphTooltipAvgValue"></span>
 
-                          <div>
-                              <div><span id="metricGraphTooltipMinLabel"></span><span> : </span><span
-                                      id="metricGraphTooltipMinValue"></span>
+                        <div>
+                            <div><span id="metricGraphTooltipMinLabel"></span><span> : </span><span
+                                    id="metricGraphTooltipMinValue"></span>
 
-                                  <div></div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
+                                <div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <!-- Add your site or application content here -->
-    <div class="container" ng-include="'views/chart.html'" ng-controller="ChartController"></div>
+<!-- Add your site or application content here -->
+<div class="container" ng-include="'views/chart.html'"></div>
 
-    <!--[if lt IE 9]>
-    <script src="bower_components/es5-shim/es5-shim.js"></script>
-    <script src="bower_components/json3/lib/json3.min.js"></script>
-    <![endif]-->
+<!--[if lt IE 9]>
+<script src="bower_components/es5-shim/es5-shim.js"></script>
+<script src="bower_components/json3/lib/json3.min.js"></script>
+<![endif]-->
 
-    <!-- build:js scripts/vendor.js -->
-    <!-- bower:js -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="bower_components/d3/d3.js"></script>
-    <!-- endbower -->
-    <!-- endbuild -->
+<!-- build:js scripts/vendor.js -->
+<!-- bower:js -->
+<script src="bower_components/jquery/jquery.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="bower_components/d3/d3.js"></script>
+<script src="bower_components/moment/moment.js"></script>
+<!-- endbower -->
+<!-- endbuild -->
 
-        <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="scripts/app.js"></script>
-        <script src="scripts/rhq-utils.js"></script>
-        <script src="scripts/directives/rhqchart.js"></script>
-        <script src="scripts/controllers/chart-controller.js"></script>
-        <script src="scripts/services/chart-data-service.js"></script>
-        <!-- endbuild -->
+<!-- build:js({.tmp,app}) scripts/scripts.js -->
+<script src="scripts/app.js"></script>
+<script src="scripts/rhq-utils.js"></script>
+<script src="scripts/directives/chart-directive.js"></script>
+<script src="scripts/controllers/chart-controller.js"></script>
+<script src="scripts/services/chart-data-service.js"></script>
+<!-- endbuild -->
 </body>
 </html>

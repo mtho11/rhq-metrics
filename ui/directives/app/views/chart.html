@@ -6,12 +6,15 @@
     <h3>RHQ Metrics Charting Directives Example</h3>
 </div>
 
-<div class="panel panel-default">
+<div class="panel panel-default" ng-controller="ChartController">
     <div class="panel-heading">
         <h3 class="panel-title">{{title.name}}</h3>
     </div>
     <div class="panel-body">
-        <div metrics-stacked-bar-chart style="height: 210px;" data="{{chartData}}"
-             chartTitle="title.name"></div>
+        <div class="well">{{chartData.yAxisUnits}}</div>
+        <div>{{chartData|json}}</div>
+        <metrics-stacked-bar-chart style="height: 210px;" rhq-data="{{chartData}}"
+                                   rhq-chart-height="210"
+                                   rhq-chart-title="{{title.name}}"></metrics-stacked-bar-chart>
     </div>
 </div>

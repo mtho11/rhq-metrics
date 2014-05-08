@@ -43,90 +43,54 @@
  * @param isSummaryGraph
  * @constructor
  */
-var ChartContext = function (chartId, chartHeight, metricsData, xAxisLabel, chartTitle, yAxisUnits, minChartTitle, avgChartTitle, peakChartTitle, dateLabel, timeLabel, downLabel, unknownLabel, noDataLabel, hoverStartLabel, hoverEndLabel, hoverPeriodLabel, hoverBarLabel, chartHoverTimeFormat, chartHoverDateFormat, isPortalGraph, portalId, buttonBarDateTimeFormat, singleValueLabel, chartXaxisTimeFormatHours, chartXaxisTimeFormatHoursMinutes, hideLegend, chartAverage, chartMin, chartMax, isSummaryGraph) {
-        if (!(this instanceof ChartContext)) {
-            throw new Error("ChartContext function cannot be called as a function.");
-        }
-        this.chartId = chartId;
-        this.chartHeight = chartHeight;
-        this.data = metricsData; // make into json later
-        this.xAxisLabel = xAxisLabel;
-        this.chartTitle = chartTitle;
-        this.yAxisUnits = yAxisUnits;
-        this.minChartTitle = minChartTitle;
-        this.avgChartTitle = avgChartTitle;
-        this.peakChartTitle = peakChartTitle;
-        this.dateLabel = dateLabel;
-        this.timeLabel = timeLabel;
-        this.downLabel = downLabel;
-        this.unknownLabel = unknownLabel;
-        this.singleValueLabel = singleValueLabel;
-        this.noDataLabel = noDataLabel;
-        this.hoverStartLabel = hoverStartLabel;
-        this.hoverEndLabel = hoverEndLabel;
-        this.hoverPeriodLabel = hoverPeriodLabel;
-        this.hoverBarLabel = hoverBarLabel;
-        this.chartHoverTimeFormat = chartHoverTimeFormat;
-        this.chartHoverDateFormat = chartHoverDateFormat;
-        this.isPortalGraph = isPortalGraph;
-        this.isSummaryGraph = isSummaryGraph;
-        this.portalId = portalId;
-        if (isSummaryGraph) {
-            this.chartHandle = "sChart-" + chartId;
-        } else {
-            if (isPortalGraph) {
-                this.chartHandle = "rChart-" + chartId + "-" + portalId;
-            }
-            else {
-                this.chartHandle = "rChart-" + chartId;
-            }
-        }
-        this.chartSelection = this.chartHandle + " svg";
-        this.buttonBarDateTimeFormat = buttonBarDateTimeFormat;
-        this.chartXaxisTimeFormatHours = chartXaxisTimeFormatHours;
-        this.chartXaxisTimeFormatHoursMinutes = chartXaxisTimeFormatHoursMinutes;
-        this.hideLegend = hideLegend;
-        this.chartAverage = chartAverage;
-        this.chartMin = chartMin;
-        this.chartMax = chartMax;
-
-    },
-    /**
-     * Availability Context object constructor
-     * @param availData
-     * @param dateLabel
-     * @param timeLabel
-     * @param hoverStartLabel
-     * @param hoverBarLabel
-     * @param availabilityLabel
-     * @param chartHoverTimeFormat
-     * @param chartHoverDateFormat
-     * @param chartTitle
-     * @param chartUpLabel
-     * @param chartDownLabel
-     * @param chartXaxisTimeFormatHours
-     * @param chartXaxisTimeFormatHoursMinutes
-     * @constructor
-     */
-    AvailChartContext = function (availData, dateLabel, timeLabel, hoverStartLabel, hoverBarLabel, availabilityLabel, chartHoverTimeFormat, chartHoverDateFormat, chartTitle, chartUpLabel, chartDownLabel, chartXaxisTimeFormatHours, chartXaxisTimeFormatHoursMinutes) {
-        if (!(this instanceof AvailChartContext)) {
-            throw new Error("AvailChartContext function cannot be called as a function.");
-        }
-        this.data = availData; // make into json
-        this.dateLabel = dateLabel;
-        this.timeLabel = timeLabel;
-        this.hoverStartLabel = hoverStartLabel;
-        this.hoverBarLabel = hoverBarLabel;
-        this.hoverBarAvailabilityLabel = availabilityLabel;
-        this.chartHoverTimeFormat = chartHoverTimeFormat;
-        this.chartHoverDateFormat = chartHoverDateFormat;
-        this.chartTitle = chartTitle;
-        this.chartDownLabel = chartDownLabel;
-        this.chartUpLabel = chartUpLabel;
-        this.chartXaxisTimeFormatHours = chartXaxisTimeFormatHours;
-        this.chartXaxisTimeFormatHoursMinutes = chartXaxisTimeFormatHoursMinutes;
-
-    },
+//var ChartContext = function (chartId, chartHeight, metricsData, xAxisLabel, chartTitle, yAxisUnits, minChartTitle, avgChartTitle, peakChartTitle, dateLabel, timeLabel, downLabel, unknownLabel, noDataLabel, hoverStartLabel, hoverEndLabel, hoverPeriodLabel, hoverBarLabel, chartHoverTimeFormat, chartHoverDateFormat, isPortalGraph, portalId, buttonBarDateTimeFormat, singleValueLabel, chartXaxisTimeFormatHours, chartXaxisTimeFormatHoursMinutes, hideLegend, chartAverage, chartMin, chartMax, isSummaryGraph) {
+//        if (!(this instanceof ChartContext)) {
+//            throw new Error("ChartContext function cannot be called as a function.");
+//        }
+//        this.chartId = chartId;
+//        this.chartHeight = chartHeight;
+//        this.data = metricsData; // make into json later
+//        this.xAxisLabel = xAxisLabel;
+//        this.chartTitle = chartTitle;
+//        this.yAxisUnits = yAxisUnits;
+//        this.minChartTitle = minChartTitle;
+//        this.avgChartTitle = avgChartTitle;
+//        this.peakChartTitle = peakChartTitle;
+//        this.dateLabel = dateLabel;
+//        this.timeLabel = timeLabel;
+//        this.downLabel = downLabel;
+//        this.unknownLabel = unknownLabel;
+//        this.singleValueLabel = singleValueLabel;
+//        this.noDataLabel = noDataLabel;
+//        this.hoverStartLabel = hoverStartLabel;
+//        this.hoverEndLabel = hoverEndLabel;
+//        this.hoverPeriodLabel = hoverPeriodLabel;
+//        this.hoverBarLabel = hoverBarLabel;
+//        this.chartHoverTimeFormat = chartHoverTimeFormat;
+//        this.chartHoverDateFormat = chartHoverDateFormat;
+//        this.isPortalGraph = isPortalGraph;
+//        this.isSummaryGraph = isSummaryGraph;
+//        this.portalId = portalId;
+//        if (isSummaryGraph) {
+//            this.chartHandle = "sChart-" + chartId;
+//        } else {
+//            if (isPortalGraph) {
+//                this.chartHandle = "rChart-" + chartId + "-" + portalId;
+//            }
+//            else {
+//                this.chartHandle = "rChart-" + chartId;
+//            }
+//        }
+//        this.chartSelection = this.chartHandle + " svg";
+//        this.buttonBarDateTimeFormat = buttonBarDateTimeFormat;
+//        this.chartXaxisTimeFormatHours = chartXaxisTimeFormatHours;
+//        this.chartXaxisTimeFormatHoursMinutes = chartXaxisTimeFormatHoursMinutes;
+//        this.hideLegend = hideLegend;
+//        this.chartAverage = chartAverage;
+//        this.chartMin = chartMin;
+//        this.chartMax = chartMax;
+//
+//    },
 
     /**
      * GraphDateContext object constructor.
@@ -134,7 +98,7 @@ var ChartContext = function (chartId, chartHeight, metricsData, xAxisLabel, char
      * @param endDate moment object representing endDate range
      * @constructor
      */
-    GraphDateContext = function (startDate, endDate) {
+    var GraphDateContext = function (startDate, endDate) {
         if (!(this instanceof GraphDateContext)) {
             throw new Error("GraphDateContext function cannot be called as a function.");
         }
