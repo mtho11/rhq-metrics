@@ -1,5 +1,5 @@
 <div class="header">
-  <h3 class="text-muted">RHQ directives</h3>
+    <h3 class="text-muted">RHQ directives</h3>
 </div>
 
 <div class="jumbotron">
@@ -13,8 +13,11 @@
     <div class="panel-body">
         <div class="well">{{chartData.yAxisUnits}}</div>
         <div>{{chartData|json}}</div>
-        <metrics-stacked-bar-chart style="height: 210px;" rhq-data="{{chartData}}"
+        <metrics-stacked-bar-chart style="height: 210px;"
+                                   rhq-data="{{chartData}}"
+                                   rhq-yaxis-units="GB"
                                    rhq-chart-height="210"
-                                   rhq-chart-title="{{title.name}}"></metrics-stacked-bar-chart>
+                                   rhq-chart-title="{{title.name}}">
+        </metrics-stacked-bar-chart>
     </div>
 </div>

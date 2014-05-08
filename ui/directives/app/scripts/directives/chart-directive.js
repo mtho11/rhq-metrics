@@ -13,7 +13,7 @@ angular.module('chartingApp')
             console.info("Draw Metrics Stacked Bar chart for title: " + attributes.rhqChartTitle);
             console.log("chart height: " + attributes.rhqChartHeight);
             var metricsData = angular.fromJson(attributes.rhqData);
-            console.log("Metrics Data:");
+            console.log("Metrics Data -->");
             console.dir(metricsData);
 
             // create a chartContext object (from rhq.js) with the data required to render to a chart
@@ -110,7 +110,7 @@ angular.module('chartingApp')
 
                 function determineScale() {
                     var xTicks, xTickSubDivide, numberOfBarsForSmallGraph = 20;
-                    if (chartContext.data.length > 0) {
+                    if (metricsData.dataPoints.length > 0) {
 
                         // if window is too small server up small chart
                         if (useSmallCharts()) {
@@ -118,17 +118,17 @@ angular.module('chartingApp')
                             width = 250;
                             xTicks = 3;
                             xTickSubDivide = 2;
-                            chartData = chartContext.data.slice(chartContext.data.length - numberOfBarsForSmallGraph, chartContext.data.length);
+                            chartData = metricsData.dataPoints.slice(metricsData.dataPoints.length - numberOfBarsForSmallGraph, metricsData.dataPoints.length);
                         }
                         else {
                             //console.log("Using Large Charts Profile, width: "+ width);
                             //  we use the width already defined above
                             xTicks = 8;
                             xTickSubDivide = 5;
-                            chartData = chartContext.data;
+                            chartData = metricsData.dataPoints;
                         }
 
-                        avgFiltered = chartContext.data.filter(function (d) {
+                        avgFiltered = metricsData.dataPoints.filter(function (d) {
                             if (d.nodata !== 'true') {
                                 return d.value;
                             }
@@ -136,7 +136,7 @@ angular.module('chartingApp')
                         avg = d3.mean(avgFiltered.map(function (d) {
                             return d.value;
                         }));
-                        peakFiltered = chartContext.data.filter(function (d) {
+                        peakFiltered = metricsData.dataPoints.filter(function (d) {
                             if (d.nodata !== 'true') {
                                 return d.high;
                             }
@@ -144,7 +144,7 @@ angular.module('chartingApp')
                         peak = d3.max(peakFiltered.map(function (d) {
                             return d.high;
                         }));
-                        minFiltered = chartContext.data.filter(function (d) {
+                        minFiltered = metricsData.dataPoints.filter(function (d) {
                             if (d.nodata !== 'true') {
                                 return d.low;
                             }
@@ -154,7 +154,7 @@ angular.module('chartingApp')
                         }));
                         lowBound = determineLowBound(min);
                         highBound = peak + ((peak - min) * 0.1);
-                        oobMax = d3.max(chartContext.data.map(function (d) {
+                        oobMax = d3.max(metricsData.dataPoints.map(function (d) {
                             if (typeof d.baselineMax === 'undefined') {
                                 return 0;
                             }
@@ -169,9 +169,9 @@ angular.module('chartingApp')
                         yScale = d3.scale.linear()
                             .clamp(true)
                             .rangeRound([height, 0])
-                            .domain([d3.min(chartContext.data, function (d) {
+                            .domain([d3.min(metricsData.dataPoints, function (d) {
                                 return d.low;
-                            }), d3.max(chartContext.data, function (d) {
+                            }), d3.max(metricsData.dataPoints, function (d) {
                                 return d.high;
                             })]);
 
@@ -222,9 +222,9 @@ angular.module('chartingApp')
                         console.log("We started the chart");
 
                         //   createMinAvgPeakSidePanel(chartContext.minChartTitle, chartContext.chartMin, chartContext.avgChartTitle, chartContext.chartAverage, chartContext.peakChartTitle, chartContext.chartMax);
-                        legendUnDefined = (chartContext.chartAverage === "");
+                        //legendUnDefined = (chartContext.chartAverage === "");
 //                        if ((!chartContext.hideLegend && !useSmallCharts() && !legendUnDefined )) {
-//                            createMinAvgPeakSidePanel(chartContext.minChartTitle, chartContext.chartMin, chartContext.avgChartTitle, chartContext.chartAverage, chartContext.peakChartTitle, chartContext.chartMax);
+//                            createMinAvgPeakSidePanel(chartContext.minChartTi/tle, chartContext.chartMin, chartContext.avgChartTitle, chartContext.chartAverage, chartContext.peakChartTitle, chartContext.chartMax);
 //                        }
                     }
 
@@ -669,14 +669,14 @@ angular.module('chartingApp')
                         .attr("transform", "translate(0," + height + ")")
                         .call(xAxis);
 
-                    if (!chartContext.isPortalGraph) {
-                        xAxisGroup.append("g")
-                            .attr("class", "x brush")
-                            .call(brush)
-                            .selectAll("rect")
-                            .attr("y", -6)
-                            .attr("height", 30);
-                    }
+//                    if (!chartContext.isPortalGraph) {
+//                        xAxisGroup.append("g")
+//                            .attr("class", "x brush")
+//                            .call(brush)
+//                            .selectAll("rect")
+//                            .attr("y", -6)
+//                            .attr("height", 30);
+//                    }
 
                     // create y-axis
                     svg.append("g")
@@ -686,7 +686,7 @@ angular.module('chartingApp')
                         .attr("transform", "rotate(-90),translate( -60,0)")
                         .attr("y", -30)
                         .style("text-anchor", "end")
-                        .text(chartContext.yAxisUnits === "NONE" ? "" : chartContext.yAxisUnits);
+                        .text(attributes.rhqYaxisUnits === "NONE" ? "" : attributes.rhqYaxisUnits);
 
                 }
 
@@ -816,11 +816,10 @@ angular.module('chartingApp')
                     // Public API
                     draw: function () {
                         // Guard condition that can occur when a portlet has not been configured yet
-                        //if (chartContext.data.length > 0) {
+                        //if (metricsData.dataPoints.length > 0) {
 
                             determineScale();
-                        console.info("Done with determineScale for #:" + attribute.rhqChartTitle.length)
-                        createHeader(attribute.rhqChartTitle);
+                        //createHeader(attributes.rhqChartTitle);
 
                             createYAxisGridLines();
 //                            if (!chartContext.isPortalGraph) {
@@ -838,7 +837,7 @@ angular.module('chartingApp')
                 }; // end public closure
             }();
 
-            //if (typeof chartContext.data !== 'undefined' && chartContext.data !== null && chartContext.data.length > 0) {
+            //if (typeof metricsData.dataPoints !== 'undefined' && metricsData.dataPoints !== null && metricsData.dataPoints.length > 0) {
             metricStackedBarGraph.draw();
             //}
         }
