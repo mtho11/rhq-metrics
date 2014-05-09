@@ -2,22 +2,27 @@
     <h3 class="text-muted">RHQ directives</h3>
 </div>
 
-<div class="jumbotron">
-    <h3>RHQ Metrics Charting Directives Example</h3>
+<div class="jumbotron" style="width:880px">
+<h3>RHQ Metrics Charting Directives Example</h3>
 </div>
 
-<div class="panel panel-default" ng-controller="ChartController">
+<div class="panel panel-default" style="width:880px" ng-controller="ChartController">
     <div class="panel-heading">
         <h3 class="panel-title">{{title.name}}</h3>
     </div>
     <div class="panel-body">
-        <div class="well">{{chartData.yAxisUnits}}</div>
-        <div>{{chartData|json}}</div>
-        <metrics-stacked-bar-chart style="height: 210px;"
+        <!--<div>{{chartData|json}}</div>-->
+        <div style="height:270px" metrics-stacked-bar-chart
                                    rhq-data="{{chartData}}"
                                    rhq-yaxis-units="GB"
-                                   rhq-chart-height="210"
+                                   rhq-chart-height="250"
+                                   rhq-chart-hover-date-format="%m/%d/%y"
+                                   rhq-chart-hover-time-format="%I:%M:%S %p"
+                                   rhq-time-label="Time"
+                                   rhq-date-label="Date"
+                                   rhq-buttonbar-datetime-format="MM/DD/YYYY h:mm a"
+                                   rhq-single-value-label="Raw Value"
                                    rhq-chart-title="{{title.name}}">
-        </metrics-stacked-bar-chart>
+        </div>
     </div>
 </div>

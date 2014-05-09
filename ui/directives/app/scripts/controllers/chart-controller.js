@@ -2,7 +2,7 @@
 
 angular.module('chartingApp')
     .controller('ChartController', function ($scope) {
-        $scope.title = {name: "Stacked Bar Chart"};
+        $scope.title = {name: "Raw Metrics Chart"};
 
 
         $scope.chartData = angular.fromJson({"scheduleId": 10006, "min": 1.809696768E10, "avg": 1.9274166101333336E10, "max": 2.2374178816E10, "numDataPoints": 60,

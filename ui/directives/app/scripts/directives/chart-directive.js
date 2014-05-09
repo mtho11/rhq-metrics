@@ -12,9 +12,17 @@ angular.module('chartingApp')
 
             console.info("Draw Metrics Stacked Bar chart for title: " + attributes.rhqChartTitle);
             console.log("chart height: " + attributes.rhqChartHeight);
-            var metricsData = angular.fromJson(attributes.rhqData);
+            var metricsData = angular.fromJson(attributes.rhqData),
+                chartHeight = +attributes.rhqChartHeight || 250,
+                timeLabel = attributes.rhqTimeLabel || "Time",
+                dateLabel = attributes.rhqDateLabel || "Date",
+                singleValueLabel = attributes.rhqSingleValueLabel || "Raw Value",
+                chartHoverDateFormat = attributes.rhqChartHoverDateFormat || "%m/%d/%y",
+                chartHoverTimeFormat = attributes.rhqChartHoverTimeFormat || "%I:%M:%S %p",
+                buttonBarDateTimeFormat = attributes.rhqButtonbarDatetimeFormat || "MM/DD/YYYY h:mm a";
             console.log("Metrics Data -->");
             console.dir(metricsData);
+
 
             // create a chartContext object (from rhq.js) with the data required to render to a chart
             // this same data could be passed to different chart types
@@ -56,10 +64,10 @@ angular.module('chartingApp')
             // Define the Stacked Bar Graph function using the module pattern
             var metricStackedBarGraph = function () {
                 // privates
-                var margin = {top: 10, right: 5, bottom: 5, left: 40},
-                    margin2 = {top: 150, right: 5, bottom: 5, left: 0},
+                var margin = {top: 10, right: 5, bottom: 5, left: 90},
+                    margin2 = {top: 150, right: 5, bottom: 5, left: 90},
                     width = 750 - margin.left - margin.right,
-                    adjustedChartHeight = attributes.rhqChartHeight - 50,
+                    adjustedChartHeight = chartHeight - 50,
                     height = adjustedChartHeight - margin.top - margin.bottom,
                     smallChartThresholdInPixels = 600,
                     titleHeight = 30, titleSpace = 10,
@@ -69,7 +77,6 @@ angular.module('chartingApp')
                     interpolation = "basis",
                     avgFiltered, avg, minFiltered, min, peakFiltered, peak,
                     oobMax,
-                    legendUnDefined,
                     lowBound,
                     newLow = 0,
                     highBound,
@@ -217,7 +224,7 @@ angular.module('chartingApp')
                         context = svg.append("g")
                             .attr("class", "context")
                             .attr("width", width + margin.left + margin.right)
-                            .attr("height", 150)
+                            .attr("height", 210)
                             .attr("transform", "translate(" + margin2.left + "," + (+titleHeight + titleSpace + margin.top + 90) + ")");
                         console.log("We started the chart");
 
@@ -265,95 +272,6 @@ angular.module('chartingApp')
 
                 }
 
-
-//                function createMinAvgPeakSidePanel(minLabel, minValue, avgLabel, avgValue, highLabel, highValue) {
-//                    var xLabel = 772,
-//                        xValue = 820,
-//                        yBase = 100,
-//                        yInc = 25;
-//
-//                    // title/header
-//                    chart.append("g").append("rect")
-//                        .attr("class", "rightSidePanel")
-//                        .attr("x", xLabel - 10)
-//                        .attr("y", margin.top + 70)
-//                        .attr("rx", 10)
-//                        .attr("ry", 10)
-//                        .attr("height", 80)
-//                        .attr("width", 135)
-//                        .attr("opacity", "0.3")
-//                        .attr("fill", "#E8E8E8");
-//
-//                    // high
-//                    chart.append("text")
-//                        .attr("class", "highLabel")
-//                        .attr("x", xLabel)
-//                        .attr("y", yBase)
-//                        .text(highLabel + " - ");
-//
-//                    if (typeof highValue !== 'undefined') {
-//                        chart.append("text")
-//                            .attr("class", "highText")
-//                            .attr("x", xValue)
-//                            .attr("y", yBase)
-//                            .text(highValue);
-//                    }
-//
-//
-//                    //avg
-//                    chart.append("text")
-//                        .attr("class", "avgLabel")
-//                        .attr("x", xLabel)
-//                        .attr("y", yBase + yInc)
-//                        .text(avgLabel + " - ");
-//
-//                    if (typeof avgValue !== 'undefined') {
-//                        chart.append("text")
-//                            .attr("class", "avgText")
-//                            .attr("x", xValue)
-//                            .attr("y", yBase + yInc)
-//                            .text(avgValue);
-//                    }
-//
-//                    // min
-//                    chart.append("text")
-//                        .attr("class", "minLabel")
-//                        .attr("x", xLabel)
-//                        .attr("y", yBase + 2 * yInc)
-//                        .text(minLabel + " - ");
-//
-//                    if (typeof minValue !== 'undefined') {
-//                        chart.append("text")
-//                            .attr("class", "minText")
-//                            .attr("x", xValue)
-//                            .attr("y", yBase + 2 * yInc)
-//                            .text(minValue);
-//                    }
-//
-//                }
-//
-//                function createHeader(titleName) {
-//                    var title = chart.append("g").append("rect")
-//                        .attr("class", "title")
-//                        .attr("x", 30)
-//                        .attr("y", margin.top)
-//                        .attr("height", titleHeight)
-//                        .attr("width", width + 30 + margin.left)
-//                        .attr("fill", "none");
-//
-//                    chart.append("text")
-//                        .attr("class", "titleName")
-//                        .attr("x", 40)
-//                        .attr("y", 37)
-//                        .attr("font-size", "12")
-//                        .attr("font-weight", "bold")
-//                        .attr("text-anchor", "left")
-//                        .text(titleName)
-//                        .attr("fill", "#003168");
-//
-//                    return title;
-//
-//                }
 
 //                function showFullMetricBarHover(d) {
 //
@@ -569,9 +487,9 @@ angular.module('chartingApp')
                             }
                         });
 
-                    function showSingleValueMetricBarHover(d) {
-                        var timeFormatter = d3.time.format(chartContext.chartHoverTimeFormat),
-                            dateFormatter = d3.time.format(chartContext.chartHoverDateFormat),
+                    function showSingleValueMetricBarHover(d, attributes) {
+                        var timeFormatter = d3.time.format(chartHoverTimeFormat),
+                            dateFormatter = d3.time.format(chartHoverDateFormat),
                             startDate = new Date(+d.timeStamp),
                             singleValueGraphTooltipDiv = d3.select("#singleValueTooltip");
 
@@ -579,17 +497,17 @@ angular.module('chartingApp')
                             .style("top", (d3.event.pageY) + "px");
 
                         singleValueGraphTooltipDiv.select("#singleValueTooltipTimeLabel")
-                            .text(chartContext.timeLabel);
+                            .text(timeLabel);
                         singleValueGraphTooltipDiv.select("#singleValueTooltipTimeValue")
                             .text(timeFormatter(startDate));
 
                         singleValueGraphTooltipDiv.select("#singleValueTooltipDateLabel")
-                            .text(chartContext.dateLabel);
+                            .text(dateLabel);
                         singleValueGraphTooltipDiv.select("#singleValueTooltipDateValue")
                             .text(dateFormatter(startDate));
 
                         singleValueGraphTooltipDiv.select("#singleValueTooltipValueLabel")
-                            .text(chartContext.singleValueLabel);
+                            .text(singleValueLabel);
                         singleValueGraphTooltipDiv.select("#singleValueTooltipValue")
                             .text(d.value.toFixed(1));
 
@@ -639,7 +557,7 @@ angular.module('chartingApp')
                                 return  "#70c4e2";
                             }
                         }).on("mouseover", function (d) {
-                            console.log("*** SingleValue: "+d);
+                            console.log("*** SingleValue: " + d);
                             showSingleValueMetricBarHover(d);
                         }).on("mouseout", function () {
                             angular.element('#singleValueTooltip').hide();
@@ -683,7 +601,7 @@ angular.module('chartingApp')
                         .attr("class", "y axis")
                         .call(yAxis)
                         .append("text")
-                        .attr("transform", "rotate(-90),translate( -60,0)")
+                        .attr("transform", "rotate(-90),translate( -70,-40)")
                         .attr("y", -30)
                         .style("text-anchor", "end")
                         .text(attributes.rhqYaxisUnits === "NONE" ? "" : attributes.rhqYaxisUnits);
@@ -721,118 +639,117 @@ angular.module('chartingApp')
 
                 }
 
-//                function createOOBLines() {
-//                    var unitsPercentMultiplier = chartContext.yAxisUnits === '%' ? 100 : 1,
-//                        minBaselineLine = d3.svg.line()
-//                            .interpolate(interpolation)
-//                            .x(function (d) {
-//                                return timeScale(d.timeStamp);
-//                            })
-//                            .y(function (d) {
-//                                return yScale(d.baselineMin * unitsPercentMultiplier);
-//                            }),
-//                        maxBaselineLine = d3.svg.line()
-//                            .interpolate(interpolation)
-//                            .x(function (d) {
-//                                return timeScale(d.timeStamp);
-//                            })
-//                            .y(function (d) {
-//                                return yScale(d.baselineMax * unitsPercentMultiplier);
-//                            });
-//
-//                    // min baseline Line
-//                    svg.append("path")
-//                        .datum(chartData)
-//                        .attr("class", "minBaselineLine")
-//                        .attr("fill", "none")
-//                        .attr("stroke", "purple")
-//                        .attr("stroke-width", "1")
-//                        .attr("stroke-dasharray", "20,10,5,5,5,10")
-//                        .attr("stroke-opacity", ".9")
-//                        .attr("d", minBaselineLine);
-//
-//                    // max baseline Line
-//                    svg.append("path")
-//                        .datum(chartData)
-//                        .attr("class", "maxBaselineLine")
-//                        .attr("fill", "none")
-//                        .attr("stroke", "orange")
-//                        .attr("stroke-width", "1")
-//                        .attr("stroke-dasharray", "20,10,5,5,5,10")
-//                        .attr("stroke-opacity", ".7")
-//                        .attr("d", maxBaselineLine);
-//
-//                }
+                function createOOBLines() {
+                    var unitsPercentMultiplier = chartContext.yAxisUnits === '%' ? 100 : 1,
+                        minBaselineLine = d3.svg.line()
+                            .interpolate(interpolation)
+                            .x(function (d) {
+                                return timeScale(d.timeStamp);
+                            })
+                            .y(function (d) {
+                                return yScale(d.baselineMin * unitsPercentMultiplier);
+                            }),
+                        maxBaselineLine = d3.svg.line()
+                            .interpolate(interpolation)
+                            .x(function (d) {
+                                return timeScale(d.timeStamp);
+                            })
+                            .y(function (d) {
+                                return yScale(d.baselineMax * unitsPercentMultiplier);
+                            });
 
-//                function createXAxisBrush() {
-//
-//                    brush = d3.svg.brush()
-//                        .x(timeScaleForBrush)
-//                        .on("brushstart", brushStart)
-//                        .on("brush", brushMove)
-//                        .on("brushend", brushEnd);
-//
-//                    brushGroup = svg.append("g")
-//                        .attr("class", "brush")
-//                        .call(brush);
-//
-//                    brushGroup.selectAll(".resize").append("path");
-//
-//                    brushGroup.selectAll("rect")
-//                        .attr("height", height);
-//
-//                    function brushStart() {
-//                        svg.classed("selecting", true);
-//                    }
-//
-//                    function brushMove() {
-//                        var s = brush.extent();
-//                        updateDateRangeDisplay(moment(s[0]), moment(s[1]));
-//                    }
-//
-//                    function brushEnd() {
-//                        var s = brush.extent();
-//                        var startTime = Math.round(s[0].getTime());
-//                        var endTime = Math.round(s[1].getTime());
-//                        svg.classed("selecting", !d3.event.target.empty());
-//                        // ignore selections less than 1 minute
-//                        if (endTime - startTime >= 60000) {
-//                            console.info("Refresh Graph with new Range");
-//                            //global.@org.rhq.coregui.client.inventory.common.graph.AbstractMetricGraph::dragSelectionRefresh(DD)(startTime, endTime);
-//                        }
-//                    }
-//
-//                    function updateDateRangeDisplay(startDate, endDate) {
-//                        var formattedDateRange = startDate.format(chartContext.buttonBarDateTimeFormat) + '  -  ' + endDate.format(chartContext.buttonBarDateTimeFormat);
-//                        var timeRange = endDate.from(startDate, true);
-//                        angular.element('.graphDateTimeRangeLabel').text(formattedDateRange + '(' + timeRange + ')');
-//                    }
-//
-//
-//                }
+                    // min baseline Line
+                    svg.append("path")
+                        .datum(chartData)
+                        .attr("class", "minBaselineLine")
+                        .attr("fill", "none")
+                        .attr("stroke", "purple")
+                        .attr("stroke-width", "1")
+                        .attr("stroke-dasharray", "20,10,5,5,5,10")
+                        .attr("stroke-opacity", ".9")
+                        .attr("d", minBaselineLine);
+
+                    // max baseline Line
+                    svg.append("path")
+                        .datum(chartData)
+                        .attr("class", "maxBaselineLine")
+                        .attr("fill", "none")
+                        .attr("stroke", "orange")
+                        .attr("stroke-width", "1")
+                        .attr("stroke-dasharray", "20,10,5,5,5,10")
+                        .attr("stroke-opacity", ".7")
+                        .attr("d", maxBaselineLine);
+
+                }
+
+                function createXAxisBrush() {
+
+                    brush = d3.svg.brush()
+                        .x(timeScaleForBrush)
+                        .on("brushstart", brushStart)
+                        .on("brush", brushMove)
+                        .on("brushend", brushEnd);
+
+                    brushGroup = svg.append("g")
+                        .attr("class", "brush")
+                        .call(brush);
+
+                    brushGroup.selectAll(".resize").append("path");
+
+                    brushGroup.selectAll("rect")
+                        .attr("height", height);
+
+                    function brushStart() {
+                        svg.classed("selecting", true);
+                    }
+
+                    function brushMove() {
+                        var s = brush.extent();
+                        updateDateRangeDisplay(moment(s[0]), moment(s[1]));
+                    }
+
+                    function brushEnd() {
+                        var s = brush.extent();
+                        var startTime = Math.round(s[0].getTime());
+                        var endTime = Math.round(s[1].getTime());
+                        svg.classed("selecting", !d3.event.target.empty());
+                        // ignore selections less than 1 minute
+                        if (endTime - startTime >= 60000) {
+                            console.info("Refresh Graph with new Range");
+                            //global.@org.rhq.coregui.client.inventory.common.graph.AbstractMetricGraph::dragSelectionRefresh(DD)(startTime, endTime);
+                            updateDateRangeDisplay(startTime, endTime);
+                        }
+                    }
+
+                    function updateDateRangeDisplay(startDate, endDate) {
+                        var formattedDateRange = startDate.format(buttonBarDateTimeFormat) + '  -  ' + endDate.format(buttonBarDateTimeFormat);
+                        var timeRange = endDate.from(startDate, true);
+                        angular.element('.graphDateTimeRangeLabel').text(formattedDateRange + '(' + timeRange + ')');
+                    }
+
+
+                }
 
 
                 return {
                     // Public API
                     draw: function () {
                         // Guard condition that can occur when a portlet has not been configured yet
-                        //if (metricsData.dataPoints.length > 0) {
+                        if (metricsData.dataPoints.length > 0) {
 
                             determineScale();
-                        //createHeader(attributes.rhqChartTitle);
+                            //createHeader(attributes.rhqChartTitle);
 
                             createYAxisGridLines();
-//                            if (!chartContext.isPortalGraph) {
-//                                createXAxisBrush();
-//                            }
+                            createXAxisBrush();
                             createStackedBars();
                             createXandYAxes();
                             createAvgLines();
-//                            if (oobMax > 0) {
-//                                console.debug("OOB Data Exists!");
-//                                createOOBLines();
-//                            }
-                        // }
+                            if (oobMax > 0) {
+                                console.debug("OOB Data Exists!");
+                                createOOBLines();
+                            }
+                        }
                     }
                 }; // end public closure
             }();
@@ -848,6 +765,12 @@ angular.module('chartingApp')
             replace: true,
             scope: { rhqData: '@',
                 rhqChartHeight: '@',
+                rhqButtonbarDatetimeFormat: '@',
+                rhqTimeLabel: '@',
+                rhqDateLabel: '@',
+                rhqChartHoverDateFormat: '@',
+                rhqChartHoverTimeFormat: '@',
+                rhqSingleValueLabel: '@',
                 rhqChartTitle: '@'}
         };
     });
