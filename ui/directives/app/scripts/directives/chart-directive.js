@@ -197,10 +197,30 @@ angular.module('chartingApp')
                             .attr("height", 210)
                             .attr("transform", "translate(" + margin2.left + "," + (+titleHeight + titleSpace + margin.top + 90) + ")");
 
-                        console.log("We started the chart");
-
-
                     }
+
+                }
+
+                function createHeader(titleName) {
+                    var title = chart.append("g").append("rect")
+                        .attr("class", "title")
+                        .attr("x", 30)
+                        .attr("y", margin.top)
+                        .attr("height", titleHeight)
+                        .attr("width", width + 30 + margin.left)
+                        .attr("fill", "none");
+
+                    chart.append("text")
+                        .attr("class", "titleName")
+                        .attr("x", 40)
+                        .attr("y", 37)
+                        .attr("font-size", "12")
+                        .attr("font-weight", "bold")
+                        .attr("text-anchor", "left")
+                        .text(titleName)
+                        .attr("fill", "#003168");
+
+                    return title;
 
                 }
 
@@ -702,7 +722,7 @@ angular.module('chartingApp')
                         if (metricsData.dataPoints.length > 0) {
 
                             determineScale();
-                            //createHeader(attributes.rhqChartTitle);
+                            createHeader(attributes.rhqChartTitle);
 
                             createYAxisGridLines();
                             createXAxisBrush();
