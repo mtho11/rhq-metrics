@@ -7,58 +7,29 @@
  * @param {expression} metricsStackedBarChart
  */
 angular.module('chartingApp')
-    .directive('metricsStackedBarChart', function () {
+    .directive('metricsStackedBarChart', function ($timeout) {
         function link(scope, element, attributes) {
 
             console.info("Draw Metrics Stacked Bar chart for title: " + attributes.rhqChartTitle);
             console.log("chart height: " + attributes.rhqChartHeight);
             var metricsData = angular.fromJson(attributes.rhqData),
                 chartHeight = +attributes.rhqChartHeight || 250,
+                tooltipTimeout = +attributes.rhqTooltipTimeout || 15000,
                 timeLabel = attributes.rhqTimeLabel || "Time",
                 dateLabel = attributes.rhqDateLabel || "Date",
                 singleValueLabel = attributes.rhqSingleValueLabel || "Raw Value",
+                noDataLabel = attributes.rhqNoDataLabel || "No Data",
+                startLabel = attributes.rhqStartLabel || "Start",
+                endLabel = attributes.rhqEndLabel || "End",
+                durationLabel = attributes.rhqDurationLabel || "Duration",
+                minLabel = attributes.rhqMinLabel || "Min",
+                maxLabel = attributes.rhqMaxLabel || "Max",
+                avgLabel = attributes.rhqAvgLabel || "Avg",
                 chartHoverDateFormat = attributes.rhqChartHoverDateFormat || "%m/%d/%y",
                 chartHoverTimeFormat = attributes.rhqChartHoverTimeFormat || "%I:%M:%S %p",
                 buttonBarDateTimeFormat = attributes.rhqButtonbarDatetimeFormat || "MM/DD/YYYY h:mm a";
             console.log("Metrics Data -->");
             console.dir(metricsData);
-
-
-            // create a chartContext object (from rhq.js) with the data required to render to a chart
-            // this same data could be passed to different chart types
-//            var chartContext = new ChartContext("chartIdNotused",
-//                200,
-//                //angular.fromJson(attribute.rhqData.data),
-//                attribute.rhqData.data,
-//                "X Axis",
-//                attribute.rhqChartTitle,
-//                "Y Axis units",
-//                "Min",
-//                "Avg",
-//                "Max",
-//                "DateLabel",
-//                "TimeLabel",
-//                "Down",
-//                "Unknown",
-//                "No Data",
-//                "Start",
-//                "End",
-//                "Period",
-//                "Bar Label",
-//                "Time Format",
-//                "Date format",
-//                false, // isPortalChart
-//                "portalId",
-//                "buttonBarDateTimeFormat",
-//                "Single Value Label",
-//                "xAxisTimeFormatHours",
-//                "xAxisTimeFormatHoursMinutes",
-//                true, // hideLegend
-//                10, // chartAverage
-//                5, //chartMin
-//                12, // chartMax
-//                false //isSummaryGraph
-//            );
 
 
             // Define the Stacked Bar Graph function using the module pattern
@@ -71,7 +42,6 @@ angular.module('chartingApp')
                     height = adjustedChartHeight - margin.top - margin.bottom,
                     smallChartThresholdInPixels = 600,
                     titleHeight = 30, titleSpace = 10,
-                    tooltipTimeout = 15000,
                     barOffset = 2,
                     chartData,
                     interpolation = "basis",
@@ -226,13 +196,10 @@ angular.module('chartingApp')
                             .attr("width", width + margin.left + margin.right)
                             .attr("height", 210)
                             .attr("transform", "translate(" + margin2.left + "," + (+titleHeight + titleSpace + margin.top + 90) + ")");
+
                         console.log("We started the chart");
 
-                        //   createMinAvgPeakSidePanel(chartContext.minChartTitle, chartContext.chartMin, chartContext.avgChartTitle, chartContext.chartAverage, chartContext.peakChartTitle, chartContext.chartMax);
-                        //legendUnDefined = (chartContext.chartAverage === "");
-//                        if ((!chartContext.hideLegend && !useSmallCharts() && !legendUnDefined )) {
-//                            createMinAvgPeakSidePanel(chartContext.minChartTi/tle, chartContext.chartMin, chartContext.avgChartTitle, chartContext.chartAverage, chartContext.peakChartTitle, chartContext.chartMax);
-//                        }
+
                     }
 
                 }
@@ -273,85 +240,85 @@ angular.module('chartingApp')
                 }
 
 
-//                function showFullMetricBarHover(d) {
-//
-//                    var timeFormatter = d3.time.format(chartContext.chartHoverTimeFormat),
-//                        dateFormatter = d3.time.format(chartContext.chartHoverDateFormat),
-//                        startDate = new Date(+d.timeStamp),
-//                        metricGraphTooltipDiv = d3.select("#metricGraphTooltip");
-//
-//                    metricGraphTooltipDiv.style("left", +(d3.event.pageX) + 15 + "px")
-//                        .style("top", (d3.event.pageY) + "px");
-//
-//                    metricGraphTooltipDiv.select("#metricGraphTooltipTimeLabel")
-//                        .text(chartContext.timeLabel);
-//                    metricGraphTooltipDiv.select("#metricGraphTooltipTimeValue")
-//                        .text(timeFormatter(startDate));
-//
-//                    metricGraphTooltipDiv.select("#metricGraphTooltipDateLabel")
-//                        .text(chartContext.dateLabel);
-//                    metricGraphTooltipDiv.select("#metricGraphTooltipDateValue")
-//                        .text(dateFormatter(startDate));
-//
-//                    metricGraphTooltipDiv.select("#metricGraphTooltipDurationLabel")
-//                        .text(chartContext.hoverBarLabel);
-//                    metricGraphTooltipDiv.select("#metricGraphTooltipDurationValue")
-//                        .text(d.barDuration);
-//
-//                    metricGraphTooltipDiv.select("#metricGraphTooltipMaxLabel")
-//                        .text(chartContext.peakChartTitle);
-//                    metricGraphTooltipDiv.select("#metricGraphTooltipMaxValue")
-//                        .text(d.high.toFixed(1));
-//
-//                    metricGraphTooltipDiv.select("#metricGraphTooltipAvgLabel")
-//                        .text(chartContext.avgChartTitle);
-//                    metricGraphTooltipDiv.select("#metricGraphTooltipAvgValue")
-//                        .text(d.value.toFixed(1));
-//
-//
-//                    metricGraphTooltipDiv.select("#metricGraphTooltipMinLabel")
-//                        .text(chartContext.minChartTitle);
-//                    metricGraphTooltipDiv.select("#metricGraphTooltipMinValue")
-//                        .text(d.low.toFixed(1));
-//
-//
-//                    //Show the tooltip
-//                    angular.element('#metricGraphTooltip').show();
-//                    $setTimeout(function () {
-//                        angular.element('#metricGraphTooltip').hide();
-//                    }, tooltipTimeout);
-//
-//                }
-//
-//                function showNoDataBarHover(d) {
-//                    var timeFormatter = d3.time.format(chartContext.chartHoverTimeFormat),
-//                        dateFormatter = d3.time.format(chartContext.chartHoverDateFormat),
-//                        startDate = new Date(+d.timeStamp),
-//                        noDataTooltipDiv = d3.select("#noDataTooltip");
-//
-//                    noDataTooltipDiv.style("left", +(d3.event.pageX) + 15 + "px")
-//                        .style("top", (d3.event.pageY) + "px");
-//
-//                    noDataTooltipDiv.select("#noDataTooltipTimeLabel")
-//                        .text(chartContext.timeLabel);
-//                    noDataTooltipDiv.select("#noDataTooltipTimeValue")
-//                        .text(timeFormatter(startDate));
-//
-//                    noDataTooltipDiv.select("#noDataTooltipDateLabel")
-//                        .text(chartContext.dateLabel);
-//                    noDataTooltipDiv.select("#noDataTooltipDateValue")
-//                        .text(dateFormatter(startDate));
-//
-//                    noDataTooltipDiv.select("#noDataLabel")
-//                        .text(chartContext.noDataLabel);
-//
-//                    //Show the tooltip
-//                    angular.element('#noDataTooltip').show();
-//                    setTimeout(function () {
-//                        angular.element('#noDataTooltip').hide();
-//                    }, tooltipTimeout);
-//
-//                }
+                function showFullMetricBarHover(d) {
+
+                    var timeFormatter = d3.time.format(chartHoverTimeFormat),
+                        dateFormatter = d3.time.format(chartHoverDateFormat),
+                        startDate = new Date(+d.timeStamp),
+                        metricGraphTooltipDiv = d3.select("#metricGraphTooltip");
+
+                    metricGraphTooltipDiv.style("left", +(d3.event.pageX) + 15 + "px")
+                        .style("top", (d3.event.pageY) + "px");
+
+                    metricGraphTooltipDiv.select("#metricGraphTooltipTimeLabel")
+                        .text(timeLabel);
+                    metricGraphTooltipDiv.select("#metricGraphTooltipTimeValue")
+                        .text(timeFormatter(startDate));
+
+                    metricGraphTooltipDiv.select("#metricGraphTooltipDateLabel")
+                        .text(dateLabel);
+                    metricGraphTooltipDiv.select("#metricGraphTooltipDateValue")
+                        .text(dateFormatter(startDate));
+
+                    metricGraphTooltipDiv.select("#metricGraphTooltipDurationLabel")
+                        .text(periodLabel);
+                    metricGraphTooltipDiv.select("#metricGraphTooltipDurationValue")
+                        .text(d.barDuration);
+
+                    metricGraphTooltipDiv.select("#metricGraphTooltipMaxLabel")
+                        .text(maxLabel);
+                    metricGraphTooltipDiv.select("#metricGraphTooltipMaxValue")
+                        .text(d.high.toFixed(1));
+
+                    metricGraphTooltipDiv.select("#metricGraphTooltipAvgLabel")
+                        .text(avgLabel);
+                    metricGraphTooltipDiv.select("#metricGraphTooltipAvgValue")
+                        .text(d.value.toFixed(1));
+
+
+                    metricGraphTooltipDiv.select("#metricGraphTooltipMinLabel")
+                        .text(minLabel);
+                    metricGraphTooltipDiv.select("#metricGraphTooltipMinValue")
+                        .text(d.low.toFixed(1));
+
+
+                    //Show the tooltip
+                    angular.element('#metricGraphTooltip').show();
+                    $timeout(function () {
+                        angular.element('#metricGraphTooltip').hide();
+                    }, tooltipTimeout);
+
+                }
+
+                function showNoDataBarHover(d) {
+                    var timeFormatter = d3.time.format(chartHoverTimeFormat),
+                        dateFormatter = d3.time.format(chartHoverDateFormat),
+                        startDate = new Date(+d.timeStamp),
+                        noDataTooltipDiv = d3.select("#noDataTooltip");
+
+                    noDataTooltipDiv.style("left", +(d3.event.pageX) + 15 + "px")
+                        .style("top", (d3.event.pageY) + "px");
+
+                    noDataTooltipDiv.select("#noDataTooltipTimeLabel")
+                        .text(timeLabel);
+                    noDataTooltipDiv.select("#noDataTooltipTimeValue")
+                        .text(timeFormatter(startDate));
+
+                    noDataTooltipDiv.select("#noDataTooltipDateLabel")
+                        .text(dateLabel);
+                    noDataTooltipDiv.select("#noDataTooltipDateValue")
+                        .text(dateFormatter(startDate));
+
+                    noDataTooltipDiv.select("#noDataLabel")
+                        .text(noDataLabel);
+
+                    //Show the tooltip
+                    angular.element('#noDataTooltip').show();
+                    setTimeout(function () {
+                        angular.element('#noDataTooltip').hide();
+                    }, tooltipTimeout);
+
+                }
 
                 function createStackedBars() {
 
@@ -487,7 +454,7 @@ angular.module('chartingApp')
                             }
                         });
 
-                    function showSingleValueMetricBarHover(d, attributes) {
+                    function showSingleValueMetricBarHover(d) {
                         var timeFormatter = d3.time.format(chartHoverTimeFormat),
                             dateFormatter = d3.time.format(chartHoverDateFormat),
                             startDate = new Date(+d.timeStamp),
@@ -557,7 +524,7 @@ angular.module('chartingApp')
                                 return  "#70c4e2";
                             }
                         }).on("mouseover", function (d) {
-                            console.log("*** SingleValue: " + d);
+                            console.log("*** Raw Value: " + d.value);
                             showSingleValueMetricBarHover(d);
                         }).on("mouseout", function () {
                             angular.element('#singleValueTooltip').hide();
@@ -587,14 +554,12 @@ angular.module('chartingApp')
                         .attr("transform", "translate(0," + height + ")")
                         .call(xAxis);
 
-//                    if (!chartContext.isPortalGraph) {
-//                        xAxisGroup.append("g")
-//                            .attr("class", "x brush")
-//                            .call(brush)
-//                            .selectAll("rect")
-//                            .attr("y", -6)
-//                            .attr("height", 30);
-//                    }
+                    xAxisGroup.append("g")
+                        .attr("class", "x brush")
+                        .call(brush)
+                        .selectAll("rect")
+                        .attr("y", -6)
+                        .attr("height", 30);
 
                     // create y-axis
                     svg.append("g")
@@ -640,7 +605,7 @@ angular.module('chartingApp')
                 }
 
                 function createOOBLines() {
-                    var unitsPercentMultiplier = chartContext.yAxisUnits === '%' ? 100 : 1,
+                    var unitsPercentMultiplier = attributes.rhqYaxisUnits === '%' ? 100 : 1,
                         minBaselineLine = d3.svg.line()
                             .interpolate(interpolation)
                             .x(function (d) {
@@ -716,8 +681,7 @@ angular.module('chartingApp')
                         // ignore selections less than 1 minute
                         if (endTime - startTime >= 60000) {
                             console.info("Refresh Graph with new Range");
-                            //global.@org.rhq.coregui.client.inventory.common.graph.AbstractMetricGraph::dragSelectionRefresh(DD)(startTime, endTime);
-                            updateDateRangeDisplay(startTime, endTime);
+                            updateDateRangeDisplay(moment(s[0]), moment(s[1]));
                         }
                     }
 
@@ -765,12 +729,21 @@ angular.module('chartingApp')
             replace: true,
             scope: { rhqData: '@',
                 rhqChartHeight: '@',
+                rhqYaxisUnits: '@',
                 rhqButtonbarDatetimeFormat: '@',
                 rhqTimeLabel: '@',
                 rhqDateLabel: '@',
                 rhqChartHoverDateFormat: '@',
                 rhqChartHoverTimeFormat: '@',
                 rhqSingleValueLabel: '@',
+                rhqNoDataLabel: '@',
+                rhqStartLabel: '@',
+                rhqEndLabel: '@',
+                rhqDurationLabel: '@',
+                rhqMinLabel: '@',
+                rhqMaxLabel: '@',
+                rhqAvgLabel: '@',
+                rhqTooltipTimeout: '@',
                 rhqChartTitle: '@'}
         };
     });
