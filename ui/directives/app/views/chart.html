@@ -11,10 +11,16 @@
         <h3 class="panel-title">{{title.name}}</h3>
     </div>
     <div class="panel-body">
+        <div class="well-sm">
+            <small><strong>Time Range:</strong></small>
+            <small style="margin-left: 15px" class="graphDateTimeRangeLabel"></small>
+        </div>
+
         <!--<div>{{chartData|json}}</div>-->
         <div style="height:270px" metrics-stacked-bar-chart
                                    rhq-data="{{chartData}}"
                                    rhq-yaxis-units="GB"
+                                   rhq-chart-title="{{title.name}}"
                                    rhq-chart-height="250"
                                    rhq-chart-hover-date-format="%m/%d/%y"
                                    rhq-chart-hover-time-format="%I:%M:%S %p"
@@ -23,14 +29,13 @@
                                    rhq-buttonbar-datetime-format="MM/DD/YYYY h:mm a"
                                    rhq-single-value-label="Raw Value"
                                    rhq-no-data-label="No Data"
+                                   rhq-aggregate-label="Aggregate"
                                    rhq-start-label="Start"
                                    rhq-end-label="End"
                                    rhq-duration-label="Duration"
                                    rhq-min-label="Min"
                                    rhq-max-label="Max"
-                                   rhq-avg-label="Avg"
-                                   rhq-tooltip-timeout="15000"
-                                   rhq-chart-title="{{title.name}}">
+                                   rhq-avg-label="Avg">
         </div>
     </div>
 </div>

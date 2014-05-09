@@ -7,18 +7,18 @@
  * @param {expression} metricsStackedBarChart
  */
 angular.module('chartingApp')
-    .directive('metricsStackedBarChart', function ($timeout) {
+    .directive('metricsStackedBarChart', function () {
         function link(scope, element, attributes) {
 
             console.info("Draw Metrics Stacked Bar chart for title: " + attributes.rhqChartTitle);
             console.log("chart height: " + attributes.rhqChartHeight);
             var metricsData = angular.fromJson(attributes.rhqData),
                 chartHeight = +attributes.rhqChartHeight || 250,
-                tooltipTimeout = +attributes.rhqTooltipTimeout || 15000,
                 timeLabel = attributes.rhqTimeLabel || "Time",
                 dateLabel = attributes.rhqDateLabel || "Date",
                 singleValueLabel = attributes.rhqSingleValueLabel || "Raw Value",
                 noDataLabel = attributes.rhqNoDataLabel || "No Data",
+                aggregateLabel = attributes.rhqAggregateLabel || "Aggregate",
                 startLabel = attributes.rhqStartLabel || "Start",
                 endLabel = attributes.rhqEndLabel || "End",
                 durationLabel = attributes.rhqDurationLabel || "Duration",
@@ -55,6 +55,7 @@ angular.module('chartingApp')
                     timeScale,
                     yAxis,
                     xAxis,
+                    tip,
                     brush,
                     brushGroup,
                     timeScaleForBrush,
@@ -186,6 +187,14 @@ angular.module('chartingApp')
                         createSvgDefs(defs);
 
 
+                        tip = d3.tip()
+                            .attr('class', 'd3-tip')
+                            .offset([-10, 0])
+                            .html(function (d) {
+                                return buildHover(d);
+                            });
+
+
                         svg = chart.append("g")
                             .attr("width", width + margin.left + margin.right)
                             .attr("height", height + margin.top - titleHeight - titleSpace + margin.bottom)
@@ -197,10 +206,30 @@ angular.module('chartingApp')
                             .attr("height", 210)
                             .attr("transform", "translate(" + margin2.left + "," + (+titleHeight + titleSpace + margin.top + 90) + ")");
 
+
+                        svg.call(tip);
                     }
 
                 }
 
+                function buildHover(d) {
+                    var hover;
+
+                    if (d.down || d.unknown || d.nodata) {
+                        // nodata
+                        hover = "<strong>" + noDataLabel + "</strong>";
+                    } else {
+                        if (+d.high === +d.low) {
+                            // raw single value from raw table
+                            hover = "<strong>" + singleValueLabel + "</strong> <span style='color:#d3d3d3'>" + d.value + "</span>";
+                        } else {
+                            // aggregate with min/avg/max
+                            hover = "<strong>Aggregate:</strong>";
+                        }
+                    }
+                    return hover;
+
+                }
                 function createHeader(titleName) {
                     var title = chart.append("g").append("rect")
                         .attr("class", "title")
@@ -302,12 +331,6 @@ angular.module('chartingApp')
                         .text(d.low.toFixed(1));
 
 
-                    //Show the tooltip
-                    angular.element('#metricGraphTooltip').show();
-                    $timeout(function () {
-                        angular.element('#metricGraphTooltip').hide();
-                    }, tooltipTimeout);
-
                 }
 
                 function showNoDataBarHover(d) {
@@ -331,12 +354,6 @@ angular.module('chartingApp')
 
                     noDataTooltipDiv.select("#noDataLabel")
                         .text(noDataLabel);
-
-                    //Show the tooltip
-                    angular.element('#noDataTooltip').show();
-                    setTimeout(function () {
-                        angular.element('#noDataTooltip').hide();
-                    }, tooltipTimeout);
 
                 }
 
@@ -381,26 +398,9 @@ angular.module('chartingApp')
                                 return  "#d3d3d6";
                             }
                         }).on("mouseover", function (d) {
-                            if (d.down || d.unknown || d.nodata) {
-                                showNoDataBarHover(d);
-                            }
-                            else {
-                                if (+d.high === +d.low) {
-                                    showSingleValueMetricBarHover(d);
-                                } else {
-                                    showFullMetricBarHover(d);
-                                }
-                            }
+                            tip.show(d);
                         }).on("mouseout", function (d) {
-                            if (d.down || d.unknown || d.nodata) {
-                                angular.element('#noDataTooltip').hide();
-                            } else {
-                                if (+d.high === +d.low) {
-                                    angular.element('#singleValueTooltip').hide();
-                                } else {
-                                    angular.element('#metricGraphTooltip').hide();
-                                }
-                            }
+                            tip.hide();
                         });
 
 
@@ -431,13 +431,9 @@ angular.module('chartingApp')
                         })
                         .attr("opacity", 0.9)
                         .on("mouseover", function (d) {
-                            showFullMetricBarHover(d);
+                            tip.show(d);
                         }).on("mouseout", function (d) {
-                            if (d.down || d.unknown || d.nodata) {
-                                angular.element('#noDataTooltip').hide();
-                            } else {
-                                angular.element('#metricGraphTooltip').hide();
-                            }
+                            tip.hide();
                         });
 
 
@@ -465,13 +461,9 @@ angular.module('chartingApp')
                         })
                         .attr("opacity", 0.9)
                         .on("mouseover", function (d) {
-                            showFullMetricBarHover(d);
+                            tip.show(d);
                         }).on("mouseout", function (d) {
-                            if (d.down || d.unknown || d.nodata) {
-                                angular.element('#noDataTooltip').hide();
-                            } else {
-                                angular.element('#metricGraphTooltip').hide();
-                            }
+                            tip.hide();
                         });
 
                     function showSingleValueMetricBarHover(d) {
@@ -497,13 +489,6 @@ angular.module('chartingApp')
                             .text(singleValueLabel);
                         singleValueGraphTooltipDiv.select("#singleValueTooltipValue")
                             .text(d.value.toFixed(1));
-
-
-                        //Show the tooltip
-                        angular.element('#singleValueTooltip').show();
-                        setTimeout(function () {
-                            angular.element('#singleValueTooltip').hide();
-                        }, tooltipTimeout);
 
                     }
 
@@ -544,10 +529,9 @@ angular.module('chartingApp')
                                 return  "#70c4e2";
                             }
                         }).on("mouseover", function (d) {
-                            console.log("*** Raw Value: " + d.value);
-                            showSingleValueMetricBarHover(d);
+                            tip.show(d);
                         }).on("mouseout", function () {
-                            angular.element('#singleValueTooltip').hide();
+                            tip.hide();
                         });
                 }
 
@@ -667,6 +651,12 @@ angular.module('chartingApp')
 
                 }
 
+                function updateDateRangeDisplay(startDate, endDate) {
+                    var formattedDateRange = startDate.format(buttonBarDateTimeFormat) + '  -  ' + endDate.format(buttonBarDateTimeFormat);
+                    var timeRange = endDate.from(startDate, true);
+                    angular.element('.graphDateTimeRangeLabel').text(formattedDateRange + '(' + timeRange + ')');
+                }
+
                 function createXAxisBrush() {
 
                     brush = d3.svg.brush()
@@ -705,13 +695,6 @@ angular.module('chartingApp')
                         }
                     }
 
-                    function updateDateRangeDisplay(startDate, endDate) {
-                        var formattedDateRange = startDate.format(buttonBarDateTimeFormat) + '  -  ' + endDate.format(buttonBarDateTimeFormat);
-                        var timeRange = endDate.from(startDate, true);
-                        angular.element('.graphDateTimeRangeLabel').text(formattedDateRange + '(' + timeRange + ')');
-                    }
-
-
                 }
 
 
@@ -733,14 +716,17 @@ angular.module('chartingApp')
                                 console.debug("OOB Data Exists!");
                                 createOOBLines();
                             }
+                            updateDateRangeDisplay(moment(metricsData.minTimeStamp), moment(metricsData.maxTimeStamp));
                         }
                     }
                 }; // end public closure
             }();
 
-            //if (typeof metricsData.dataPoints !== 'undefined' && metricsData.dataPoints !== null && metricsData.dataPoints.length > 0) {
-            metricStackedBarGraph.draw();
-            //}
+            if (typeof metricsData.dataPoints !== 'undefined' && metricsData.dataPoints !== null && metricsData.dataPoints.length > 0) {
+                metricStackedBarGraph.draw();
+            } else {
+                console.warn("There is no data to graph!")
+            }
         }
 
         return {
@@ -757,13 +743,13 @@ angular.module('chartingApp')
                 rhqChartHoverTimeFormat: '@',
                 rhqSingleValueLabel: '@',
                 rhqNoDataLabel: '@',
+                rhqAggregateLabel: '@',
                 rhqStartLabel: '@',
                 rhqEndLabel: '@',
                 rhqDurationLabel: '@',
                 rhqMinLabel: '@',
                 rhqMaxLabel: '@',
                 rhqAvgLabel: '@',
-                rhqTooltipTimeout: '@',
                 rhqChartTitle: '@'}
         };
     });

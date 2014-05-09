@@ -23,54 +23,9 @@
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/d3-chart.css">
     <!-- endbuild -->
+
 </head>
 <body ng-app="chartingApp">
-
-<!-- TODO: get rid of this HTML dependency for hovers -->
-<div id="singleValueTooltip" class="hidden">
-    <div><span id="singleValueTooltipTimeLabel"></span><span>: </span><span id="singleValueTooltipTimeValue"></span>
-    </div>
-    <div><span id="singleValueTooltipDateLabel"></span><span>: </span><span id="singleValueTooltipDateValue"></span>
-    </div>
-    <hr>
-    <div><span id="singleValueTooltipValueLabel"></span><span>: </span><span id="singleValueTooltipValue"></span></div>
-</div>
-<div id="noDataTooltip" class="hidden">
-    <div><span id="noDataTooltipTimeLabel"></span><span>: </span><span id="noDataTooltipTimeValue"></span></div>
-    <div><span id="noDataTooltipDateLabel"></span><span>: </span><span id="noDataTooltipDateValue"></span></div>
-    <hr>
-    <div id="noDataLabel"></div>
-</div>
-<div id="metricGraphTooltip" class="hidden">
-    <div><span id="metricGraphTooltipTimeLabel"></span><span>: </span><span id="metricGraphTooltipTimeValue"></span>
-    </div>
-    <div><span id="metricGraphTooltipDateLabel"></span><span>: </span><span id="metricGraphTooltipDateValue"></span>
-    </div>
-    <div><span id="metricGraphTooltipDurationLabel"></span><span>: </span><span
-            id="metricGraphTooltipDurationValue"></span>
-
-        <div>
-            <hr>
-            <div><span id="metricGraphTooltipMaxLabel"></span><span> : </span><span
-                    id="metricGraphTooltipMaxValue"></span>
-
-                <div>
-                    <div><span id="metricGraphTooltipAvgLabel"></span><span> : </span><span
-                            id="metricGraphTooltipAvgValue"></span>
-
-                        <div>
-                            <div><span id="metricGraphTooltipMinLabel"></span><span> : </span><span
-                                    id="metricGraphTooltipMinValue"></span>
-
-                                <div></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- Add your site or application content here -->
 <div class="container" ng-include="'views/chart.html'"></div>
@@ -87,6 +42,7 @@
 <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 <script src="bower_components/d3/d3.js"></script>
 <script src="bower_components/moment/moment.js"></script>
+<script src="bower_components/d3-tip/index.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
