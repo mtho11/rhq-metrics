@@ -7,7 +7,7 @@
  * @param {expression} metricsStackedBarChart
  */
 angular.module('chartingApp')
-    .directive('metricsStackedBarChart', function () {
+    .directive('metricsStackedBarChart', function (chartDataService) {
         function link(scope, element, attributes) {
 
             console.info("Draw Metrics Stacked Bar chart for title: " + attributes.rhqChartTitle);
@@ -31,7 +31,6 @@ angular.module('chartingApp')
             console.log("Metrics Data -->");
             console.dir(metricsData);
 
-
             // Define the Stacked Bar Graph function using the module pattern
             var metricStackedBarGraph = function () {
                 // privates
@@ -44,12 +43,7 @@ angular.module('chartingApp')
                     titleHeight = 30, titleSpace = 10,
                     barOffset = 2,
                     chartData,
-                    interpolation = "basis",
-                    avgFiltered, avg, minFiltered, min, peakFiltered, peak,
                     oobMax,
-                    lowBound,
-                    newLow = 0,
-                    highBound,
                     calcBarWidth,
                     yScale,
                     timeScale,
@@ -64,16 +58,6 @@ angular.module('chartingApp')
                     context,
                     svg;
 
-                // adjust the min scale so blue low line is not in axis
-                function determineLowBound(min) {
-                    newLow = min;
-                    if (newLow < 0) {
-                        return 0;
-                    }
-                    else {
-                        return newLow;
-                    }
-                }
 
                 function getChartWidth() {
                     //return angular.element("#" + chartContext.chartHandle).width();
@@ -106,32 +90,8 @@ angular.module('chartingApp')
                             chartData = metricsData.dataPoints;
                         }
 
-                        avgFiltered = metricsData.dataPoints.filter(function (d) {
-                            if (d.nodata !== 'true') {
-                                return d.value;
-                            }
-                        });
-                        avg = d3.mean(avgFiltered.map(function (d) {
-                            return d.value;
-                        }));
-                        peakFiltered = metricsData.dataPoints.filter(function (d) {
-                            if (d.nodata !== 'true') {
-                                return d.high;
-                            }
-                        });
-                        peak = d3.max(peakFiltered.map(function (d) {
-                            return d.high;
-                        }));
-                        minFiltered = metricsData.dataPoints.filter(function (d) {
-                            if (d.nodata !== 'true') {
-                                return d.low;
-                            }
-                        });
-                        min = d3.min(minFiltered.map(function (d) {
-                            return d.low;
-                        }));
-                        lowBound = determineLowBound(min);
-                        highBound = peak + ((peak - min) * 0.1);
+                        chartDataService.setupFilteredData(metricsData);
+
                         oobMax = d3.max(metricsData.dataPoints.map(function (d) {
                             if (typeof d.baselineMax === 'undefined') {
                                 return 0;
@@ -221,8 +181,11 @@ angular.module('chartingApp')
                     } else {
                         if (+d.high === +d.low) {
                             // raw single value from raw table
-                            hover = "<strong>" + singleValueLabel + "</strong> <span style='color:#d3d3d3'>" + d.value + "</span>";
+                            var formattedDateTime = moment(d.timeStamp).format(buttonBarDateTimeFormat);
+                            hover = '<div><span style="color: #d3d3d3;">Timestamp: </span>' + '<span>' + formattedDateTime + '</span>' + '</div><hr/>' +
+                                '<div><span style="color: #d3d3d3;">' + singleValueLabel + '</span><span>: </span><span>' + d.value + '</span> </div> ';
                         } else {
+                            //@todo: finish aggregates once in C*
                             // aggregate with min/avg/max
                             hover = "<strong>Aggregate:</strong>";
                         }
@@ -230,6 +193,7 @@ angular.module('chartingApp')
                     return hover;
 
                 }
+
                 function createHeader(titleName) {
                     var title = chart.append("g").append("rect")
                         .attr("class", "title")
@@ -289,74 +253,6 @@ angular.module('chartingApp')
                 }
 
 
-                function showFullMetricBarHover(d) {
-
-                    var timeFormatter = d3.time.format(chartHoverTimeFormat),
-                        dateFormatter = d3.time.format(chartHoverDateFormat),
-                        startDate = new Date(+d.timeStamp),
-                        metricGraphTooltipDiv = d3.select("#metricGraphTooltip");
-
-                    metricGraphTooltipDiv.style("left", +(d3.event.pageX) + 15 + "px")
-                        .style("top", (d3.event.pageY) + "px");
-
-                    metricGraphTooltipDiv.select("#metricGraphTooltipTimeLabel")
-                        .text(timeLabel);
-                    metricGraphTooltipDiv.select("#metricGraphTooltipTimeValue")
-                        .text(timeFormatter(startDate));
-
-                    metricGraphTooltipDiv.select("#metricGraphTooltipDateLabel")
-                        .text(dateLabel);
-                    metricGraphTooltipDiv.select("#metricGraphTooltipDateValue")
-                        .text(dateFormatter(startDate));
-
-                    metricGraphTooltipDiv.select("#metricGraphTooltipDurationLabel")
-                        .text(periodLabel);
-                    metricGraphTooltipDiv.select("#metricGraphTooltipDurationValue")
-                        .text(d.barDuration);
-
-                    metricGraphTooltipDiv.select("#metricGraphTooltipMaxLabel")
-                        .text(maxLabel);
-                    metricGraphTooltipDiv.select("#metricGraphTooltipMaxValue")
-                        .text(d.high.toFixed(1));
-
-                    metricGraphTooltipDiv.select("#metricGraphTooltipAvgLabel")
-                        .text(avgLabel);
-                    metricGraphTooltipDiv.select("#metricGraphTooltipAvgValue")
-                        .text(d.value.toFixed(1));
-
-
-                    metricGraphTooltipDiv.select("#metricGraphTooltipMinLabel")
-                        .text(minLabel);
-                    metricGraphTooltipDiv.select("#metricGraphTooltipMinValue")
-                        .text(d.low.toFixed(1));
-
-
-                }
-
-                function showNoDataBarHover(d) {
-                    var timeFormatter = d3.time.format(chartHoverTimeFormat),
-                        dateFormatter = d3.time.format(chartHoverDateFormat),
-                        startDate = new Date(+d.timeStamp),
-                        noDataTooltipDiv = d3.select("#noDataTooltip");
-
-                    noDataTooltipDiv.style("left", +(d3.event.pageX) + 15 + "px")
-                        .style("top", (d3.event.pageY) + "px");
-
-                    noDataTooltipDiv.select("#noDataTooltipTimeLabel")
-                        .text(timeLabel);
-                    noDataTooltipDiv.select("#noDataTooltipTimeValue")
-                        .text(timeFormatter(startDate));
-
-                    noDataTooltipDiv.select("#noDataTooltipDateLabel")
-                        .text(dateLabel);
-                    noDataTooltipDiv.select("#noDataTooltipDateValue")
-                        .text(dateFormatter(startDate));
-
-                    noDataTooltipDiv.select("#noDataLabel")
-                        .text(noDataLabel);
-
-                }
-
                 function createStackedBars() {
 
                     var pixelsOffHeight = 0;
@@ -371,7 +267,7 @@ angular.module('chartingApp')
                         })
                         .attr("y", function (d) {
                             if (d.down || d.unknown || d.nodata) {
-                                return yScale(highBound);
+                                return yScale(chartDataService.getHighBound());
                             }
                             else {
                                 return yScale(d.low);
@@ -379,7 +275,7 @@ angular.module('chartingApp')
                         })
                         .attr("height", function (d) {
                             if (d.down || d.unknown || d.nodata) {
-                                return height - yScale(highBound) - pixelsOffHeight;
+                                return height - yScale(chartDataService.getHighBound()) - pixelsOffHeight;
                             }
                             else {
                                 return height - yScale(d.low) - pixelsOffHeight;
@@ -413,7 +309,7 @@ angular.module('chartingApp')
                             return timeScale(d.timeStamp);
                         })
                         .attr("y", function (d) {
-                            return isNaN(d.high) ? yScale(lowBound) : yScale(d.high);
+                            return isNaN(d.high) ? yScale(chartDataService.getLowBound()) : yScale(d.high);
                         })
                         .attr("height", function (d) {
                             if (d.down || d.unknown || d.nodata) {
@@ -465,33 +361,6 @@ angular.module('chartingApp')
                         }).on("mouseout", function (d) {
                             tip.hide();
                         });
-
-                    function showSingleValueMetricBarHover(d) {
-                        var timeFormatter = d3.time.format(chartHoverTimeFormat),
-                            dateFormatter = d3.time.format(chartHoverDateFormat),
-                            startDate = new Date(+d.timeStamp),
-                            singleValueGraphTooltipDiv = d3.select("#singleValueTooltip");
-
-                        singleValueGraphTooltipDiv.style("left", +(d3.event.pageX) + 15 + "px")
-                            .style("top", (d3.event.pageY) + "px");
-
-                        singleValueGraphTooltipDiv.select("#singleValueTooltipTimeLabel")
-                            .text(timeLabel);
-                        singleValueGraphTooltipDiv.select("#singleValueTooltipTimeValue")
-                            .text(timeFormatter(startDate));
-
-                        singleValueGraphTooltipDiv.select("#singleValueTooltipDateLabel")
-                            .text(dateLabel);
-                        singleValueGraphTooltipDiv.select("#singleValueTooltipDateValue")
-                            .text(dateFormatter(startDate));
-
-                        singleValueGraphTooltipDiv.select("#singleValueTooltipValueLabel")
-                            .text(singleValueLabel);
-                        singleValueGraphTooltipDiv.select("#singleValueTooltipValue")
-                            .text(d.value.toFixed(1));
-
-                    }
-
 
                     // if high == low put a "cap" on the bar to show non-aggregated bar
                     svg.selectAll("rect.singleValue")
@@ -611,7 +480,7 @@ angular.module('chartingApp')
                 function createOOBLines() {
                     var unitsPercentMultiplier = attributes.rhqYaxisUnits === '%' ? 100 : 1,
                         minBaselineLine = d3.svg.line()
-                            .interpolate(interpolation)
+                            .interpolate("basis")
                             .x(function (d) {
                                 return timeScale(d.timeStamp);
                             })
@@ -619,7 +488,7 @@ angular.module('chartingApp')
                                 return yScale(d.baselineMin * unitsPercentMultiplier);
                             }),
                         maxBaselineLine = d3.svg.line()
-                            .interpolate(interpolation)
+                            .interpolate("basis")
                             .x(function (d) {
                                 return timeScale(d.timeStamp);
                             })
@@ -654,7 +523,7 @@ angular.module('chartingApp')
                 function updateDateRangeDisplay(startDate, endDate) {
                     var formattedDateRange = startDate.format(buttonBarDateTimeFormat) + '  -  ' + endDate.format(buttonBarDateTimeFormat);
                     var timeRange = endDate.from(startDate, true);
-                    angular.element('.graphDateTimeRangeLabel').text(formattedDateRange + '(' + timeRange + ')');
+                    angular.element('.graphDateTimeRangeLabel').text(formattedDateRange + '  (' + timeRange + ')');
                 }
 
                 function createXAxisBrush() {
@@ -711,7 +580,7 @@ angular.module('chartingApp')
                             createXAxisBrush();
                             createStackedBars();
                             createXandYAxes();
-                            createAvgLines();
+                            //createAvgLines();
                             if (oobMax > 0) {
                                 console.debug("OOB Data Exists!");
                                 createOOBLines();
