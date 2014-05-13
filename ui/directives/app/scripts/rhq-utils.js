@@ -1,96 +1,9 @@
 
 /**
- * RHQ Charting Javascript Functions.
+ * RHQ-metrics Charting Javascript Functions.
  */
 "use strict";
 
-
-/**
- * ChartContext Constructor Object
- * Contains all of the data required to render a chart.
- * A ChartContext can be passed to multiple chart renders to display different chart types
- * of that data.
- * @param chartId
- * @param chartHeight
- * @param metricsData
- * @param xAxisLabel
- * @param chartTitle
- * @param yAxisUnits
- * @param minChartTitle
- * @param avgChartTitle
- * @param peakChartTitle
- * @param dateLabel
- * @param timeLabel
- * @param downLabel
- * @param unknownLabel
- * @param noDataLabel
- * @param hoverStartLabel
- * @param hoverEndLabel
- * @param hoverPeriodLabel
- * @param hoverBarLabel
- * @param chartHoverTimeFormat
- * @param chartHoverDateFormat
- * @param isPortalGraph
- * @param portalId
- * @param buttonBarDateTimeFormat
- * @param singleValueLabel
- * @param chartXaxisTimeFormatHours
- * @param chartXaxisTimeFormatHoursMinutes
- * @param hideLegend
- * @param chartAverage
- * @param chartMin
- * @param chartMax
- * @param isSummaryGraph
- * @constructor
- */
-//var ChartContext = function (chartId, chartHeight, metricsData, xAxisLabel, chartTitle, yAxisUnits, minChartTitle, avgChartTitle, peakChartTitle, dateLabel, timeLabel, downLabel, unknownLabel, noDataLabel, hoverStartLabel, hoverEndLabel, hoverPeriodLabel, hoverBarLabel, chartHoverTimeFormat, chartHoverDateFormat, isPortalGraph, portalId, buttonBarDateTimeFormat, singleValueLabel, chartXaxisTimeFormatHours, chartXaxisTimeFormatHoursMinutes, hideLegend, chartAverage, chartMin, chartMax, isSummaryGraph) {
-//        if (!(this instanceof ChartContext)) {
-//            throw new Error("ChartContext function cannot be called as a function.");
-//        }
-//        this.chartId = chartId;
-//        this.chartHeight = chartHeight;
-//        this.data = metricsData; // make into json later
-//        this.xAxisLabel = xAxisLabel;
-//        this.chartTitle = chartTitle;
-//        this.yAxisUnits = yAxisUnits;
-//        this.minChartTitle = minChartTitle;
-//        this.avgChartTitle = avgChartTitle;
-//        this.peakChartTitle = peakChartTitle;
-//        this.dateLabel = dateLabel;
-//        this.timeLabel = timeLabel;
-//        this.downLabel = downLabel;
-//        this.unknownLabel = unknownLabel;
-//        this.singleValueLabel = singleValueLabel;
-//        this.noDataLabel = noDataLabel;
-//        this.hoverStartLabel = hoverStartLabel;
-//        this.hoverEndLabel = hoverEndLabel;
-//        this.hoverPeriodLabel = hoverPeriodLabel;
-//        this.hoverBarLabel = hoverBarLabel;
-//        this.chartHoverTimeFormat = chartHoverTimeFormat;
-//        this.chartHoverDateFormat = chartHoverDateFormat;
-//        this.isPortalGraph = isPortalGraph;
-//        this.isSummaryGraph = isSummaryGraph;
-//        this.portalId = portalId;
-//        if (isSummaryGraph) {
-//            this.chartHandle = "sChart-" + chartId;
-//        } else {
-//            if (isPortalGraph) {
-//                this.chartHandle = "rChart-" + chartId + "-" + portalId;
-//            }
-//            else {
-//                this.chartHandle = "rChart-" + chartId;
-//            }
-//        }
-//        this.chartSelection = this.chartHandle + " svg";
-//        this.buttonBarDateTimeFormat = buttonBarDateTimeFormat;
-//        this.chartXaxisTimeFormatHours = chartXaxisTimeFormatHours;
-//        this.chartXaxisTimeFormatHoursMinutes = chartXaxisTimeFormatHoursMinutes;
-//        this.hideLegend = hideLegend;
-//        this.chartAverage = chartAverage;
-//        this.chartMin = chartMin;
-//        this.chartMax = chartMax;
-//
-//    },
 
     /**
      * GraphDateContext object constructor.

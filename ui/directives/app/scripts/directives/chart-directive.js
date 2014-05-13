@@ -8,10 +8,17 @@
  */
 angular.module('chartingApp')
     .directive('metricsStackedBarChart', function (chartDataService) {
+        function drawGraph() {
+            metricsStackedBarChart.draw();
+        }
+
         function link(scope, element, attributes) {
+            if (typeof attributes.rhqData === 'undefined') {
+                console.warn("rhqData on metricStackedBarChart is undefined");
+            }
+            console.log("**** rhqData: " + attributes.rhqData);
 
             console.info("Draw Metrics Stacked Bar chart for title: " + attributes.rhqChartTitle);
-            console.log("chart height: " + attributes.rhqChartHeight);
             var metricsData = angular.fromJson(attributes.rhqData),
                 chartHeight = +attributes.rhqChartHeight || 250,
                 timeLabel = attributes.rhqTimeLabel || "Time",
@@ -32,6 +39,7 @@ angular.module('chartingApp')
             console.dir(metricsData);
 
             // Define the Stacked Bar Graph function using the module pattern
+            // keeps the graph somewhat isolated from the directive
             var metricStackedBarGraph = function () {
                 // privates
                 var margin = {top: 10, right: 5, bottom: 5, left: 90},
@@ -172,10 +180,14 @@ angular.module('chartingApp')
 
                 }
 
+                function isNotDataBar() {
+                    return d.down || d.unknown || d.nodata;
+                }
+
                 function buildHover(d) {
                     var hover;
 
-                    if (d.down || d.unknown || d.nodata) {
+                    if (isNotDataBar()) {
                         // nodata
                         hover = "<strong>" + noDataLabel + "</strong>";
                     } else {
@@ -266,7 +278,7 @@ angular.module('chartingApp')
                             return timeScale(d.timeStamp);
                         })
                         .attr("y", function (d) {
-                            if (d.down || d.unknown || d.nodata) {
+                            if (isNotDataBar()) {
                                 return yScale(chartDataService.getHighBound());
                             }
                             else {
@@ -274,7 +286,7 @@ angular.module('chartingApp')
                             }
                         })
                         .attr("height", function (d) {
-                            if (d.down || d.unknown || d.nodata) {
+                            if (isNotDataBar()) {
                                 return height - yScale(chartDataService.getHighBound()) - pixelsOffHeight;
                             }
                             else {
@@ -287,7 +299,7 @@ angular.module('chartingApp')
 
                         .attr("opacity", ".9")
                         .attr("fill", function (d) {
-                            if (d.down || d.unknown || d.nodata) {
+                            if (isNotDataBar()) {
                                 return  "url(#noDataStripes)";
                             }
                             else {
@@ -312,7 +324,7 @@ angular.module('chartingApp')
                             return isNaN(d.high) ? yScale(chartDataService.getLowBound()) : yScale(d.high);
                         })
                         .attr("height", function (d) {
-                            if (d.down || d.unknown || d.nodata) {
+                            if (isNotDataBar()) {
                                 return 0;
                             }
                             else {
@@ -345,7 +357,7 @@ angular.module('chartingApp')
                             return isNaN(d.value) ? height : yScale(d.value);
                         })
                         .attr("height", function (d) {
-                            if (d.down || d.unknown || d.nodata) {
+                            if (isNotDataBar()) {
                                 return 0;
                             }
                             else {
@@ -374,7 +386,7 @@ angular.module('chartingApp')
                             return isNaN(d.value) ? height : yScale(d.value) - 2;
                         })
                         .attr("height", function (d) {
-                            if (d.down || d.unknown || d.nodata) {
+                            if (isNotDataBar()) {
                                 return 0;
                             }
                             else {
@@ -563,19 +575,13 @@ angular.module('chartingApp')
                             updateDateRangeDisplay(moment(s[0]), moment(s[1]));
                         }
                     }
-
                 }
-
 
                 return {
                     // Public API
                     draw: function () {
-                        // Guard condition that can occur when a portlet has not been configured yet
-                        if (metricsData.dataPoints.length > 0) {
-
                             determineScale();
                             createHeader(attributes.rhqChartTitle);
-
                             createYAxisGridLines();
                             createXAxisBrush();
                             createStackedBars();
@@ -586,7 +592,6 @@ angular.module('chartingApp')
                                 createOOBLines();
                             }
                             updateDateRangeDisplay(moment(metricsData.minTimeStamp), moment(metricsData.maxTimeStamp));
-                        }
                     }
                 }; // end public closure
             }();
