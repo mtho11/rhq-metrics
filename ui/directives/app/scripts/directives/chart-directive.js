@@ -50,7 +50,6 @@ angular.module('chartingApp')
                 brushGroup,
                 timeScaleForBrush,
                 chart,
-                defs,
                 context,
                 svg;
 
@@ -59,8 +58,8 @@ angular.module('chartingApp')
                 return;
             }
 
-            metricsData = angular.fromJson(attributes.rhqData),
-                console.log("Metrics Data -->");
+            metricsData = angular.fromJson(attributes.rhqData);
+            console.log("Metrics Data -->");
             console.dir(metricsData);
 
             function getChartWidth() {
@@ -69,7 +68,6 @@ angular.module('chartingApp')
             }
 
             function useSmallCharts() {
-                console.debug("getChartWidth: " + getChartWidth());
                 return  getChartWidth() <= smallChartThresholdInPixels;
             }
 
@@ -184,17 +182,18 @@ angular.module('chartingApp')
             }
 
             function buildHover(d) {
-                var hover;
+                var hover,
+                    formattedDateTime = moment(d.timeStamp).format(buttonBarDateTimeFormat);
 
                 if (isNotDataBar(d)) {
                     // nodata
-                    hover = "<strong>" + noDataLabel + "</strong>";
+                    hover = "<small>" + noDataLabel + "</small><hr/>" +
+                        '<div><small><span style="color: #d3d3d3;">Timestamp: </span>' + '<span>' + formattedDateTime + '</span>' + '</small></div>';
                 } else {
                     if (+d.high === +d.low) {
                         // raw single value from raw table
-                        var formattedDateTime = moment(d.timeStamp).format(buttonBarDateTimeFormat);
-                        hover = '<div><span style="color: #d3d3d3;">Timestamp: </span>' + '<span>' + formattedDateTime + '</span>' + '</div><hr/>' +
-                            '<div><span style="color: #d3d3d3;">' + singleValueLabel + '</span><span>: </span><span>' + d.value + '</span> </div> ';
+                        hover = '<div><small><span style="color: #d3d3d3;">Timestamp: </span>' + '<span>' + formattedDateTime + '</span>' + '</small></div><hr/>' +
+                            '<div><small><span style="color: #d3d3d3;">' + singleValueLabel + '</span><span>: </span><span>' + d.value + '</span></small> </div> ';
                     } else {
                         //@todo: finish aggregates once in C*
                         // aggregate with min/avg/max
@@ -280,9 +279,11 @@ angular.module('chartingApp')
                     })
                     .attr("y", function (d) {
                         if (isNotDataBar(d)) {
+                            console.warn("d -->" + chartDataService.getHighBound());
                             return yScale(chartDataService.getHighBound());
                         }
                         else {
+                            console.warn("d ***" + d.low);
                             return yScale(d.low);
                         }
                     })
@@ -432,6 +433,8 @@ angular.module('chartingApp')
             function createXandYAxes() {
                 var xAxisGroup;
 
+                svg.selectAll('g.axis').remove();
+
                 // xAxis.tickFormat(rhqCommon.getD3CustomTimeFormat(chartContext.chartXaxisTimeFormatHours, chartContext.chartXaxisTimeFormatHoursMinutes));
 
                 // create x-axis
@@ -490,48 +493,6 @@ angular.module('chartingApp')
 
             }
 
-            function createOOBLines() {
-                var unitsPercentMultiplier = attributes.rhqYaxisUnits === '%' ? 100 : 1,
-                    minBaselineLine = d3.svg.line()
-                        .interpolate("basis")
-                        .x(function (d) {
-                            return timeScale(d.timeStamp);
-                        })
-                        .y(function (d) {
-                            return yScale(d.baselineMin * unitsPercentMultiplier);
-                        }),
-                    maxBaselineLine = d3.svg.line()
-                        .interpolate("basis")
-                        .x(function (d) {
-                            return timeScale(d.timeStamp);
-                        })
-                        .y(function (d) {
-                            return yScale(d.baselineMax * unitsPercentMultiplier);
-                        });
-
-                // min baseline Line
-                svg.append("path")
-                    .datum(chartData)
-                    .attr("class", "minBaselineLine")
-                    .attr("fill", "none")
-                    .attr("stroke", "purple")
-                    .attr("stroke-width", "1")
-                    .attr("stroke-dasharray", "20,10,5,5,5,10")
-                    .attr("stroke-opacity", ".9")
-                    .attr("d", minBaselineLine);
-
-                // max baseline Line
-                svg.append("path")
-                    .datum(chartData)
-                    .attr("class", "maxBaselineLine")
-                    .attr("fill", "none")
-                    .attr("stroke", "orange")
-                    .attr("stroke-width", "1")
-                    .attr("stroke-dasharray", "20,10,5,5,5,10")
-                    .attr("stroke-opacity", ".7")
-                    .attr("d", maxBaselineLine);
-
-            }
 
             function updateDateRangeDisplay(startDate, endDate) {
                 var formattedDateRange = startDate.format(buttonBarDateTimeFormat) + '  -  ' + endDate.format(buttonBarDateTimeFormat);
@@ -572,7 +533,7 @@ angular.module('chartingApp')
                     svg.classed("selecting", !d3.event.target.empty());
                     // ignore selections less than 1 minute
                     if (endTime - startTime >= 60000) {
-                        console.info("Refresh Graph with new Range");
+                        console.debug("Refresh Graph with new Range");
                         updateDateRangeDisplay(moment(s[0]), moment(s[1]));
                     }
                 }
@@ -585,11 +546,7 @@ angular.module('chartingApp')
             createXAxisBrush();
             createStackedBars();
             createXandYAxes();
-            //createAvgLines();
-//                        if (oobMax > 0) {
-//                            console.debug("OOB Data Exists!");
-//                            createOOBLines();
-//                        }
+            createAvgLines();
             updateDateRangeDisplay(moment(metricsData.startTimeStamp), moment(metricsData.endTimeStamp));
 
 

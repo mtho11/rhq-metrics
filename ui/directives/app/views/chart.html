@@ -14,8 +14,10 @@
         <div class="well-sm">
             <small><strong>Time Range:</strong></small>
             <small style="margin-left: 15px" class="graphDateTimeRangeLabel"></small>
+            <button type="button" style="margin-left: 40px" class="btn btn-default btn-xs"
+                    ng-click="refreshChartData()">Refresh
+            </button>
         </div>
-        <button type="button" class="btn btn-default btn-xs" ng-click="refreshChartData()">Refresh</button>
 
         <!--<div>{{chartData|json}}</div>-->
         <div style="height:270px" metrics-stacked-bar-chart
