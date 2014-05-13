@@ -151,9 +151,7 @@ angular.module('chartingApp')
                         // create the actual chart group
                         chart = d3.select(element[0]).append("svg");
 
-                        defs = chart.append("defs");
-                        createSvgDefs(defs);
-
+                        createSvgDefs(chart);
 
                         tip = d3.tip()
                             .attr('class', 'd3-tip')
@@ -171,7 +169,7 @@ angular.module('chartingApp')
                         context = svg.append("g")
                             .attr("class", "context")
                             .attr("width", width + margin.left + margin.right)
-                            .attr("height", 210)
+                            .attr("height", chartHeight)
                             .attr("transform", "translate(" + margin2.left + "," + (+titleHeight + titleSpace + margin.top + 90) + ")");
 
 
@@ -229,7 +227,9 @@ angular.module('chartingApp')
 
                 }
 
-                function createSvgDefs(defs) {
+                function createSvgDefs(chart) {
+
+                    var defs = chart.append("defs");
 
                     defs.append("pattern")
                         .attr("id", "noDataStripes")
