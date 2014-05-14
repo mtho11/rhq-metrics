@@ -17,6 +17,14 @@
             <button type="button" style="margin-left: 40px" class="btn btn-default btn-xs"
                     ng-click="refreshChartData()">Refresh
             </button>
+
+
+            <form role="form">
+                <div class="form-group">
+                    <label for="searchIdText">ID</label>
+                    <input type="text" ng-model="searchId" class="form-control" id="searchIdText"
+                           placeholder="Enter ID">
+                </div>
         </div>
 
         <!--<div>{{chartData|json}}</div>-->

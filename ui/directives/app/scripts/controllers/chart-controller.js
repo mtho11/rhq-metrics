@@ -3,16 +3,26 @@
 angular.module('chartingApp')
     .controller('ChartController', function ($scope, $http) {
         $scope.title = {name: "Raw Metrics Chart"};
+        $scope.searchId = "100";
+        $scope.endTimeStamp = moment();
+        $scope.startTimeStamp = moment().subtract('hours', 8); //default time period set to 8 hours
 
         $scope.refreshChartData = function () {
 
-            console.log("Retrieving metrics data for  ");
+            console.log("Retrieving metrics data for id: " + $scope.searchId);
+            console.log("Date Range: " + $scope.startTimeStamp.format() + " - " + $scope.endTimeStamp.format());
 
-
-            $http.get('/rhq-metrics/100/data?start=1398891827116').success(function (response) {
+            $http.get('/rhq-metrics/' + $scope.searchId + '/data',
+                {
+                    params: {
+                        start: $scope.startTimeStamp.unix(),
+                        end: $scope.endTimeStamp.unix()
+                    }
+                }
+            ).success(function (response) {
                 console.dir("--> " + response);
 
-                var newDataPoints = $.map(response.dataPoints, function (point) {
+                    var newDataPoints = $.map(response.data, function (point) {
                     return {
                         "timeStamp": point.timeStamp,
                         "high": point.value === 'NaN' ? 0 : point.high,
@@ -21,7 +31,7 @@ angular.module('chartingApp')
                         "nodata": point.value === 'NaN'
                     };
                 });
-                console.info("# New DataPoints: " + newDataPoints.length);
+                    console.info("# Transformed DataPoints: " + newDataPoints.length);
                 console.dir(newDataPoints);
 
                 $scope.chartData = {
@@ -39,10 +49,8 @@ angular.module('chartingApp')
                     "oobLow": 0,
                     "dataPoints": newDataPoints
                 };
-            }).error(function (data) {
-                console.error("Error -->" + data);
-
             });
+
         };
 
     });
