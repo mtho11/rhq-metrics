@@ -22,8 +22,8 @@ angular.module('chartingApp')
             $http.get('/rhq-metrics/' + $scope.restParams.searchId + '/data',
                 {
                     params: {
-                        start: moment($scope.restParams.startTimeStamp).unix(),
-                        end: moment($scope.restParams.endTimeStamp).unix()
+                        start: moment($scope.restParams.startTimeStamp).valueOf(),
+                        end: moment($scope.restParams.endTimeStamp).valueOf()
                     }
                 }
             ).success(function (response) {

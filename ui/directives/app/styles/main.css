@@ -59,6 +59,10 @@ body {
   margin-top: 28px;
 }
 
+.standard-width {
+    width: 880px;
+}
+
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   /* Remove the padding we set earlier */
