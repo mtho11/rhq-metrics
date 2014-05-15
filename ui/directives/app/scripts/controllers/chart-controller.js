@@ -1,24 +1,29 @@
 'use strict';
 
+
+/**
+ * @ngdoc controller
+ * @name ChartController
+ * @param {expression} chartController
+ */
 angular.module('chartingApp')
     .controller('ChartController', function ($scope, $http) {
-        $scope.title = {name: "Raw Metrics Chart"};
         $scope.restParams = {
             searchId: "100",
-            endTimeStamp: moment(),
-            startTimeStamp: moment().subtract('hours', 8) //default time period set to 8 hours
+            endTimeStamp: new Date(),
+            startTimeStamp: moment().subtract('hours', 8).toDate() //default time period set to 8 hours
         }
 
         $scope.refreshChartData = function () {
 
             console.log("Retrieving metrics data for id: " + $scope.restParams.searchId);
-            console.log("Date Range: " + $scope.restParams.startTimeStamp.format() + " - " + $scope.restParams.endTimeStamp.format());
+            console.log("Date Range: " + $scope.restParams.startTimeStamp + " - " + $scope.restParams.endTimeStamp);
 
             $http.get('/rhq-metrics/' + $scope.restParams.searchId + '/data',
                 {
                     params: {
-                        start: $scope.restParams.startTimeStamp.unix(),
-                        end: $scope.restParams.endTimeStamp.unix()
+                        start: moment($scope.restParams.startTimeStamp).unix(),
+                        end: moment($scope.restParams.endTimeStamp).unix()
                     }
                 }
             ).success(function (response) {

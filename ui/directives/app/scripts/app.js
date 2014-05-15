@@ -1,3 +1,3 @@
 'use strict';
 
-angular.module('chartingApp', [ 'ui.bootstrap.datetimepicker']);
+angular.module('chartingApp', [ 'ui.bootstrap', 'ui.bootstrap.datetimepicker']);
