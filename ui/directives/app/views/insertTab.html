@@ -1,0 +1,145 @@
+<div class="panel panel-default" style="width:880px" ng-controller="InsertMetricsController">
+    <div class="panel-heading">
+        <h3 class="panel-title">Insert Raw Metrics</h3>
+    </div>
+
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="input-group">
+                <input type="text" class="form-control">
+
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Timestamp
+                        <span class="caret"></span></button>
+                    <ul class="dropdown-menu pull-right">
+                        <li><a href="#">Now!</a></li>
+                        <li><a href="#">1 Hour Ago</a></li>
+                        <li><a href="#">8 Hours Ago</a></li>
+                        <li><a href="#">1 Week Ago</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                    </ul>
+                </div>
+                <!-- /btn-group -->
+            </div>
+            <!-- /input-group -->
+        </div>
+        <!-- /.col-lg-6 -->
+    </div>
+    <!-- /.row -->
+
+
+    <div class="panel-body">
+        <div class="well">
+
+            <accordion>
+                <accordion-group heading="Quick Insert">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label for="quickInsertIdText" class="col-sm-1 control-label">ID</label>
+
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" id="quickInsertIdText"
+                                       ng-model="quickInsert.timeStamp"
+                                       placeholder="Enter Id...">
+                                <span class="help-block">Example: 100, CPU1, FOO </span>
+                            </div>
+
+                            <label for="quickInsertValueText" class="col-sm-1 control-label">Value</label>
+
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" id="quickInsertValueText"
+                                       ng-model="quickInsert.id"
+                                       placeholder="Enter Value...">
+                                <span class="help-block">Example: 100, 5.25, 5000  </span>
+                            </div>
+
+                            <!--<div class="form-group">-->
+                            <!--<label for="quickInsertTimeStampText" class="col-sm-2 control-label">Timestamp</label>-->
+
+                            <!--<div class="col-sm-5">-->
+                            <!--<input type="text" class="form-control" id="quickInsertTimeStampText" ng-model="quickInsert.id"-->
+                            <!--placeholder="Enter Timestamp in ms  Here...">-->
+                            <!--<span class="help-block">Example:  </span>-->
+                            <!--</div>-->
+                            <!--</div>-->
+
+
+                            <div class="col-sm-3">
+                                <div class="btn-group" dropdown>
+                                    <button type="button" class="btn btn-primary">Insert Data</button>
+                                    <button type="button" class="btn btn-primary dropdown-toggle">
+                                        <span class="caret"></span>
+                                        <span class="sr-only">Insert Data</span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="#">1 Hour Ago</a></li>
+                                        <li><a href="#">8 Hours Ago</a></li>
+                                        <li><a href="#">24 Hours Ago</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Separated link</a></li>
+                                    </ul>
+                                </div>
+                                <span class="help-block">Default is Now</span>
+                            </div>
+
+
+                            <!--<div class="col-sm-offset-2 col-sm-10">-->
+                            <!--<button type="button" ng-click="quickInsert()" class="btn btn-primary">Insert Data-->
+                            <!--</button>-->
+                            <!--</div>-->
+                        </div>
+
+                    </form>
+                </accordion-group>
+
+
+                <accordion-group heading="Raw Json Insert (multiple)" is-open="showOpenGroup">
+
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label for="insertId" class="col-sm-2 control-label">ID</label>
+
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" id="insertId" ng-model="insertData.id"
+                                       placeholder="Enter Id...">
+                                <span class="help-block">Example: 100, apache3.cpu  </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="jsonText" class="col-sm-2 control-label">Raw Json</label>
+
+                            <div class="col-sm-10">
+
+                                <!--class="form-control" placeholder="Enter Raw Json Here... "/><input type="text" id="jsonText" ng-model="insertData.jsonPayload"-->
+                                <textarea id="jsonText" ng-model="insertData.jsonPayload" rows="6"
+                                          class="form-control" placeholder="Enter Json here..."
+                                        >[{'value': 33, 'timestamp':1400178146614}, {'value': 40,
+                                    'timestamp':1400178149615}]</textarea>
+                                <span class="help-block">Example:  [{'value': 33, 'timestamp':1400178146614}, {'value': 40, 'timestamp':1400178149615}] </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="button" ng-click="insertData()" class="btn btn-primary">Insert Data
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
+                </accordion-group>
+
+
+                <accordion-group heading="Advanced Insert">
+                    Advanced Insert
+                </accordion-group>
+
+            </accordion>
+
+
+        </div>
+    </div>
+</div>

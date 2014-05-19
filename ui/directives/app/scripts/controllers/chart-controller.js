@@ -19,7 +19,7 @@ angular.module('chartingApp')
             console.log("Retrieving metrics data for id: " + $scope.restParams.searchId);
             console.log("Date Range: " + $scope.restParams.startTimeStamp + " - " + $scope.restParams.endTimeStamp);
 
-            $http.get('/rhq-metrics/' + $scope.restParams.searchId + '/data',
+            $http.get('/rhq-metrics/' + $scope.restParams.searchId,
                 {
                     params: {
                         start: moment($scope.restParams.startTimeStamp).valueOf(),

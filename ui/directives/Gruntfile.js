@@ -68,8 +68,8 @@ module.exports = function (grunt) {
         proxies: [
             {
                 context: '/rhq-metrics',
-                host: '127.0.0.1',
-                port: 7474,
+                host: 'localhost',
+                port: 8080,
                 https: false,
                 changeOrigin: false
             }
