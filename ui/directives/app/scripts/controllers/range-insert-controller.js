@@ -7,7 +7,7 @@
  * @param {expression} insertMetricsController
  */
 angular.module('chartingApp')
-    .controller('InsertMetricsController', function ($scope, $http) {
+    .controller('RangeInsertController', function ($scope, $http) {
 
         $scope.showOpenGroup = true;
         $scope.insertData = {
@@ -15,7 +15,7 @@ angular.module('chartingApp')
             jsonPayload: ""
         };
 
-        $scope.quickInsert = {
+        $scope.rangeInsert = {
             timeStamp: moment().valueOf(),
             id: "CPU1",
             jsonPayload: ""
@@ -39,18 +39,13 @@ angular.module('chartingApp')
                     console.debug("POST response: " + status + " --> " + response);
 
                 });
-        }
-
-        $scope.quickInsert = function () {
-
-
-        }
+        };
 
 
 //        $scope.insertData = function () {
 //
 //            console.log("POSTing data");
-//            $http.post('http://localhost:8080/rhq-metrics/' + $scope.insertData.id + '/data', $scope.insertData.jsonPayload
+//            $http.post('http://localhost:7474/rhq-metrics/' + $scope.insertData.id + '/data', $scope.insertData.jsonPayload
 //            ).success(function (response, status) {
 //
 //                    console.debug("POST response: " + status + " --> " + response);

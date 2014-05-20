@@ -1,8 +1,4 @@
 <!doctype html>
-<!--[if lt IE 7]>
-<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>
-<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>
 <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
@@ -29,7 +25,7 @@
 <body ng-app="chartingApp">
 
 <!-- Add your site or application content here -->
-<div class="container" ng-include="'views/chart.html'"></div>
+<div class="container" ng-include="'views/metrics.html'"></div>
 
 <!--[if lt IE 9]>
 <script src="bower_components/es5-shim/es5-shim.js"></script>
@@ -54,6 +50,8 @@
 <script src="scripts/directives/chart-directive.js"></script>
 <script src="scripts/controllers/chart-controller.js"></script>
 <script src="scripts/controllers/insert-metrics-controller.js"></script>
+<script src="scripts/controllers/streaming-controller.js"></script>
+<script src="scripts/controllers/range-insert-controller.js"></script>
 <script src="scripts/services/chart-data-service.js"></script>
 <!-- endbuild -->
 </body>

@@ -54,7 +54,7 @@ angular.module('chartingApp')
                 svg;
 
             if (attributes.rhqData === "") {
-                console.warn("No Data")
+                console.warn("No Data");
                 return;
             }
 

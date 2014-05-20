@@ -4,30 +4,30 @@
     </div>
 
 
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="input-group">
-                <input type="text" class="form-control">
+    <!--<div class="row">-->
+    <!--<div class="col-sm-6">-->
+    <!--<div class="input-group">-->
+    <!--<input type="text" class="form-control">-->
 
-                <div class="input-group-btn">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Timestamp
-                        <span class="caret"></span></button>
-                    <ul class="dropdown-menu pull-right">
-                        <li><a href="#">Now!</a></li>
-                        <li><a href="#">1 Hour Ago</a></li>
-                        <li><a href="#">8 Hours Ago</a></li>
-                        <li><a href="#">1 Week Ago</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                    </ul>
-                </div>
-                <!-- /btn-group -->
-            </div>
-            <!-- /input-group -->
-        </div>
-        <!-- /.col-lg-6 -->
-    </div>
-    <!-- /.row -->
+    <!--<div class="input-group-btn">-->
+    <!--<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Timestamp-->
+    <!--<span class="caret"></span></button>-->
+    <!--<ul class="dropdown-menu pull-right">-->
+    <!--<li><a href="#">Now!</a></li>-->
+    <!--<li><a href="#">1 Hour Ago</a></li>-->
+    <!--<li><a href="#">8 Hours Ago</a></li>-->
+    <!--<li><a href="#">1 Week Ago</a></li>-->
+    <!--<li class="divider"></li>-->
+    <!--<li><a href="#">Separated link</a></li>-->
+    <!--</ul>-->
+    <!--</div>-->
+    <!--&lt;!&ndash; /btn-group &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; /input-group &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; /.col-lg-6 &ndash;&gt;-->
+    <!--</div>-->
+    <!--&lt;!&ndash; /.row &ndash;&gt;-->
 
 
     <div class="panel-body">
@@ -133,8 +133,58 @@
                 </accordion-group>
 
 
-                <accordion-group heading="Advanced Insert">
-                    Advanced Insert
+                <accordion-group heading="Advanced Range Insert">
+                Advanced Insert
+                </accordion-group>
+
+
+                <accordion-group heading="Create Streaming Metrics" ng-controller="RangeInsertController">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label for="rangeInsertId" class="col-sm-2 control-label">ID</label>
+
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="rangeInsertId" ng-model="rangeInsert.id"
+                                       placeholder="Enter Id...">
+                                <span class="help-block">Example: 100, apache3.cpu  </span>
+                            </div>
+                        </div>
+
+                        <h5>Random Values </h5>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">From </label>
+
+                            <div class="col-sm-2">
+                                <input type="number" min="0" max="100" step="5" class="form-control">
+                            </div>
+
+                            <label class="col-sm-1 control-label">To</label>
+
+                            <div class="col-sm-2">
+                                <input type="number" min="10" max="1000" step="25" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-1">
+                                <button type="button" ng-click="start()" class="btn btn-success">Start</button>
+                            </div>
+                            <div class="col-sm-1">
+                                <button type="button" ng-click="stop()" class="btn btn-danger">Stop</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="rangeInsertId" class="col-sm-3 control-label">Streamed Count:</label>
+
+                            <!-- Maybe hover over this to get tooltip of last value produced -->
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" disabled ng-model="rangeInsert.id">
+                            </div>
+                        </div>
+
+                    </form>
                 </accordion-group>
 
             </accordion>
