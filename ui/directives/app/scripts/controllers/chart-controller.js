@@ -52,12 +52,14 @@ angular.module('chartingApp')
             startTimeStamp: moment().subtract('hours', 8).toDate() //default time period set to 8 hours
         }
 
+
         $scope.refreshChartData = function () {
 
             console.log("Retrieving metrics data for id: " + $scope.restParams.searchId);
             console.log("Date Range: " + $scope.restParams.startTimeStamp + " - " + $scope.restParams.endTimeStamp);
 
-            $http.get('/rhq-metrics/' + $scope.restParams.searchId,
+            //$http.get('/rhq-metrics/' + $scope.restParams.searchId,
+            $http.get('/api/chart-data-rest-servlet.json',
                 {
                     params: {
                         start: moment($scope.restParams.startTimeStamp).valueOf(),
@@ -67,19 +69,18 @@ angular.module('chartingApp')
             ).success(function (response) {
                     console.dir("--> " + response);
 
-                    var newDataPoints = $.map(response.data, function (point) {
+                    var newDataPoints = $.map(response.dataPoints, function (point) {
                         return {
                             "timeStamp": point.timeStamp,
-                            "high": point.value === 'NaN' ? 0 : point.high,
-                            "low": point.value === 'NaN' ? 0 : point.low,
-                            "value": point.value === 'NaN' ? 0 : point.value,
-                            "nodata": point.value === 'NaN'
+                            "avg": point.avg === 'NaN' ? 0 : point.avg
                         };
                     });
                     console.info("# Transformed DataPoints: " + newDataPoints.length);
                     console.dir(newDataPoints);
 
+                    // this is basically the DTO for the screen
                     $scope.chartData = {
+                        "id": $scope.restParams.id,
                         "min": response.min,
                         "max": response.max,
                         "avg": response.avg,
@@ -87,11 +88,6 @@ angular.module('chartingApp')
                         "startTimeStamp": response.startTimeStamp,
                         "endTimeStamp": response.endTimeStamp,
                         "barDuration": 0,
-                        "baselineMin": 0,
-                        "baselineMax": 0,
-                        "baseline": 0,
-                        "oobHigh": 0,
-                        "oobLow": 0,
                         "dataPoints": newDataPoints
                     };
                 });
