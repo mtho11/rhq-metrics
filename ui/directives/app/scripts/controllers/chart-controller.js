@@ -8,6 +8,44 @@
  */
 angular.module('chartingApp')
     .controller('ChartController', function ($scope, $http) {
+
+        $scope.text = "Angular Rickshaw stuff";
+        $scope.title = "Angular Rickshaw";
+        $scope.inputColor = "steelblue";
+        $scope.graphcolor = "steelblue";
+        $scope.inputHeight = 100;
+        $scope.graphheight = 100;
+        $scope.inputWidth = 200;
+        $scope.graphwidth = 200;
+        $scope.graphdata = [
+            {x: 0, y: 0}
+        ];
+        $scope.graphIndex = 1;
+        $scope.inputData = 0;
+        $scope.changeColor = function () {
+            if (($scope.inputColor != null) && ($scope.inputColor !== "")) {
+                $scope.graphcolor = $scope.inputColor;
+            }
+        };
+        $scope.addData = function () {
+            if (($scope.inputData != null) && ($scope.inputData !== "")) {
+                $scope.graphdata.push({x: $scope.graphIndex, y: parseInt($scope.inputData, 10)});
+                $scope.graphIndex++;
+            }
+        };
+        $scope.changeHeight = function () {
+            if (($scope.inputHeight != null) && ($scope.inputHeight !== "")) {
+                $scope.graphheight = parseInt($scope.inputHeight, 10);
+            }
+        };
+        $scope.changeWidth = function () {
+            if (($scope.inputWidth != null) && ($scope.inputWidth !== "")) {
+                $scope.graphwidth = parseInt($scope.inputWidth, 10);
+            }
+        };
+
+
+
         $scope.restParams = {
             searchId: "100",
             endTimeStamp: new Date(),
