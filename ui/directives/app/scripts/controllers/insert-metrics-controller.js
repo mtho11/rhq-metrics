@@ -9,6 +9,8 @@
 angular.module('chartingApp')
     .controller('InsertMetricsController', function ($scope, $http) {
 
+        $scope.timeIntervalInMinutes = [1, 5, 10, 15, 30, 60];
+        $scope.selectedTimeInterval = 5;
         $scope.showOpenGroup = true;
         $scope.insertData = {
             id: "",
@@ -17,7 +19,7 @@ angular.module('chartingApp')
 
         $scope.quickInsert = {
             timeStamp: moment().valueOf(),
-            id: "CPU1",
+            id: "",
             jsonPayload: ""
         };
 
