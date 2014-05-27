@@ -41,7 +41,7 @@
 
             <div class="col-sm-2">
                 <input type="text" class="form-control" id="quickInsertIdText"
-                       ng-model="quickInsert.timeStamp"
+                       ng-model="quickInsertData.timeStamp"
                        placeholder="Enter Id...">
                 <span class="help-block">Example: 100, CPU1, FOO </span>
             </div>
@@ -50,7 +50,7 @@
 
             <div class="col-sm-3">
                 <input type="text" class="form-control" id="quickInsertValueText"
-                       ng-model="quickInsert.id"
+                       ng-model="quickInsertData.id"
                        placeholder="Enter Value...">
                 <span class="help-block">Example: 100, 5.25, 5000  </span>
             </div>
@@ -68,18 +68,18 @@
 
             <div class="col-sm-3">
                 <div class="btn-group" dropdown>
-                    <button type="button" class="btn btn-primary">Insert Data</button>
-                    <button type="button" class="btn btn-primary dropdown-toggle">
-                        <span class="caret"></span>
-                        <span class="sr-only">Insert Data</span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">1 Hour Ago</a></li>
-                        <li><a href="#">8 Hours Ago</a></li>
-                        <li><a href="#">24 Hours Ago</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                    </ul>
+                    <button type="button" class="btn btn-primary" ng-click="quickInsert()">Insert Data</button>
+                    <!--<button type="button" class="btn btn-primary dropdown-toggle">-->
+                        <!--<span class="caret"></span>-->
+                        <!--<span class="sr-only">Insert Data</span>-->
+                    <!--</button>-->
+                    <!--<ul class="dropdown-menu" role="menu">-->
+                        <!--<li><a href="#">1 Hour Ago</a></li>-->
+                        <!--<li><a href="#">8 Hours Ago</a></li>-->
+                        <!--<li><a href="#">24 Hours Ago</a></li>-->
+                        <!--<li class="divider"></li>-->
+                        <!--<li><a href="#">Separated link</a></li>-->
+                    <!--</ul>-->
                 </div>
                 <span class="help-block">Default is Now</span>
             </div>
@@ -101,7 +101,7 @@
             <label for="insertId" class="col-sm-2 control-label">ID</label>
 
             <div class="col-sm-5">
-                <input type="text" class="form-control" id="insertId" ng-model="insertData.id"
+                <input type="text" class="form-control" id="insertId" ng-model="multiInsertData.id"
                        placeholder="Enter Id...">
                 <span class="help-block">Example: 100, apache3.cpu  </span>
             </div>
@@ -113,7 +113,7 @@
             <div class="col-sm-10">
 
                 <!--class="form-control" placeholder="Enter Raw Json Here... "/><input type="text" id="jsonText" ng-model="insertData.jsonPayload"-->
-                <textarea id="jsonText" ng-model="insertData.jsonPayload" rows="6"
+                <textarea id="jsonText" ng-model="multiInsertData.jsonPayload" rows="6"
                           class="form-control" placeholder="Enter Json here..."
                         >[{'value': 33, 'timestamp':1400178146614}, {'value': 40,
                     'timestamp':1400178149615}]</textarea>
@@ -123,7 +123,7 @@
 
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="button" ng-click="insertData()" class="btn btn-primary">Insert Data
+                <button type="button" ng-click="multiInsert()" class="btn btn-primary">Insert Data
                 </button>
             </div>
         </div>

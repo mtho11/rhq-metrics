@@ -12,52 +12,46 @@ angular.module('chartingApp')
         $scope.timeIntervalInMinutes = [1, 5, 10, 15, 30, 60];
         $scope.selectedTimeInterval = 5;
         $scope.showOpenGroup = true;
-        $scope.insertData = {
+        $scope.multiInsertData = {
             id: "",
             jsonPayload: ""
         };
 
-        $scope.quickInsert = {
+        $scope.quickInsertData = {
             timeStamp: moment().valueOf(),
             id: "",
             jsonPayload: ""
         };
 
-        $scope.insertData = function () {
+        $scope.multiInsert = function () {
 
-            console.log("POSTing data");
+            console.log("multi insert for: "+$scope.multiInsertData.id);
+            console.info("payload: "+$scope.multiInsertData.jsonPayload);
             $http({
-                    url: 'http://localhost:8080/rhq-metrics/' + $scope.insertData.id + '/data',
+                    url: 'http://localhost:8080/rhq-metrics/metrics/' + $scope.multiInsertData.id,
                     method: 'POST',
-                    data: $scope.insertData.jsonPayload,
+                    data: $scope.multiInsertData.jsonPayload,
                     headers: {
                         'Access-Control-Allow-Headers': 'Content-Type, Content-Length, x-xsrf-token',
                         'Access-Control-Allow-Origin': '*',
                         'Content-Type': 'application/json',
-                        'Content-Length': $scope.insertData.jsonPayload}
+                        'Content-Length': $scope.multiInsertData.jsonPayload.length}
                 }
             ).success(function (response, status) {
-
                     console.debug("POST response: " + status + " --> " + response);
+                }).error(function (response, status) {
+                    console.error("Error: " + status + " --> " + response);
+                });
+        };
 
+        $scope.quickInsert = function () {
+            console.info("quick insert for id: "+$scope.quickInsertData.id);
+            console.info("payload: "+$scope.quickInsertData.jsonPayload);
+            $http.post('http://localhost:8080/rhq-metrics/metrics/' + $scope.quickInsertData.id , $scope.quickInsertData.jsonPayload
+            ).success(function (response, status) {
+                    console.debug("POST response: " + status + " --> " + response);
                 });
         }
 
-        $scope.quickInsert = function () {
-
-
-        }
-
-
-//        $scope.insertData = function () {
-//
-//            console.log("POSTing data");
-//            $http.post('http://localhost:8080/rhq-metrics/' + $scope.insertData.id + '/data', $scope.insertData.jsonPayload
-//            ).success(function (response, status) {
-//
-//                    console.debug("POST response: " + status + " --> " + response);
-//
-//                });
-//        }
 
     });
