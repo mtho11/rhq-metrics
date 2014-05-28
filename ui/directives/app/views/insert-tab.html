@@ -35,7 +35,7 @@
 
 <accordion>
 <accordion-group heading="Quick Insert">
-    <form class="form-horizontal" role="form">
+    <form class="form-horizontal" role="form" style="height:135px;">
         <div class="form-group">
             <label for="quickInsertIdText" class="col-sm-1 control-label">ID</label>
 
@@ -55,40 +55,25 @@
                 <span class="help-block">Example: 100, 5.25, 5000  </span>
             </div>
 
-            <!--<div class="form-group">-->
-            <!--<label for="quickInsertTimeStampText" class="col-sm-2 control-label">Timestamp</label>-->
-
-            <!--<div class="col-sm-5">-->
-            <!--<input type="text" class="form-control" id="quickInsertTimeStampText" ng-model="quickInsert.id"-->
-            <!--placeholder="Enter Timestamp in ms  Here...">-->
-            <!--<span class="help-block">Example:  </span>-->
-            <!--</div>-->
-            <!--</div>-->
 
 
             <div class="col-sm-3">
                 <div class="btn-group" dropdown>
                     <button type="button" class="btn btn-primary" ng-click="quickInsert()">Insert Data</button>
-                    <!--<button type="button" class="btn btn-primary dropdown-toggle">-->
-                        <!--<span class="caret"></span>-->
-                        <!--<span class="sr-only">Insert Data</span>-->
-                    <!--</button>-->
-                    <!--<ul class="dropdown-menu" role="menu">-->
-                        <!--<li><a href="#">1 Hour Ago</a></li>-->
-                        <!--<li><a href="#">8 Hours Ago</a></li>-->
-                        <!--<li><a href="#">24 Hours Ago</a></li>-->
-                        <!--<li class="divider"></li>-->
-                        <!--<li><a href="#">Separated link</a></li>-->
-                    <!--</ul>-->
+                    <button type="button" class="btn btn-primary dropdown-toggle">
+                        <span class="caret"></span>
+                        <span class="sr-only">Insert Data</span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#" ng-click="quickInsert(1)">1 Hour Ago</a></li>
+                        <li><a href="#"ng-click="quickInsert(4)">4 Hours Ago</a></li>
+                        <li><a href="#" ng-click="quickInsert(8)">8 Hours Ago</a></li>
+                    </ul>
                 </div>
                 <span class="help-block">Default is Now</span>
             </div>
 
 
-            <!--<div class="col-sm-offset-2 col-sm-10">-->
-            <!--<button type="button" ng-click="quickInsert()" class="btn btn-primary">Insert Data-->
-            <!--</button>-->
-            <!--</div>-->
         </div>
 
     </form>

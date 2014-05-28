@@ -45,8 +45,18 @@ angular.module('chartingApp')
                 });
         };
 
-        $scope.quickInsert = function () {
-            $scope.quickInsertData.jsonPayload = { timestamp: moment().valueOf(), value: $scope.quickInsertData.value };
+        $scope.quickInsert = function (numberOfHoursPast) {
+            var multiplier, computedTimestamp;
+
+            if(typeof numberOfHoursPast === 'undedfined'){
+               multiplier = 1;
+            }else {
+                multiplier = numberOfHoursPast;
+            }
+            computedTimestamp = moment().subtract('hours', multiplier);
+            console.log("Generated Timestamp is: "+ computedTimestamp.fromNow());
+
+            $scope.quickInsertData.jsonPayload = { timestamp: computedTimestamp.valueOf(), value: $scope.quickInsertData.value };
             console.info("quick insert for id: "+$scope.quickInsertData.id);
             console.info("payload: "+$scope.quickInsertData.jsonPayload);
             $http.post('http://localhost:8080/rhq-metrics/metrics/' + $scope.quickInsertData.id , $scope.quickInsertData.jsonPayload
