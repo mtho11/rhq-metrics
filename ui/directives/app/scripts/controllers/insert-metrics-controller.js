@@ -20,7 +20,8 @@ angular.module('chartingApp')
         $scope.quickInsertData = {
             timeStamp: moment().valueOf(),
             id: "",
-            jsonPayload: ""
+            jsonPayload: "",
+            value: ""
         };
 
         $scope.multiInsert = function () {
@@ -45,11 +46,13 @@ angular.module('chartingApp')
         };
 
         $scope.quickInsert = function () {
+            $scope.quickInsertData.jsonPayload = { timestamp: moment().valueOf(), value: $scope.quickInsertData.value };
             console.info("quick insert for id: "+$scope.quickInsertData.id);
             console.info("payload: "+$scope.quickInsertData.jsonPayload);
             $http.post('http://localhost:8080/rhq-metrics/metrics/' + $scope.quickInsertData.id , $scope.quickInsertData.jsonPayload
             ).success(function (response, status) {
                     console.debug("POST response: " + status + " --> " + response);
+                    $scope.quickInsertData.value = "";
                 });
         }
 
