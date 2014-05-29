@@ -26,8 +26,8 @@ angular.module('chartingApp')
 
         $scope.multiInsert = function () {
 
-            console.log("multi insert for: "+$scope.multiInsertData.id);
-            console.info("payload: "+$scope.multiInsertData.jsonPayload);
+            console.log("multi insert for: " + $scope.multiInsertData.id);
+            console.info("payload: " + $scope.multiInsertData.jsonPayload);
             $http({
                     url: 'http://localhost:8080/rhq-metrics/metrics/' + $scope.multiInsertData.id,
                     method: 'POST',
@@ -40,29 +40,35 @@ angular.module('chartingApp')
                 }
             ).success(function (response, status) {
                     console.debug("POST response: " + status + " --> " + response);
+                    toastr.success('Inserted value: ' + $scope.quickInsertData.value, 'Success')
                 }).error(function (response, status) {
                     console.error("Error: " + status + " --> " + response);
+                    toastr.error('An issue with inserting data has occurred. Please see the console logs. Status: ' + status);
                 });
         };
 
         $scope.quickInsert = function (numberOfHoursPast) {
             var multiplier, computedTimestamp;
 
-            if(typeof numberOfHoursPast === 'undedfined'){
-               multiplier = 1;
-            }else {
+            if (typeof numberOfHoursPast === 'undefined') {
+                multiplier = 1;
+            } else {
                 multiplier = numberOfHoursPast;
             }
             computedTimestamp = moment().subtract('hours', multiplier);
-            console.log("Generated Timestamp is: "+ computedTimestamp.fromNow());
+            console.log("Generated Timestamp is: " + computedTimestamp.fromNow());
 
             $scope.quickInsertData.jsonPayload = { timestamp: computedTimestamp.valueOf(), value: $scope.quickInsertData.value };
-            console.info("quick insert for id: "+$scope.quickInsertData.id);
-            console.info("payload: "+$scope.quickInsertData.jsonPayload);
-            $http.post('http://localhost:8080/rhq-metrics/metrics/' + $scope.quickInsertData.id , $scope.quickInsertData.jsonPayload
+            console.info("quick insert for id: " + $scope.quickInsertData.id);
+            console.info("payload: " + $scope.quickInsertData.jsonPayload);
+            $http.post('http://localhost:8080/rhq-metrics/metrics/' + $scope.quickInsertData.id, $scope.quickInsertData.jsonPayload
             ).success(function (response, status) {
                     console.debug("POST response: " + status + " --> " + response);
+                    toastr.success('Inserted value: ' + $scope.quickInsertData.value, 'Success')
                     $scope.quickInsertData.value = "";
+                }).error(function (response, status) {
+                    console.error("Error: " + status + " --> " + response);
+                    toastr.error('An issue with inserting data has occurred. Please see the console logs. Status: ' + status);
                 });
         }
 
