@@ -9,13 +9,33 @@
 angular.module('chartingApp')
     .controller('RangeInsertController', ['$scope', '$http', function ($scope, $http) {
 
-        $scope.showOpenGroup = true;
+
+
 
         $scope.rangeInsertData = {
             timeStamp: moment().valueOf(),
             id: "CPU1",
-            jsonPayload: ""
+            jsonPayload: "",
+            startNumber: 1,
+            endNumber: 100,
+            intervalInMinutes: 1
         };
+        
+        var createRandomValue = function () {
+            
+        };
+        
+        $scope.start = function () {
+
+
+
+
+        };
+        
+        $scope.stop = function () {
+
+            $interval.cancel(intervalPromise);
+        }
 
 
         $scope.rangeInsert = function () {
