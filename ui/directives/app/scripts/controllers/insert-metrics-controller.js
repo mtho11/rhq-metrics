@@ -7,7 +7,7 @@
  * @param {expression} insertMetricsController
  */
 angular.module('chartingApp')
-    .controller('InsertMetricsController', function ($scope, $http) {
+    .controller('InsertMetricsController', ['$scope', '$http', function ($scope, $http) {
 
         $scope.timeIntervalInMinutes = [1, 5, 10, 15, 30, 60];
         $scope.selectedTimeInterval = 5;
@@ -31,16 +31,11 @@ angular.module('chartingApp')
             $http({
                     url: 'http://localhost:8080/rhq-metrics/metrics/' + $scope.multiInsertData.id,
                     method: 'POST',
-                    data: $scope.multiInsertData.jsonPayload,
-                    headers: {
-                        'Access-Control-Allow-Headers': 'Content-Type, Content-Length, x-xsrf-token',
-                        'Access-Control-Allow-Origin': '*',
-                        'Content-Type': 'application/json',
-                        'Content-Length': $scope.multiInsertData.jsonPayload.length}
+                    data: $scope.multiInsertData.jsonPayload
                 }
             ).success(function (response, status) {
                     console.debug("POST response: " + status + " --> " + response);
-                    toastr.success('Inserted value: ' + $scope.quickInsertData.value, 'Success')
+                    toastr.success('Inserted values: ' + $scope.multiInsertData.jsonPayload, 'Success')
                 }).error(function (response, status) {
                     console.error("Error: " + status + " --> " + response);
                     toastr.error('An issue with inserting data has occurred. Please see the console logs. Status: ' + status);
@@ -61,6 +56,7 @@ angular.module('chartingApp')
             $scope.quickInsertData.jsonPayload = { timestamp: computedTimestamp.valueOf(), value: $scope.quickInsertData.value };
             console.info("quick insert for id: " + $scope.quickInsertData.id);
             console.info("payload: " + $scope.quickInsertData.jsonPayload);
+
             $http.post('http://localhost:8080/rhq-metrics/metrics/' + $scope.quickInsertData.id, $scope.quickInsertData.jsonPayload
             ).success(function (response, status) {
                     console.debug("POST response: " + status + " --> " + response);
@@ -73,4 +69,4 @@ angular.module('chartingApp')
         }
 
 
-    });
+    }]);

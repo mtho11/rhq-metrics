@@ -7,15 +7,11 @@
  * @param {expression} insertMetricsController
  */
 angular.module('chartingApp')
-    .controller('StreamingController', function ($scope, $http) {
+    .controller('StreamingController', ['$scope', '$http', function ($scope, $http) {
 
         $scope.showOpenGroup = true;
-        $scope.insertData = {
-            id: "",
-            jsonPayload: ""
-        };
 
-        $scope.streamedData = {
+        $scope.streamingInsertData = {
             timeStamp: moment().valueOf(),
             id: "CPU1",
             jsonPayload: "",
@@ -32,4 +28,4 @@ angular.module('chartingApp')
         };
 
 
-    });
+    }]);

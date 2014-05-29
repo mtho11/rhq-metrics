@@ -7,50 +7,34 @@
  * @param {expression} insertMetricsController
  */
 angular.module('chartingApp')
-    .controller('RangeInsertController', function ($scope, $http) {
+    .controller('RangeInsertController', ['$scope', '$http', function ($scope, $http) {
 
         $scope.showOpenGroup = true;
-        $scope.insertData = {
-            id: "",
-            jsonPayload: ""
-        };
 
-        $scope.rangeInsert = {
+        $scope.rangeInsertData = {
             timeStamp: moment().valueOf(),
             id: "CPU1",
             jsonPayload: ""
         };
 
-        $scope.insertData = function () {
 
-            console.log("POSTing data");
+        $scope.rangeInsert = function () {
+
+            console.log("multi insert for: " + $scope.rangeInsertData.id);
+            console.info("payload: " + $scope.rangeInsertData.jsonPayload);
             $http({
-                    url: 'http://localhost:8080/rhq-metrics/' + $scope.insertData.id + '/data',
+                    url: 'http://localhost:8080/rhq-metrics/metrics/' + $scope.rangeInsertData.id,
                     method: 'POST',
-                    data: $scope.insertData.jsonPayload,
-                    headers: {
-                        'Access-Control-Allow-Headers': 'Content-Type, Content-Length, x-xsrf-token',
-                        'Access-Control-Allow-Origin': '*',
-                        'Content-Type': 'application/json',
-                        'Content-Length': $scope.insertData.jsonPayload}
+                    data: $scope.rangeInsertData.jsonPayload
                 }
             ).success(function (response, status) {
-
                     console.debug("POST response: " + status + " --> " + response);
-
+                    toastr.success('Inserted values: ' + $scope.rangeInsertData.jsonPayload, 'Success')
+                }).error(function (response, status) {
+                    console.error("Error: " + status + " --> " + response);
+                    toastr.error('An issue with inserting data has occurred. Please see the console logs. Status: ' + status);
                 });
         };
 
 
-//        $scope.insertData = function () {
-//
-//            console.log("POSTing data");
-//            $http.post('http://localhost:7474/rhq-metrics/' + $scope.insertData.id + '/data', $scope.insertData.jsonPayload
-//            ).success(function (response, status) {
-//
-//                    console.debug("POST response: " + status + " --> " + response);
-//
-//                });
-//        }
-
-    });
+    }]);

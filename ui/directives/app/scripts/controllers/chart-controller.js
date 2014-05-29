@@ -7,7 +7,7 @@
  * @param {expression} chartController
  */
 angular.module('chartingApp')
-    .controller('ChartController', function ($scope, $http) {
+    .controller('ChartController', ['$scope', '$http', function ($scope, $http) {
 
         $scope.text = "Angular Rickshaw stuff";
         $scope.title = "Angular Rickshaw";
@@ -94,4 +94,4 @@ angular.module('chartingApp')
 
         };
 
-    });
+    }]);
