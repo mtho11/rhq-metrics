@@ -7,7 +7,7 @@
  * @param {expression} insertMetricsController
  */
 angular.module('chartingApp')
-    .controller('InsertMetricsController', ['$scope', '$http', function ($scope, $http) {
+    .controller('InsertMetricsController', ['$scope', '$http', 'baseUrl', function ($scope, $http, baseUrl) {
 
         $scope.timeIntervalInMinutes = [1, 5, 10, 15, 30, 60];
         $scope.selectedTimeInterval = 5;
@@ -29,7 +29,7 @@ angular.module('chartingApp')
             console.log("multi insert for: " + $scope.multiInsertData.id);
             console.info("payload: " + $scope.multiInsertData.jsonPayload);
             $http({
-                    url: 'http://localhost:8080/rhq-metrics/metrics/' + $scope.multiInsertData.id,
+                    url: baseUrl + '/' + $scope.multiInsertData.id,
                     method: 'POST',
                     data: $scope.multiInsertData.jsonPayload
                 }
@@ -57,7 +57,7 @@ angular.module('chartingApp')
             console.info("quick insert for id: " + $scope.quickInsertData.id);
             console.info("payload: " + $scope.quickInsertData.jsonPayload);
 
-            $http.post('http://localhost:8080/rhq-metrics/metrics/' + $scope.quickInsertData.id, $scope.quickInsertData.jsonPayload
+            $http.post(baseUrl + '/' + $scope.quickInsertData.id, $scope.quickInsertData.jsonPayload
             ).success(function (response, status) {
                     console.debug("POST response: " + status + " --> " + response);
                     toastr.success('Inserted value: ' + $scope.quickInsertData.value, 'Success')

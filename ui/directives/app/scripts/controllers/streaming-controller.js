@@ -7,7 +7,7 @@
  * @param {expression} insertMetricsController
  */
 angular.module('chartingApp')
-    .controller('StreamingController', ['$scope', '$http', '$interval', function ($scope, $http, $interval) {
+    .controller('StreamingController', ['$scope', '$http', '$interval', 'baseUrl', function ($scope, $http, $interval, baseUrl) {
         var intervalPromise,
         createRandomValue = function () {
 

@@ -7,7 +7,7 @@
  * @param {expression} chartController
  */
 angular.module('chartingApp')
-    .controller('ChartController', ['$scope', '$http', function ($scope, $http) {
+    .controller('ChartController', ['$scope', '$http', 'baseUrl', function ($scope, $http, baseUrl) {
 
         $scope.text = "Angular Rickshaw stuff";
         $scope.title = "Angular Rickshaw";
@@ -45,12 +45,11 @@ angular.module('chartingApp')
         };
 
 
-
         $scope.restParams = {
-            searchId: "100",
+            searchId: "",
             endTimeStamp: new Date(),
             startTimeStamp: moment().subtract('hours', 8).toDate() //default time period set to 8 hours
-        }
+        };
 
 
         $scope.refreshChartData = function () {
@@ -58,8 +57,7 @@ angular.module('chartingApp')
             console.log("Retrieving metrics data for id: " + $scope.restParams.searchId);
             console.log("Date Range: " + $scope.restParams.startTimeStamp + " - " + $scope.restParams.endTimeStamp);
 
-            //$http.get('/rhq-metrics/' + $scope.restParams.searchId,
-            $http.get('/api/chart-data-rest-servlet.json',
+            $http.get(baseUrl + '/' + $scope.restParams.searchId,
                 {
                     params: {
                         start: moment($scope.restParams.startTimeStamp).valueOf(),
@@ -69,27 +67,33 @@ angular.module('chartingApp')
             ).success(function (response) {
                     console.dir("--> " + response);
 
-                    var newDataPoints = $.map(response.dataPoints, function (point) {
+                    var newDataPoints = $.map(response, function (point) {
                         return {
-                            "timeStamp": point.timeStamp,
-                            "avg": point.avg === 'NaN' ? 0 : point.avg
+                            "timeStamp": point.timestamp,
+                            "value": point.value === 'NaN' ? 0 : point.value
                         };
                     });
-                    console.info("# Transformed DataPoints: " + newDataPoints.length);
-                    console.dir(newDataPoints);
+                    if (newDataPoints.length !== 0) {
 
-                    // this is basically the DTO for the screen
-                    $scope.chartData = {
-                        "id": $scope.restParams.id,
-                        "min": response.min,
-                        "max": response.max,
-                        "avg": response.avg,
-                        "group": response.group,
-                        "startTimeStamp": response.startTimeStamp,
-                        "endTimeStamp": response.endTimeStamp,
-                        "barDuration": 0,
-                        "dataPoints": newDataPoints
-                    };
+                        console.info("# Transformed DataPoints: " + newDataPoints.length);
+                        console.dir(newDataPoints);
+
+                        // this is basically the DTO for the chart
+                        $scope.chartData = {
+                            "id": $scope.restParams.id,
+                            "startTimeStamp": $scope.restParams.startTimeStamp,
+                            "endTimeStamp": $scope.restParams.endTimeStamp,
+                            "dataPoints": newDataPoints
+                        };
+                    } else {
+                        console.warn('No Data found for id: ' + $scope.restParams.searchId);
+                        toastr.warn('No Data found for id: ' + $scope.restParams.searchId);
+                    }
+
+
+                }).error(function (response, status) {
+                    console.error('Error loading graph data: ' + response);
+                    toastr.error('Error loading graph data', 'Status: ' + status);
                 });
 
         };
