@@ -34,6 +34,7 @@
                                     <span class="sr-only">Insert Data</span>
                                 </button>
                                 <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#" ng-click="quickInsert()">Now</a></li>
                                     <li><a href="#" ng-click="quickInsert(1)">1 Hour Ago</a></li>
                                     <li><a href="#" ng-click="quickInsert(4)">4 Hours Ago</a></li>
                                     <li><a href="#" ng-click="quickInsert(8)">8 Hours Ago</a></li>
@@ -103,13 +104,15 @@
                         <label class="col-sm-2 control-label">From </label>
 
                         <div class="col-sm-2">
-                            <input type="number" min="0" max="100" step="5" class="form-control">
+                            <input type="number" min="0" max="100" step="5" required class="form-control"
+                                    ng-model="rangeInsertData.startNumber">
                         </div>
 
                         <label class="col-sm-1 control-label">To</label>
 
                         <div class="col-sm-2">
-                            <input type="number" min="10" max="1000" step="25" class="form-control">
+                            <input type="number" min="10" max="1000" step="25"  required class="form-control"
+                                    ng-model="rangeInsertData.endNumber">
                         </div>
                     </div>
 
@@ -140,10 +143,10 @@
             <accordion-group heading="Create Streaming Metrics" ng-controller="StreamingController">
                 <form class="form-horizontal" role="form">
                     <div class="form-group">
-                        <label for="rangeInsertId" class="col-sm-2 control-label">ID</label>
+                        <label for="streamingInsertId" class="col-sm-2 control-label">ID</label>
 
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" id="rangeInsertId" ng-model="rangeInsertData.id"
+                            <input type="text" class="form-control" id="streamingInsertId" ng-model="streamingInsertData.id"
                                    placeholder="Enter Id...">
                             <span class="help-block">Example: 100, apache3.cpu  </span>
                         </div>
@@ -155,41 +158,48 @@
                         <label class="col-sm-2 control-label">From </label>
 
                         <div class="col-sm-2">
-                            <input type="number" min="0" max="100" step="5" class="form-control" ng-model="rangeInsertData.startNumber">
+                            <input type="number" min="0" max="100" step="5" class="form-control" name="startNumber"
+                                   ng-model="streamingInsertData.startNumber" required>
                         </div>
 
                         <label class="col-sm-1 control-label">To</label>
 
                         <div class="col-sm-2">
-                            <input type="number" min="10" max="1000" step="25" class="form-control" ng-model="rangeInsertData.endNumber">
+                            <input type="number" min="10" max="1000" step="25" class="form-control" name="endNumber"
+                                   ng-model="streamingInsertData.endNumber" required>
                         </div>
                     </div>
 
 
 
                     <div class="form-group">
-                        <div class="col-sm-offset-3 col-sm-1">
-                            <label class="col-sm-2 control-label">Refresh Interval</label>
-                    <select ng-model="selectedRefreshInterval"
-                            ng-options="value.interval for value in refreshIntervals"></select>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Every</label>
+
+                            <div class="col-sm-5">
+                                <select ng-model="selectedTimeInterval"
+                                        ng-options="value for value in timeIntervalInMinutes"></select>
+                                <span class="help-block"> (Time Interval In Minutes.)</span>
+                            </div>
+                            <div class="col-sm-2">
                             </div>
                         </div>
 
                     <div class="form-group">
                         <div class="col-sm-offset-3 col-sm-1">
-                            <button type="button" ng-click="start()" class="btn btn-success">Start</button>
+                            <button type="button" ng-click="startStreaming()" class="btn btn-primary">Start</button>
                         </div>
                         <div class="col-sm-1">
-                            <button type="button" ng-click="stop()" class="btn btn-danger">Stop</button>
+                            <button type="button" ng-click="stopStreaming()" class="btn btn-danger">Stop</button>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="rangeInsertId" class="col-sm-3 control-label">Streamed Count:</label>
+                        <label  class="col-sm-3 control-label">Streamed Count:</label>
 
                         <!-- Maybe hover over this to get tooltip of last value produced -->
                         <div class="col-sm-2">
-                            <input type="text" class="form-control" disabled ng-model="rangeInsertData.id">
+                            <input type="text" class="form-control" readonly ng-model="rangeInsertData.lastStreamedValue">
                         </div>
                     </div>
 

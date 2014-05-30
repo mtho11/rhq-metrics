@@ -11,31 +11,19 @@ angular.module('chartingApp')
 
 
 
-
         $scope.rangeInsertData = {
             timeStamp: moment().valueOf(),
             id: "CPU1",
             jsonPayload: "",
             startNumber: 1,
             endNumber: 100,
-            intervalInMinutes: 1
+            selectedIntervalInMinutes: $scope.timeIntervalInMinutes[0]
         };
         
         var createRandomValue = function () {
             
         };
         
-        $scope.start = function () {
-
-
-
-
-        };
-        
-        $scope.stop = function () {
-
-            $interval.cancel(intervalPromise);
-        }
 
 
         $scope.rangeInsert = function () {

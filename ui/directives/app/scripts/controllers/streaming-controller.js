@@ -3,47 +3,44 @@
 
 /**
  * @ngdoc controller
- * @name InsertMetricsController
- * @param {expression} insertMetricsController
+ * @name StreamingController
+ * @param {expression} StreamingController
  */
 angular.module('chartingApp')
     .controller('StreamingController', ['$scope', '$http', '$interval', 'baseUrl', function ($scope, $http, $interval, baseUrl) {
-        var intervalPromise,
-        createRandomValue = function () {
-
+        var intervalPromise   ,
+            randomIntFromInterval = function(min,max)
+        {
+            return Math.floor(Math.random()*(max-min+1)+min);
         };
-        $scope.refreshIntervals = [
-            {"interval": '30s', "rangeInSeconds": 30 },
-            {"interval": '1m', "rangeInSeconds": 60 },
-            {"interval": '5m', "rangeInSeconds": 5 * 60},
-            {"interval": '10m', "rangeInSeconds": 10 * 60},
-            {"interval": '30m', "rangeInSeconds": 30 * 60},
-            {"interval": '1h', "rangeInSeconds": 60 * 60},
-        ];
+
+
 
         $scope.streamingInsertData = {
             timeStamp: moment().valueOf(),
-            id: "",
+            id: "100",
             jsonPayload: "",
             count: 1,
             startNumber: 1,
             endNumber: 100,
-            intervalInMinutes: 1,
-            lastStreamedValue: 0
+            refreshTimerValue : 30,
+            lastStreamedValue: 2,
+            selectedRefreshInterval : $scope.timeIntervalInMinutes[0]
         };
 
-        $scope.refreshTimerValue = 30;
-        $scope.selectedRefreshInterval = $scope.refreshIntervals[0];
+        console.warn("In StreamingController");
 
-        $scope.start = function () {
+
+        $scope.startStreaming = function () {
+            console.info("Start Streaming Inserts");
             intervalPromise = $interval(function () {
-                console.log("Timer has Run! for seconds: " + $scope.refreshTimerValue);
-                toastr.success('Starting Streaming Data.');
+                console.log("Timer has Run! for seconds: " + $scope.streamingInsertData.refreshTimerValue);
                 $scope.streamingInsertData.count = $scope.streamingInsertData.count + 1;
-                $scope.streamingInsertData.lastStreamedValue = 100;
+                $scope.streamingInsertData.lastStreamedValue = randomIntFromInterval($scope.streamingInsertData.startNumber, $scope.streamingInsertData.endNumber);
+                toastr.success('Streamed Value: '+$scope.streamingInsertData.lastStreamedValue);
                 //$scope.$emit('refreshIntervalChangedEvent', $scope.selectedRefreshInterval);
                 // no need to do anything as all we want to do change the interval
-            }, $scope.refreshTimerValue * 1000);
+            }, $scope.streamingInsertData.refreshTimerValue * 1000);
             $scope.$on('$destroy', function () {
                 console.info('Destroying intervalPromise');
                 $interval.cancel(intervalPromise);
@@ -51,7 +48,7 @@ angular.module('chartingApp')
 
         };
 
-        $scope.stop = function () {
+        $scope.stopStreaming = function () {
             toastr.info('Stopping Streaming Data.');
             console.info('Stop Streaming Data.');
             $interval.cancel(intervalPromise);

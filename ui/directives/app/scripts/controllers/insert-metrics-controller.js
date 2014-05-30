@@ -43,14 +43,13 @@ angular.module('chartingApp')
         };
 
         $scope.quickInsert = function (numberOfHoursPast) {
-            var multiplier, computedTimestamp;
+            var  computedTimestamp;
 
             if (typeof numberOfHoursPast === 'undefined') {
-                multiplier = 1;
+                computedTimestamp = moment();
             } else {
-                multiplier = numberOfHoursPast;
+                computedTimestamp = moment().subtract('hours', numberOfHoursPast);
             }
-            computedTimestamp = moment().subtract('hours', multiplier);
             console.log("Generated Timestamp is: " + computedTimestamp.fromNow());
 
             $scope.quickInsertData.jsonPayload = { timestamp: computedTimestamp.valueOf(), value: $scope.quickInsertData.value };

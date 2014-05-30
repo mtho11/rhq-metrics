@@ -13,8 +13,8 @@ angular.module('chartingApp')
         $scope.title = "Angular Rickshaw";
         $scope.inputColor = "steelblue";
         $scope.graphcolor = "steelblue";
-        $scope.inputHeight = 100;
-        $scope.graphheight = 100;
+        $scope.inputHeight = 200;
+        $scope.graphheight = 200;
         $scope.inputWidth = 200;
         $scope.graphwidth = 200;
         $scope.graphdata = [
@@ -65,7 +65,7 @@ angular.module('chartingApp')
                     }
                 }
             ).success(function (response) {
-                    console.dir("--> " + response);
+                    //console.dir("--> " + response);
 
                     var newDataPoints = $.map(response, function (point) {
                         return {

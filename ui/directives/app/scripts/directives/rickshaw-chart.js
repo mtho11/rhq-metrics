@@ -18,6 +18,8 @@ angular.module('chartingApp')
                     }
                 ];
 
+                console.debug("Inside rickshawChart");
+
                 scope.$watch(attrs.color, function (value) {
                     if (graph != null) {
                         graph.series[0].color = value;
@@ -52,6 +54,7 @@ angular.module('chartingApp')
                     height: 100,
                     series: series
                 });
+                console.debug("Now lets Render Rickshaw");
                 graph.render();
             }
         };
