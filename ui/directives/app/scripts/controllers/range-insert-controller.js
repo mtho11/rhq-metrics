@@ -8,27 +8,24 @@
  */
 angular.module('chartingApp')
     .controller('RangeInsertController', ['$scope', '$http', 'baseUrl', function ($scope, $http, baseUrl) {
-
-
-
         $scope.rangeInsertData = {
             timeStamp: moment().valueOf(),
-            id: "CPU1",
+            id: "",
             jsonPayload: "",
             startNumber: 1,
             endNumber: 100,
             selectedIntervalInMinutes: $scope.timeIntervalInMinutes[0]
         };
         
-        var createRandomValue = function () {
-            
+        var createRandomValue = function (min,max) {
+            return Math.floor(Math.random()*(max-min+1)+min);
         };
         
 
 
         $scope.rangeInsert = function () {
 
-            console.log("multi insert for: " + $scope.rangeInsertData.id);
+            console.info("multi insert for: " + $scope.rangeInsertData.id);
             console.info("payload: " + $scope.rangeInsertData.jsonPayload);
             $http({
                     url: baseUrl + '/' + $scope.rangeInsertData.id,

@@ -1,6 +1,6 @@
 <div class="panel panel-default" style="width:880px" ng-controller="ChartController">
     <!--<div class="panel-heading">-->
-        <!--<h3 class="panel-title">Raw Metrics Graphing</h3>-->
+    <!--<h3 class="panel-title">Raw Metrics Graphing</h3>-->
     <!--</div>-->
     <div class="panel-body">
         <div class="well">
@@ -68,29 +68,30 @@
             </form>
         </div>
 
+        <h2>Chart</h2>
         <rickshaw-chart color="graphcolor" graphicaldata="graphdata" height="graphheight"
-                       width="graphwidth"></rickshaw-chart>
+                        width="graphwidth"></rickshaw-chart>
 
 
-        <!--<div style="height:270px" metrics-stacked-bar-chart-->
-        <!--rhq-data="{{chartData}}"-->
-        <!--rhq-yaxis-units="GB"-->
-        <!--rhq-chart-title="{{title.name}}"-->
-        <!--rhq-chart-height="250"-->
-        <!--rhq-chart-hover-date-format="%m/%d/%y"-->
-        <!--rhq-chart-hover-time-format="%I:%M:%S %p"-->
-        <!--rhq-time-label="Time"-->
-        <!--rhq-date-label="Date"-->
-        <!--rhq-buttonbar-datetime-format="MM/DD/YYYY h:mm a"-->
-        <!--rhq-single-value-label="Raw Value"-->
-        <!--rhq-no-data-label="No Data"-->
-        <!--rhq-aggregate-label="Aggregate"-->
-        <!--rhq-start-label="Start"-->
-        <!--rhq-end-label="End"-->
-        <!--rhq-duration-label="Duration"-->
-        <!--rhq-min-label="Min"-->
-        <!--rhq-max-label="Max"-->
-        <!--rhq-avg-label="Avg">-->
-        <!--</div>-->
+        <div style="height:270px" metrics-stacked-bar-chart
+             rhq-data="{{chartData.dataPoints}}"
+             rhq-yaxis-units="GB"
+             rhq-chart-title="{{title.name}}"
+             rhq-chart-height="250"
+             rhq-chart-hover-date-format="%m/%d/%y"
+             rhq-chart-hover-time-format="%I:%M:%S %p"
+             rhq-time-label="Time"
+             rhq-date-label="Date"
+             rhq-buttonbar-datetime-format="MM/DD/YYYY h:mm a"
+             rhq-single-value-label="Raw Value"
+             rhq-no-data-label="No Data"
+             rhq-aggregate-label="Aggregate"
+             rhq-start-label="Start"
+             rhq-end-label="End"
+             rhq-duration-label="Duration"
+             rhq-min-label="Min"
+             rhq-max-label="Max"
+             rhq-avg-label="Avg">
+        </div>
     </div>
 </div>

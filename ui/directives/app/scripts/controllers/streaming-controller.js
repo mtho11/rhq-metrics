@@ -14,11 +14,9 @@ angular.module('chartingApp')
             return Math.floor(Math.random()*(max-min+1)+min);
         };
 
-
-
         $scope.streamingInsertData = {
             timeStamp: moment().valueOf(),
-            id: "100",
+            id: "",
             jsonPayload: "",
             count: 1,
             startNumber: 1,
@@ -27,9 +25,6 @@ angular.module('chartingApp')
             lastStreamedValue: 2,
             selectedRefreshInterval : $scope.timeIntervalInMinutes[0]
         };
-
-        console.warn("In StreamingController");
-
 
         $scope.startStreaming = function () {
             console.info("Start Streaming Inserts");

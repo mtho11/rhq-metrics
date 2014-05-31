@@ -12,10 +12,6 @@ angular.module('chartingApp')
         $scope.timeIntervalInMinutes = [1, 5, 10, 15, 30, 60];
         $scope.selectedTimeInterval = 5;
         $scope.showOpenGroup = true;
-        $scope.multiInsertData = {
-            id: "",
-            jsonPayload: ""
-        };
 
         $scope.quickInsertData = {
             timeStamp: moment().valueOf(),
@@ -24,22 +20,9 @@ angular.module('chartingApp')
             value: ""
         };
 
-        $scope.multiInsert = function () {
-
-            console.log("multi insert for: " + $scope.multiInsertData.id);
-            console.info("payload: " + $scope.multiInsertData.jsonPayload);
-            $http({
-                    url: baseUrl + '/' + $scope.multiInsertData.id,
-                    method: 'POST',
-                    data: $scope.multiInsertData.jsonPayload
-                }
-            ).success(function (response, status) {
-                    console.debug("POST response: " + status + " --> " + response);
-                    toastr.success('Inserted values: ' + $scope.multiInsertData.jsonPayload, 'Success')
-                }).error(function (response, status) {
-                    console.error("Error: " + status + " --> " + response);
-                    toastr.error('An issue with inserting data has occurred. Please see the console logs. Status: ' + status);
-                });
+        $scope.multiInsertData = {
+            id: "",
+            jsonPayload: ""
         };
 
         $scope.quickInsert = function (numberOfHoursPast) {
@@ -54,18 +37,36 @@ angular.module('chartingApp')
 
             $scope.quickInsertData.jsonPayload = { timestamp: computedTimestamp.valueOf(), value: $scope.quickInsertData.value };
             console.info("quick insert for id: " + $scope.quickInsertData.id);
-            console.info("payload: " + $scope.quickInsertData.jsonPayload);
 
             $http.post(baseUrl + '/' + $scope.quickInsertData.id, $scope.quickInsertData.jsonPayload
             ).success(function (response, status) {
                     console.debug("POST response: " + status + " --> " + response);
-                    toastr.success('Inserted value: ' + $scope.quickInsertData.value, 'Success')
+                    toastr.success('Inserted value: ' + $scope.quickInsertData.value + ", "+computedTimestamp.fromNow(), 'Success')
                     $scope.quickInsertData.value = "";
                 }).error(function (response, status) {
                     console.error("Error: " + status + " --> " + response);
                     toastr.error('An issue with inserting data has occurred. Please see the console logs. Status: ' + status);
                 });
         }
+
+
+        $scope.multiInsert = function () {
+            console.info("multi insert for: " + $scope.multiInsertData.id);
+            $http({
+                    url: baseUrl + '/' + $scope.multiInsertData.id,
+                    method: 'POST',
+                    data: $scope.multiInsertData.jsonPayload
+                }
+            ).success(function (response, status) {
+                    console.debug("POST response: " + status + " --> " + response);
+                    toastr.success('Inserted values: ' + $scope.multiInsertData.jsonPayload, 'Success')
+                }).error(function (response, status) {
+                    console.error("Error: " + status + " --> " + response);
+                    toastr.error('An issue with inserting data has occurred. Please see the console logs. Status: ' + status);
+                });
+        };
+
+
 
 
     }]);
