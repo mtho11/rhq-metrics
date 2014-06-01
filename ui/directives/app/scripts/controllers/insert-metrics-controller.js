@@ -28,7 +28,7 @@ angular.module('chartingApp')
         $scope.quickInsert = function (numberOfHoursPast) {
             var  computedTimestamp;
 
-            if (typeof numberOfHoursPast === 'undefined') {
+            if (angular.isUndefined(numberOfHoursPast)) {
                 computedTimestamp = moment();
             } else {
                 computedTimestamp = moment().subtract('hours', numberOfHoursPast);
@@ -39,9 +39,9 @@ angular.module('chartingApp')
             console.info("quick insert for id: " + $scope.quickInsertData.id);
 
             $http.post(baseUrl + '/' + $scope.quickInsertData.id, $scope.quickInsertData.jsonPayload
-            ).success(function (response, status) {
-                    console.debug("POST response: " + status + " --> " + response);
-                    toastr.success('Inserted value: ' + $scope.quickInsertData.value + ", "+computedTimestamp.fromNow(), 'Success')
+            ).success(function () {
+                    toastr.success('Inserted<br/>Value: ' + $scope.quickInsertData.value + ",<br/>Time: "+computedTimestamp.fromNow()+ "<br/>ID: "+$scope.quickInsertData.id,
+                        'Success')
                     $scope.quickInsertData.value = "";
                 }).error(function (response, status) {
                     console.error("Error: " + status + " --> " + response);
@@ -57,8 +57,7 @@ angular.module('chartingApp')
                     method: 'POST',
                     data: $scope.multiInsertData.jsonPayload
                 }
-            ).success(function (response, status) {
-                    console.debug("POST response: " + status + " --> " + response);
+            ).success(function () {
                     toastr.success('Inserted values: ' + $scope.multiInsertData.jsonPayload, 'Success')
                 }).error(function (response, status) {
                     console.error("Error: " + status + " --> " + response);

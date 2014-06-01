@@ -58,7 +58,7 @@ angular.module('chartingApp')
                 return;
             }
 
-            metricsData = angular.fromJson(attributes.rhqData);
+            metricsData = attributes.rhqData;
             console.log("Metrics Data -->");
             console.dir(metricsData);
 
@@ -156,13 +156,13 @@ angular.module('chartingApp')
                     timeScale = d3.time.scale()
                         .range([0, width])
                         .domain(d3.extent(chartData, function (d) {
-                            return d.timeStamp;
+                            return d.timestamp;
                         }));
 
                     timeScaleForBrush = d3.time.scale()
                         .range([0, width])
                         .domain(d3.extent(chartData, function (d) {
-                            return d.timeStamp;
+                            return d.timestamp;
                         }));
 
                     xAxis = d3.svg.axis()
@@ -183,16 +183,16 @@ angular.module('chartingApp')
 
             function buildHover(d) {
                 var hover,
-                    formattedDateTime = moment(d.timeStamp).format(buttonBarDateTimeFormat);
+                    formattedDateTime = moment(d.timestamp).format(buttonBarDateTimeFormat);
 
                 if (isNotDataBar(d)) {
                     // nodata
                     hover = "<small>" + noDataLabel + "</small><hr/>" +
-                        '<div><small><span style="color: #d3d3d3;">Timestamp: </span>' + '<span>' + formattedDateTime + '</span>' + '</small></div>';
+                        '<div><small><span style="color: #d3d3d3;">timestamp: </span>' + '<span>' + formattedDateTime + '</span>' + '</small></div>';
                 } else {
                     if (+d.high === +d.low) {
                         // raw single value from raw table
-                        hover = '<div><small><span style="color: #d3d3d3;">Timestamp: </span>' + '<span>' + formattedDateTime + '</span>' + '</small></div><hr/>' +
+                        hover = '<div><small><span style="color: #d3d3d3;">timestamp: </span>' + '<span>' + formattedDateTime + '</span>' + '</small></div><hr/>' +
                             '<div><small><span style="color: #d3d3d3;">' + singleValueLabel + '</span><span>: </span><span>' + d.value + '</span></small> </div> ';
                     } else {
                         //@todo: finish aggregates once in C*
@@ -275,7 +275,7 @@ angular.module('chartingApp')
                     .enter().append("rect")
                     .attr("class", "leaderBar")
                     .attr("x", function (d) {
-                        return timeScale(d.timeStamp);
+                        return timeScale(d.timestamp);
                     })
                     .attr("y", function (d) {
                         if (isNotDataBar(d)) {
@@ -320,7 +320,7 @@ angular.module('chartingApp')
                     .enter().append("rect")
                     .attr("class", "high")
                     .attr("x", function (d) {
-                        return timeScale(d.timeStamp);
+                        return timeScale(d.timestamp);
                     })
                     .attr("y", function (d) {
                         return isNaN(d.high) ? yScale(chartDataService.getLowBound()) : yScale(d.high);
@@ -353,7 +353,7 @@ angular.module('chartingApp')
                     .enter().append("rect")
                     .attr("class", "low")
                     .attr("x", function (d) {
-                        return timeScale(d.timeStamp);
+                        return timeScale(d.timestamp);
                     })
                     .attr("y", function (d) {
                         return isNaN(d.value) ? height : yScale(d.value);
@@ -382,7 +382,7 @@ angular.module('chartingApp')
                     .enter().append("rect")
                     .attr("class", "singleValue")
                     .attr("x", function (d) {
-                        return timeScale(d.timeStamp);
+                        return timeScale(d.timestamp);
                     })
                     .attr("y", function (d) {
                         return isNaN(d.value) ? height : yScale(d.value) - 2;
@@ -470,7 +470,7 @@ angular.module('chartingApp')
                             return !d.nodata;
                         })
                         .x(function (d) {
-                            return timeScale(d.timeStamp) + (calcBarWidth() / 2);
+                            return timeScale(d.timestamp) + (calcBarWidth() / 2);
                         })
                         .y(function (d) {
                             if (showBarAvgTrendline) {
@@ -547,14 +547,14 @@ angular.module('chartingApp')
             createStackedBars();
             createXandYAxes();
             createAvgLines();
-            updateDateRangeDisplay(moment(metricsData.startTimeStamp), moment(metricsData.endTimeStamp));
+            updateDateRangeDisplay(moment(metricsData.starttimestamp), moment(metricsData.endtimestamp));
 
 
             scope.render = function (rhqData) {
-                console.debug("Render");
+                console.debug("Render for rhq-data length of: "+rhqData.length);
                 determineScale();
                 createStackedBars();
-                updateDateRangeDisplay(moment(metricsData.minTimeStamp), moment(metricsData.maxTimeStamp));
+                updateDateRangeDisplay(moment(metricsData.mintimestamp), moment(metricsData.maxtimestamp));
             };
 
             scope.$watch('rhqData', function () {

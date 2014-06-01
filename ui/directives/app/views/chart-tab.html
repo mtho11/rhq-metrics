@@ -68,14 +68,19 @@
             </form>
         </div>
 
-        <h2>Chart</h2>
-        <rickshaw-chart color="graphcolor" graphicaldata="graphdata" height="graphheight"
-                        width="graphwidth"></rickshaw-chart>
+        <!--<rickshaw-chart color="graphcolor" graphicaldata="graphdata" height="graphheight"-->
+                        <!--width="graphwidth"></rickshaw-chart>-->
 
+        <h2>Data Points {{chartData.dataPoints.length}}</h2>
+        <ul>
+            <li  ng-repeat="chartPoint in chartData.dataPoints">
+                [{{$index + 1}}] {{chartPoint.moment.fromNow()}} -->  {{chartPoint.value}}
+            </li>
+        </ul>
 
         <div style="height:270px" metrics-stacked-bar-chart
-             rhq-data="{{chartData.dataPoints}}"
-             rhq-yaxis-units="GB"
+             rhq-data="{{chartData}}"
+             rhq-yaxis-units=""
              rhq-chart-title="{{title.name}}"
              rhq-chart-height="250"
              rhq-chart-hover-date-format="%m/%d/%y"

@@ -65,12 +65,11 @@ angular.module('chartingApp')
                     }
                 }
             ).success(function (response) {
-                    //console.dir("--> " + response);
-
                     var newDataPoints = $.map(response, function (point) {
                         return {
-                            "timeStamp": point.timestamp,
-                            "value": point.value === 'NaN' ? 0 : point.value
+                            "timestamp": point.timestamp,
+                            "value": point.value === 'NaN' ? 0 : point.value,
+                            "moment":  moment(point.timestamp)
                         };
                     });
                     if (newDataPoints.length !== 0) {
@@ -90,12 +89,10 @@ angular.module('chartingApp')
                         toastr.warn('No Data found for id: ' + $scope.restParams.searchId);
                     }
 
-
                 }).error(function (response, status) {
                     console.error('Error loading graph data: ' + response);
                     toastr.error('Error loading graph data', 'Status: ' + status);
                 });
-
         };
 
     }]);
