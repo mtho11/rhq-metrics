@@ -104,6 +104,7 @@ angular.module('chartingApp')
 
             function determineScale() {
                 var xTicks, xTickSubDivide, numberOfBarsForSmallGraph = 20;
+                console.info("DetermineScale");
                 if (metricsData.dataPoints.length > 0) {
 
                     // if window is too small server up small chart
@@ -547,14 +548,14 @@ angular.module('chartingApp')
             createStackedBars();
             createXandYAxes();
             createAvgLines();
-            updateDateRangeDisplay(moment(metricsData.starttimestamp), moment(metricsData.endtimestamp));
+           // updateDateRangeDisplay(moment(metricsData.starttimestamp), moment(metricsData.endtimestamp));
 
 
             scope.render = function (rhqData) {
                 console.debug("Render for rhq-data length of: "+rhqData.length);
                 determineScale();
                 createStackedBars();
-                updateDateRangeDisplay(moment(metricsData.mintimestamp), moment(metricsData.maxtimestamp));
+                //updateDateRangeDisplay(moment(metricsData.mintimestamp), moment(metricsData.maxtimestamp));
             };
 
             scope.$watch('rhqData', function () {

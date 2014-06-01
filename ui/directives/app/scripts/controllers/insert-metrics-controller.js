@@ -47,7 +47,7 @@ angular.module('chartingApp')
                     console.error("Error: " + status + " --> " + response);
                     toastr.error('An issue with inserting data has occurred. Please see the console logs. Status: ' + status);
                 });
-        }
+        };
 
 
         $scope.multiInsert = function () {

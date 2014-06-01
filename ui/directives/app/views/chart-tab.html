@@ -78,8 +78,8 @@
             </li>
         </ul>
 
-        <div style="height:270px" metrics-stacked-bar-chart
-             rhq-data="{{chartData}}"
+        <div id="stackedBarChart" style="height:270px" metrics-stacked-bar-chart
+             rhq-data="{{chartData.dataPoints}}"
              rhq-yaxis-units=""
              rhq-chart-title="{{title.name}}"
              rhq-chart-height="250"
