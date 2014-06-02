@@ -78,25 +78,48 @@
             </li>
         </ul>
 
-        <div id="stackedBarChart" style="height:270px" metrics-stacked-bar-chart
-             rhq-data="{{chartData.dataPoints}}"
-             rhq-yaxis-units=""
-             rhq-chart-title="{{title.name}}"
-             rhq-chart-height="250"
-             rhq-chart-hover-date-format="%m/%d/%y"
-             rhq-chart-hover-time-format="%I:%M:%S %p"
-             rhq-time-label="Time"
-             rhq-date-label="Date"
-             rhq-buttonbar-datetime-format="MM/DD/YYYY h:mm a"
-             rhq-single-value-label="Raw Value"
-             rhq-no-data-label="No Data"
-             rhq-aggregate-label="Aggregate"
-             rhq-start-label="Start"
-             rhq-end-label="End"
-             rhq-duration-label="Duration"
-             rhq-min-label="Min"
-             rhq-max-label="Max"
-             rhq-avg-label="Avg">
-        </div>
+        <nvd3-stacked-area-chart
+                data="chartData.nvd3DataPoints"
+                width="600"
+                height="350"
+                showXAxis="true"
+                showYAxis="true"
+                interactive="true"
+            xAxisTickFormat="xAxisTickFormat_Date_Format()">
+        </nvd3-stacked-area-chart>
+
+        <!---->
+        <!--<nvd3-line-chart-->
+                <!--data="exampleData"-->
+                <!--width="600"-->
+                <!--height="350"-->
+                <!--showXAxis="true"-->
+                <!--showYAxis="true"-->
+                <!--tooltips="true"-->
+                <!--xAxisTickFormat="xAxisTickFormat_Date_Format()"-->
+                <!--interactive="true">-->
+        <!--</nvd3-line-chart>-->
+
+
+        <!--<div id="stackedBarChart" style="height:270px" metrics-stacked-bar-chart-->
+             <!--rhq-data="{{chartData.dataPoints}}"-->
+             <!--rhq-yaxis-units=""-->
+             <!--rhq-chart-title="{{title.name}}"-->
+             <!--rhq-chart-height="250"-->
+             <!--rhq-chart-hover-date-format="%m/%d/%y"-->
+             <!--rhq-chart-hover-time-format="%I:%M:%S %p"-->
+             <!--rhq-time-label="Time"-->
+             <!--rhq-date-label="Date"-->
+             <!--rhq-buttonbar-datetime-format="MM/DD/YYYY h:mm a"-->
+             <!--rhq-single-value-label="Raw Value"-->
+             <!--rhq-no-data-label="No Data"-->
+             <!--rhq-aggregate-label="Aggregate"-->
+             <!--rhq-start-label="Start"-->
+             <!--rhq-end-label="End"-->
+             <!--rhq-duration-label="Duration"-->
+             <!--rhq-min-label="Min"-->
+             <!--rhq-max-label="Max"-->
+             <!--rhq-avg-label="Avg">-->
+        <!--</div>-->
     </div>
 </div>

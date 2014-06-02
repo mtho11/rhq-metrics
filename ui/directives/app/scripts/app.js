@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('chartingApp', [ 'ui.bootstrap', 'ui.bootstrap.datetimepicker'])
+angular.module('chartingApp', [ 'ui.bootstrap', 'ui.bootstrap.datetimepicker','nvd3ChartDirectives'])
     .constant('baseUrl', 'http://localhost:8080/rhq-metrics/metrics')
     .config(function ($httpProvider) {
         $httpProvider.defaults.useXDomain = true;

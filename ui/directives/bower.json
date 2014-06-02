@@ -13,7 +13,9 @@
     "angular-bootstrap-datetimepicker": "~0.2.2",
     "angular-bootstrap": "~0.11.0",
     "rickshaw": "1.5.0",
-    "toastr": "2.0.3"
+    "toastr": "2.0.3",
+    "angularjs-nvd3-directives": "~0.0.7",
+    "nvd3": "~1.1.15-beta"
   },
   "devDependencies": {
     "angular-mocks": "1.2.11",

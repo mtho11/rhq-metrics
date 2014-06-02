@@ -65,13 +65,15 @@ angular.module('chartingApp')
                     }
                 }
             ).success(function (response) {
+                    // we want to isolate the response from the data we are feeding to the chart
                     var newDataPoints = $.map(response, function (point) {
                         return {
                             "timestamp": point.timestamp,
                             "value": point.value === 'NaN' ? 0 : point.value,
-                            "moment":  moment(point.timestamp)
+                            "moment": moment(point.timestamp)
                         };
                     });
+
                     if (newDataPoints.length !== 0) {
 
                         console.info("# Transformed DataPoints: " + newDataPoints.length);
@@ -82,7 +84,8 @@ angular.module('chartingApp')
                             "id": $scope.restParams.id,
                             "startTimeStamp": $scope.restParams.startTimeStamp,
                             "endTimeStamp": $scope.restParams.endTimeStamp,
-                            "dataPoints": newDataPoints
+                            "dataPoints": newDataPoints,
+                            "nvd3DataPoints": formatForNvD3(response)
                         };
                     } else {
                         console.warn('No Data found for id: ' + $scope.restParams.searchId);
@@ -94,5 +97,25 @@ angular.module('chartingApp')
                     toastr.error('Error loading graph data', 'Status: ' + status);
                 });
         };
+
+        function formatForNvD3(dataPoints) {
+
+            // do this for nvd3
+            var nvd3ValuesArray = [];
+            dataPoints.forEach(function (myPoint) {
+                nvd3ValuesArray.push(new Array(myPoint.timestamp, myPoint.value));
+            });
+
+            var nvd3Data = {
+                "key": "Metrics",
+                "values": nvd3ValuesArray
+            };
+
+            console.log("nvd3Data: "+ nvd3Data.toJson())
+            console.dir(nvd3Data);
+
+            return nvd3Data;
+
+        }
 
     }]);
