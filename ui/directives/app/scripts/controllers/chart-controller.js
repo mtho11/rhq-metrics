@@ -9,38 +9,25 @@
 angular.module('chartingApp')
     .controller('ChartController', ['$scope', '$http', 'baseUrl', function ($scope, $http, baseUrl) {
 
-        $scope.text = "Angular Rickshaw stuff";
-        $scope.title = "Angular Rickshaw";
-        $scope.inputColor = "steelblue";
-        $scope.graphcolor = "steelblue";
-        $scope.inputHeight = 200;
-        $scope.graphheight = 200;
-        $scope.inputWidth = 200;
-        $scope.graphwidth = 200;
-        $scope.graphdata = [
-            {x: 0, y: 0}
-        ];
-        $scope.graphIndex = 1;
-        $scope.inputData = 0;
-        $scope.changeColor = function () {
-            if (($scope.inputColor != null) && ($scope.inputColor !== "")) {
-                $scope.graphcolor = $scope.inputColor;
-            }
-        };
+//        $scope.text = "Angular Rickshaw stuff";
+//        $scope.title = "Angular Rickshaw";
+//        $scope.inputColor = "steelblue";
+//        $scope.graphcolor = "steelblue";
+//        $scope.inputHeight = 200;
+//        $scope.graphheight = 200;
+//        $scope.inputWidth = 200;
+//        $scope.graphwidth = 200;
+//        $scope.graphIndex = 1;
+//        $scope.inputData = 0;
+//        $scope.changeColor = function () {
+//            if (($scope.inputColor != null) && ($scope.inputColor !== "")) {
+//                $scope.graphcolor = $scope.inputColor;
+//            }
+//        };
         $scope.addData = function () {
             if (($scope.inputData != null) && ($scope.inputData !== "")) {
                 $scope.graphdata.push({x: $scope.graphIndex, y: parseInt($scope.inputData, 10)});
                 $scope.graphIndex++;
-            }
-        };
-        $scope.changeHeight = function () {
-            if (($scope.inputHeight != null) && ($scope.inputHeight !== "")) {
-                $scope.graphheight = parseInt($scope.inputHeight, 10);
-            }
-        };
-        $scope.changeWidth = function () {
-            if (($scope.inputWidth != null) && ($scope.inputWidth !== "")) {
-                $scope.graphwidth = parseInt($scope.inputWidth, 10);
             }
         };
 
@@ -85,7 +72,8 @@ angular.module('chartingApp')
                             "startTimeStamp": $scope.restParams.startTimeStamp,
                             "endTimeStamp": $scope.restParams.endTimeStamp,
                             "dataPoints": newDataPoints,
-                            "nvd3DataPoints": formatForNvD3(response)
+                            "nvd3DataPoints": formatForNvD3(response),
+                            "rickshawDataPoints": formatForRickshaw(response)
                         };
                     } else {
                         console.warn('No Data found for id: ' + $scope.restParams.searchId);
@@ -111,11 +99,19 @@ angular.module('chartingApp')
                 "values": nvd3ValuesArray
             };
 
-            console.log("nvd3Data: "+ nvd3Data.toJson())
-            console.dir(nvd3Data);
-
             return nvd3Data;
 
+        }
+
+        function formatForRickshaw(dataPoints) {
+
+            var rickshawData = $.map(dataPoints, function (point) {
+                return {
+                    "x": point.timestamp,
+                    "y": point.value,
+                };
+            });
+            return rickshawData;
         }
 
     }]);

@@ -1,7 +1,4 @@
 <div class="panel panel-default" style="width:880px" ng-controller="ChartController">
-    <!--<div class="panel-heading">-->
-    <!--<h3 class="panel-title">Raw Metrics Graphing</h3>-->
-    <!--</div>-->
     <div class="panel-body">
         <div class="well">
             <small style="margin-left: 15px" class="graphDateTimeRangeLabel"></small>
@@ -68,25 +65,24 @@
             </form>
         </div>
 
-        <!--<rickshaw-chart color="graphcolor" graphicaldata="graphdata" height="graphheight"-->
-                        <!--width="graphwidth"></rickshaw-chart>-->
 
-        <h2>Data Points {{chartData.dataPoints.length}}</h2>
-        <ul>
-            <li  ng-repeat="chartPoint in chartData.dataPoints">
-                [{{$index + 1}}] {{chartPoint.moment.fromNow()}} -->  {{chartPoint.value}}
-            </li>
-        </ul>
 
-        <nvd3-stacked-area-chart
-                data="chartData.nvd3DataPoints"
-                width="600"
-                height="350"
-                showXAxis="true"
-                showYAxis="true"
-                interactive="true"
-            xAxisTickFormat="xAxisTickFormat_Date_Format()">
-        </nvd3-stacked-area-chart>
+
+        <rickshaw-chart color="'steelblue'" graphicaldata="chartData.rickshawDataPoints" height="200" renderer="area"
+                        showXAxis="true"
+                        showYAxis="true"
+                        width="600">
+        </rickshaw-chart>
+
+        <!--<nvd3-stacked-area-chart-->
+                <!--data="chartData.nvd3DataPoints"-->
+                <!--width="600"-->
+                <!--height="350"-->
+                <!--showXAxis="true"-->
+                <!--showYAxis="true"-->
+                <!--interactive="true"-->
+            <!--xAxisTickFormat="xAxisTickFormat_Date_Format()">-->
+        <!--</nvd3-stacked-area-chart>-->
 
         <!---->
         <!--<nvd3-line-chart-->
@@ -121,5 +117,11 @@
              <!--rhq-max-label="Max"-->
              <!--rhq-avg-label="Avg">-->
         <!--</div>-->
+        <h2>Data Points {{chartData.dataPoints.length}}</h2>
+        <ul>
+            <li  ng-repeat="chartPoint in chartData.dataPoints">
+                [{{$index + 1}}] {{chartPoint.moment.fromNow()}} -->  {{chartPoint.value}}
+            </li>
+        </ul>
     </div>
 </div>
