@@ -3,31 +3,31 @@
 
 /**
  * @ngdoc directive
- * @name metricsStackedBarChart
- * @param {expression} metricsStackedBarChart
+ * @name rhqmStackedBarChart
+ * @param {expression} rhqmStackedBarChart
  */
 angular.module('chartingApp')
-    .directive('metricsStackedBarChart', function (chartDataService) {
+    .directive('rhqmStackedBarChart', ['chartDataService', function (chartDataService) {
 
         function link(scope, element, attributes) {
-            console.info("Draw Metrics Stacked Bar chart for title: " + attributes.rhqChartTitle);
+            console.info("Draw Metrics Stacked Bar chart for title: " + attributes.chartTitle);
             //
             var metricsData,
-                chartHeight = +attributes.rhqChartHeight || 250,
-                timeLabel = attributes.rhqTimeLabel || "Time",
-                dateLabel = attributes.rhqDateLabel || "Date",
-                singleValueLabel = attributes.rhqSingleValueLabel || "Raw Value",
-                noDataLabel = attributes.rhqNoDataLabel || "No Data",
-                aggregateLabel = attributes.rhqAggregateLabel || "Aggregate",
-                startLabel = attributes.rhqStartLabel || "Start",
-                endLabel = attributes.rhqEndLabel || "End",
-                durationLabel = attributes.rhqDurationLabel || "Duration",
-                minLabel = attributes.rhqMinLabel || "Min",
-                maxLabel = attributes.rhqMaxLabel || "Max",
-                avgLabel = attributes.rhqAvgLabel || "Avg",
-                chartHoverDateFormat = attributes.rhqChartHoverDateFormat || "%m/%d/%y",
-                chartHoverTimeFormat = attributes.rhqChartHoverTimeFormat || "%I:%M:%S %p",
-                buttonBarDateTimeFormat = attributes.rhqButtonbarDatetimeFormat || "MM/DD/YYYY h:mm a";
+                chartHeight = +attributes.chartHeight || 250,
+                timeLabel = attributes.timeLabel || "Time",
+                dateLabel = attributes.dateLabel || "Date",
+                singleValueLabel = attributes.singleValueLabel || "Raw Value",
+                noDataLabel = attributes.noDataLabel || "No Data",
+                aggregateLabel = attributes.aggregateLabel || "Aggregate",
+                startLabel = attributes.startLabel || "Start",
+                endLabel = attributes.endLabel || "End",
+                durationLabel = attributes.durationLabel || "Duration",
+                minLabel = attributes.minLabel || "Min",
+                maxLabel = attributes.maxLabel || "Max",
+                avgLabel = attributes.avgLabel || "Avg",
+                chartHoverDateFormat = attributes.chartHoverDateFormat || "%m/%d/%y",
+                chartHoverTimeFormat = attributes.chartHoverTimeFormat || "%I:%M:%S %p",
+                buttonBarDateTimeFormat = attributes.buttonbarDatetimeFormat || "MM/DD/YYYY h:mm a";
 
             // chart specific vars
             var margin = {top: 10, right: 5, bottom: 5, left: 90},
@@ -53,12 +53,12 @@ angular.module('chartingApp')
                 context,
                 svg;
 
-            if (attributes.rhqData === "") {
+            if (attributes.data === "") {
                 console.warn("No Data");
                 return;
             }
 
-            metricsData = attributes.rhqData;
+            metricsData = attributes.data;
             console.log("Metrics Data -->");
             console.dir(metricsData);
 
@@ -96,7 +96,6 @@ angular.module('chartingApp')
                     .attr("width", width + margin.left + margin.right)
                     .attr("height", chartHeight)
                     .attr("transform", "translate(" + margin2.left + "," + (+titleHeight + titleSpace + margin.top + 90) + ")");
-
 
                 svg.call(tip);
 
@@ -280,11 +279,11 @@ angular.module('chartingApp')
                     })
                     .attr("y", function (d) {
                         if (isNotDataBar(d)) {
-                            console.warn("d -->" + chartDataService.getHighBound());
+                            console.log("d -->" + chartDataService.getHighBound());
                             return yScale(chartDataService.getHighBound());
                         }
                         else {
-                            console.warn("d ***" + d.low);
+                            console.log("d ***" + d.low);
                             return yScale(d.low);
                         }
                     })
@@ -459,7 +458,7 @@ angular.module('chartingApp')
                     .attr("transform", "rotate(-90),translate( -70,-40)")
                     .attr("y", -30)
                     .style("text-anchor", "end")
-                    .text(attributes.rhqYaxisUnits === "NONE" ? "" : attributes.rhqYaxisUnits);
+                    .text(attributes.yAxisUnits === "NONE" ? "" : attributes.yAxisUnits);
 
             }
 
@@ -542,7 +541,7 @@ angular.module('chartingApp')
 
             oneTimeChartSetup();
             determineScale();
-            createHeader(attributes.rhqChartTitle);
+            createHeader(attributes.chartTitle);
             createYAxisGridLines();
             createXAxisBrush();
             createStackedBars();
@@ -552,15 +551,15 @@ angular.module('chartingApp')
 
 
             scope.render = function (rhqData) {
-                console.debug("Render for rhq-data length of: "+rhqData.length);
+                console.debug("Render for rhq data length of: "+rhqData.length);
                 determineScale();
                 createStackedBars();
                 //updateDateRangeDisplay(moment(metricsData.mintimestamp), moment(metricsData.maxtimestamp));
             };
 
             scope.$watch('rhqData', function () {
-                console.debug("watcher for rhqData fired");
-                scope.render(scope.rhqData);
+                console.debug("watcher for rhq Data fired");
+                scope.render(scope.data);
             }, true);
 
         }
@@ -570,22 +569,22 @@ angular.module('chartingApp')
             restrict: 'EA',
             replace: true,
             scope: { rhqData: '@',
-                rhqChartHeight: '@',
-                rhqYaxisUnits: '@',
-                rhqButtonbarDatetimeFormat: '@',
-                rhqTimeLabel: '@',
-                rhqDateLabel: '@',
-                rhqChartHoverDateFormat: '@',
-                rhqChartHoverTimeFormat: '@',
-                rhqSingleValueLabel: '@',
-                rhqNoDataLabel: '@',
-                rhqAggregateLabel: '@',
-                rhqStartLabel: '@',
-                rhqEndLabel: '@',
-                rhqDurationLabel: '@',
-                rhqMinLabel: '@',
-                rhqMaxLabel: '@',
-                rhqAvgLabel: '@',
-                rhqChartTitle: '@'}
+                chartHeight: '@',
+                yAxisUnits: '@',
+                buttonbarDatetimeFormat: '@',
+                timeLabel: '@',
+                dateLabel: '@',
+                chartHoverDateFormat: '@',
+                chartHoverTimeFormat: '@',
+                singleValueLabel: '@',
+                noDataLabel: '@',
+                aggregateLabel: '@',
+                startLabel: '@',
+                endLabel: '@',
+                durationLabel: '@',
+                minLabel: '@',
+                maxLabel: '@',
+                avgLabel: '@',
+                chartTitle: '@'}
         };
-    });
+    }]);

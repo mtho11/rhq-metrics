@@ -7,7 +7,7 @@
  * @param {expression} insertMetricsController
  */
 angular.module('chartingApp')
-    .controller('RangeInsertController', ['$scope', '$http', 'baseUrl', function ($scope, $http, baseUrl) {
+    .controller('RangeInsertController', ['$scope', '$http', 'BASE_URL', function ($scope, $http, BASE_URL) {
         $scope.rangeInsertData = {
             timeStamp: moment().valueOf(),
             id: "",
@@ -28,7 +28,7 @@ angular.module('chartingApp')
             console.info("multi insert for: " + $scope.rangeInsertData.id);
             console.info("payload: " + $scope.rangeInsertData.jsonPayload);
             $http({
-                    url: baseUrl + '/' + $scope.rangeInsertData.id,
+                    url: BASE_URL + '/' + $scope.rangeInsertData.id,
                     method: 'POST',
                     data: $scope.rangeInsertData.jsonPayload
                 }

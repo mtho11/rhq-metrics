@@ -1,10 +1,9 @@
 <div class="panel panel-default" style="width:880px" ng-controller="ChartController">
     <div class="panel-body">
-        <div class="well">
+        <div class="well" >
             <small style="margin-left: 15px" class="graphDateTimeRangeLabel"></small>
 
             <form class="form-horizontal" role="form">
-
 
                 <div class="form-group">
                     <label class="col-sm-2 control-label">ID</label>
@@ -97,29 +96,32 @@
         <!--</nvd3-line-chart>-->
 
 
-        <!--<div id="stackedBarChart" style="height:270px" metrics-stacked-bar-chart-->
-             <!--rhq-data="{{chartData.dataPoints}}"-->
-             <!--rhq-yaxis-units=""-->
-             <!--rhq-chart-title="{{title.name}}"-->
-             <!--rhq-chart-height="250"-->
-             <!--rhq-chart-hover-date-format="%m/%d/%y"-->
-             <!--rhq-chart-hover-time-format="%I:%M:%S %p"-->
-             <!--rhq-time-label="Time"-->
-             <!--rhq-date-label="Date"-->
-             <!--rhq-buttonbar-datetime-format="MM/DD/YYYY h:mm a"-->
-             <!--rhq-single-value-label="Raw Value"-->
-             <!--rhq-no-data-label="No Data"-->
-             <!--rhq-aggregate-label="Aggregate"-->
-             <!--rhq-start-label="Start"-->
-             <!--rhq-end-label="End"-->
-             <!--rhq-duration-label="Duration"-->
-             <!--rhq-min-label="Min"-->
-             <!--rhq-max-label="Max"-->
-             <!--rhq-avg-label="Avg">-->
-        <!--</div>-->
+        <div id="stackedBarChart" style="height:270px">
+            <rhqm-stacked-bar-chart
+             data="{{chartData.dataPoints}}"
+             yaxis-units=""
+             chart-title="{{'Metrics Chart'}}"
+             chart-height="250"
+             chart-hover-date-format="%m/%d/%y"
+             chart-hover-time-format="%I:%M:%S %p"
+             time-label="Time"
+             date-label="Date"
+             buttonbar-datetime-format="MM/DD/YYYY h:mm a"
+             single-value-label="Raw Value"
+             no-data-label="No Data"
+             aggregate-label="Aggregate"
+             start-label="Start"
+             end-label="End"
+             duration-label="Duration"
+             min-label="Min"
+             max-label="Max"
+             avg-label="Avg"></rhqm-stacked-bar-chart>
+        </div>
+
+
         <div ng-show="chartData.dataPoints.length > 0">
         <h4>Data Points: {{chartData.dataPoints.length}}</h4>
-        <table class="table table-bordered" style="width:300px;">
+        <table class="table table-hover" style="width:300px;">
             <thead>
             <tr>
                 <th> Time </th>
@@ -129,7 +131,7 @@
             <tbody>
             <tr ng-repeat="chartPoint in chartData.dataPoints">
                 <td>{{chartPoint.moment.format('MMMM Do YYYY, h:mm:ss a')}}</td>
-                <td>{{chartPoint.value}}</td>
+                <td style="float:right;">{{chartPoint.value}}</td>
             </tr>
 
             </tbody>

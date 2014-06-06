@@ -7,7 +7,7 @@
  * @param {expression} StreamingController
  */
 angular.module('chartingApp')
-    .controller('StreamingController', ['$scope', '$http', '$interval', 'baseUrl', function ($scope, $http, $interval, baseUrl) {
+    .controller('StreamingController', ['$scope', '$http', '$interval', 'BASE_URL', function ($scope, $http, $interval, BASE_URL) {
         var intervalPromise   ,
             randomIntFromInterval = function(min,max)
         {
