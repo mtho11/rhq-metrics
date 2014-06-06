@@ -4,6 +4,7 @@
 
         <accordion>
             <accordion-group heading="Quick Insert" is-open="showOpenGroup">
+                <p class="text-muted">Quickly add some data to rhq-metrics.</p>
                 <form class="form-horizontal" role="form" style="height:135px;">
                     <div class="form-group">
                         <label for="quickInsertIdText" class="col-sm-1 control-label">ID</label>
@@ -51,6 +52,7 @@
 
 
             <accordion-group heading="Raw Json Insert (multiple)" >
+                <p class="text-muted">Bulk insert a bunch of records.</p>
                 <form class="form-horizontal" role="form">
                     <div class="form-group">
                         <label for="insertId" class="col-sm-2 control-label">ID</label>
@@ -85,7 +87,7 @@
 
 
             <accordion-group heading="Advanced Range Insert" ng-controller="RangeInsertController">
-                <p>Create Historical data by inserting random values of data for a date range every X minutes/hours</p>
+                <p class="text-muted">Create Historical data by inserting random values of data for a date range every X minutes/hours</p>
 
                 <form class="form-horizontal" role="form">
                     <div class="form-group">
@@ -141,7 +143,7 @@
 
 
             <accordion-group heading="Streaming Metrics" ng-controller="StreamingController">
-                <p>Create streaming metrics for the future that generate random numbers every X minutes </p>
+                <p class="text-muted">Create streaming metrics for the future that generate random numbers every X minutes </p>
                 <form class="form-horizontal" role="form">
                     <div class="form-group">
                         <label for="streamingInsertId" class="col-sm-2 control-label">ID</label>

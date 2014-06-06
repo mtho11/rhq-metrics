@@ -68,11 +68,11 @@
 
 
 
-        <rickshaw-chart color="'steelblue'" graphicaldata="chartData.rickshawDataPoints" height="200" renderer="area"
-                        showXAxis="true"
-                        showYAxis="true"
-                        width="600">
-        </rickshaw-chart>
+        <!--<rickshaw-chart color="'steelblue'" graphicaldata="chartData.rickshawDataPoints" height="200" renderer="area"-->
+                        <!--showXAxis="true"-->
+                        <!--showYAxis="true"-->
+                        <!--width="600">-->
+        <!--</rickshaw-chart>-->
 
         <!--<nvd3-stacked-area-chart-->
                 <!--data="chartData.nvd3DataPoints"-->
@@ -117,11 +117,24 @@
              <!--rhq-max-label="Max"-->
              <!--rhq-avg-label="Avg">-->
         <!--</div>-->
-        <h2>Data Points {{chartData.dataPoints.length}}</h2>
-        <ul>
-            <li  ng-repeat="chartPoint in chartData.dataPoints">
-                [{{$index + 1}}] {{chartPoint.moment.fromNow()}} -->  {{chartPoint.value}}
-            </li>
-        </ul>
+        <div ng-show="chartData.dataPoints.length > 0">
+        <h4>Data Points: {{chartData.dataPoints.length}}</h4>
+        <table class="table table-bordered" style="width:300px;">
+            <thead>
+            <tr>
+                <th> Time </th>
+                <th> Value </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="chartPoint in chartData.dataPoints">
+                <td>{{chartPoint.moment.format('MMMM Do YYYY, h:mm:ss a')}}</td>
+                <td>{{chartPoint.value}}</td>
+            </tr>
+
+            </tbody>
+
+        </table>
+        </div>
     </div>
 </div>
