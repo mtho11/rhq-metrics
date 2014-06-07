@@ -64,7 +64,7 @@ angular.module('chartingApp')
             },
             getAverage: function () {
                 return avg;
-            },
+            }
 
         };
     });
