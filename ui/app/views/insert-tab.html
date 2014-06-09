@@ -88,7 +88,7 @@
 </accordion-group>
 
 
-<accordion-group heading="Advanced Range Insert" ng-controller="RangeInsertController">
+<accordion-group heading="Advanced Range Insert" >
     <p class="text-muted">Create Historical data by inserting random values of data for a date range every X
         minutes/hours</p>
 
@@ -139,7 +139,7 @@
 
             <div class="col-sm-5">
                 <select ng-model="rangeInsertData.selectedDuration"
-                        ng-options="value for value in rangeDurations"></select>
+                        ng-options="duration for duration in rangeDurations"></select>
                 <span class="help-block"> (In Days.)</span>
             </div>
             <div class="col-sm-2">

@@ -7,7 +7,7 @@ angular.module('chartingApp')
 
         // Public API here
         return {
-            insertSingle: function (id, jsonPayload) {
+            insertPayload: function (id, jsonPayload) {
                 $http.post(BASE_URL + '/' + id, jsonPayload
                 ).success(function () {
                         toastr.success('Inserted value for ID: '+id, 'Success')
