@@ -21,12 +21,12 @@ angular.module('chartingApp')
             else {
                 return newLow;
             }
-        };
+        }
 
         // Public API here
         return {
-            setupFilteredData: function (metricsData) {
-                avgFiltered = metricsData.dataPoints.filter(function (d) {
+            setupFilteredData: function (dataPoints) {
+                avgFiltered = dataPoints.filter(function (d) {
                     if (d.nodata !== 'true') {
                         return d.value;
                     }
@@ -35,7 +35,7 @@ angular.module('chartingApp')
                     return d.value;
                 }));
 
-                peakFiltered = metricsData.dataPoints.filter(function (d) {
+                peakFiltered = dataPoints.filter(function (d) {
                     if (d.nodata !== 'true') {
                         return d.high;
                     }
@@ -44,7 +44,7 @@ angular.module('chartingApp')
                     return d.high;
                 }));
 
-                minFiltered = metricsData.dataPoints.filter(function (d) {
+                minFiltered = dataPoints.filter(function (d) {
                     if (d.nodata !== 'true') {
                         return d.low;
                     }

@@ -10,9 +10,9 @@ angular.module('chartingApp')
     .directive('rhqmStackedBarChart', ['chartDataService', function (chartDataService) {
 
         function link(scope, element, attributes) {
-            console.info("Draw Metrics Stacked Bar chart for title: " + attributes.chartTitle);
-            //
-            var metricsData,
+            console.debug("Draw Metrics Stacked Bar chart for title: " + attributes.chartTitle);
+
+            var dataPoints,
                 chartHeight = +attributes.chartHeight || 250,
                 timeLabel = attributes.timeLabel || "Time",
                 dateLabel = attributes.dateLabel || "Date",
@@ -39,7 +39,6 @@ angular.module('chartingApp')
                 titleHeight = 30, titleSpace = 10,
                 barOffset = 2,
                 chartData,
-                oobMax,
                 calcBarWidth,
                 yScale,
                 timeScale,
@@ -53,14 +52,14 @@ angular.module('chartingApp')
                 context,
                 svg;
 
-            if (attributes.data === "") {
-                console.warn("No Data");
-                return;
-            }
+//            if (attributes.data === "") {
+//                console.warn("No Data");
+//                return;
+//            }
 
-            metricsData = attributes.data;
-            console.log("Metrics Data -->");
-            console.dir(metricsData);
+            dataPoints = attributes.data;
+            console.log("dataPoints-->"+typeof dataPoints);
+            console.dir(dataPoints);
 
             function getChartWidth() {
                 //return angular.element("#" + chartContext.chartHandle).width();
@@ -73,6 +72,7 @@ angular.module('chartingApp')
 
 
             function oneTimeChartSetup() {
+                console.debug("Graph one-time setup");
                 // create the actual chart group
                 chart = d3.select(element[0]).append("svg");
 
@@ -101,10 +101,13 @@ angular.module('chartingApp')
 
             }
 
-            function determineScale() {
+            function determineScale(dataPoints) {
                 var xTicks, xTickSubDivide, numberOfBarsForSmallGraph = 20;
-                console.info("DetermineScale");
-                if (metricsData.dataPoints.length > 0) {
+                console.debug(" *** DetermineScale");
+                console.debug("dataPoints type: "+ typeof dataPoints);
+                console.dir(dataPoints);
+                console.debug("#dataPoints: "+ dataPoints.length);
+                if (dataPoints.length > 0) {
 
                     // if window is too small server up small chart
                     if (useSmallCharts()) {
@@ -112,26 +115,18 @@ angular.module('chartingApp')
                         width = 250;
                         xTicks = 3;
                         xTickSubDivide = 2;
-                        chartData = metricsData.dataPoints.slice(metricsData.dataPoints.length - numberOfBarsForSmallGraph, metricsData.dataPoints.length);
+                        chartData = dataPoints.slice(dataPoints.length - numberOfBarsForSmallGraph, dataPoints.length);
                     }
                     else {
                         //console.log("Using Large Charts Profile, width: "+ width);
                         //  we use the width already defined above
                         xTicks = 8;
                         xTickSubDivide = 5;
-                        chartData = metricsData.dataPoints;
+                        chartData = dataPoints;
                     }
 
-                    chartDataService.setupFilteredData(metricsData);
+                    chartDataService.setupFilteredData(dataPoints);
 
-                    oobMax = d3.max(metricsData.dataPoints.map(function (d) {
-                        if (typeof d.baselineMax === 'undefined') {
-                            return 0;
-                        }
-                        else {
-                            return +d.baselineMax;
-                        }
-                    }));
                     calcBarWidth = function () {
                         return (width / chartData.length - barOffset  );
                     };
@@ -139,9 +134,9 @@ angular.module('chartingApp')
                     yScale = d3.scale.linear()
                         .clamp(true)
                         .rangeRound([height, 0])
-                        .domain([d3.min(metricsData.dataPoints, function (d) {
+                        .domain([d3.min(dataPoints, function (d) {
                             return d.low;
-                        }), d3.max(metricsData.dataPoints, function (d) {
+                        }), d3.max(dataPoints, function (d) {
                             return d.high;
                         })]);
 
@@ -172,13 +167,12 @@ angular.module('chartingApp')
                         .tickSize(4, 4, 0)
                         .orient("bottom");
 
-
                 }
 
             }
 
             function isNotDataBar(d) {
-                return d.down || d.unknown || d.nodata;
+                return d.down || d.unknown || d.empty;
             }
 
             function buildHover(d) {
@@ -265,7 +259,7 @@ angular.module('chartingApp')
             }
 
 
-            function createStackedBars() {
+            function createStackedBars(lowBound, highBound) {
 
                 var pixelsOffHeight = 0;
 
@@ -279,8 +273,8 @@ angular.module('chartingApp')
                     })
                     .attr("y", function (d) {
                         if (isNotDataBar(d)) {
-                            console.log("d -->" + chartDataService.getHighBound());
-                            return yScale(chartDataService.getHighBound());
+                            console.log("d -->" + highBound);
+                            return yScale(highBound);
                         }
                         else {
                             console.log("d ***" + d.low);
@@ -289,7 +283,7 @@ angular.module('chartingApp')
                     })
                     .attr("height", function (d) {
                         if (isNotDataBar(d)) {
-                            return height - yScale(chartDataService.getHighBound()) - pixelsOffHeight;
+                            return height - yScale(highBound) - pixelsOffHeight;
                         }
                         else {
                             return height - yScale(d.low) - pixelsOffHeight;
@@ -323,7 +317,7 @@ angular.module('chartingApp')
                         return timeScale(d.timestamp);
                     })
                     .attr("y", function (d) {
-                        return isNaN(d.high) ? yScale(chartDataService.getLowBound()) : yScale(d.high);
+                        return isNaN(d.high) ? yScale(lowBound) : yScale(d.high);
                     })
                     .attr("height", function (d) {
                         if (isNotDataBar(d)) {
@@ -342,7 +336,7 @@ angular.module('chartingApp')
                     .attr("opacity", 0.9)
                     .on("mouseover", function (d) {
                         tip.show(d);
-                    }).on("mouseout", function (d) {
+                    }).on("mouseout", function () {
                         tip.hide();
                     });
 
@@ -372,7 +366,7 @@ angular.module('chartingApp')
                     .attr("opacity", 0.9)
                     .on("mouseover", function (d) {
                         tip.show(d);
-                    }).on("mouseout", function (d) {
+                    }).on("mouseout", function () {
                         tip.hide();
                     });
 
@@ -467,7 +461,7 @@ angular.module('chartingApp')
                     barAvgLine = d3.svg.line()
                         .interpolate("linear")
                         .defined(function (d) {
-                            return !d.nodata;
+                            return !d.empty;
                         })
                         .x(function (d) {
                             return timeScale(d.timestamp) + (calcBarWidth() / 2);
@@ -494,12 +488,6 @@ angular.module('chartingApp')
             }
 
 
-            function updateDateRangeDisplay(startDate, endDate) {
-                var formattedDateRange = startDate.format(buttonBarDateTimeFormat) + '  -  ' + endDate.format(buttonBarDateTimeFormat);
-                var timeRange = endDate.from(startDate, true);
-                angular.element('.graphDateTimeRangeLabel').text(formattedDateRange + '  (' + timeRange + ')');
-            }
-
             function createXAxisBrush() {
 
                 brush = d3.svg.brush()
@@ -523,7 +511,7 @@ angular.module('chartingApp')
 
                 function brushMove() {
                     var s = brush.extent();
-                    updateDateRangeDisplay(moment(s[0]), moment(s[1]));
+                    //updateDateRangeDisplay(moment(s[0]), moment(s[1]));
                 }
 
                 function brushEnd() {
@@ -534,41 +522,47 @@ angular.module('chartingApp')
                     // ignore selections less than 1 minute
                     if (endTime - startTime >= 60000) {
                         console.debug("Refresh Graph with new Range");
-                        updateDateRangeDisplay(moment(s[0]), moment(s[1]));
+                        //updateDateRangeDisplay(moment(s[0]), moment(s[1]));
                     }
                 }
             }
 
             oneTimeChartSetup();
-            determineScale();
+            determineScale(dataPoints);
             createHeader(attributes.chartTitle);
             createYAxisGridLines();
             createXAxisBrush();
-            createStackedBars();
+            createStackedBars(chartDataService.getLowBound(), chartDataService.getHighBound());
             createXandYAxes();
             createAvgLines();
            // updateDateRangeDisplay(moment(metricsData.starttimestamp), moment(metricsData.endtimestamp));
 
 
-            scope.render = function (metricsData) {
-                console.debug("Render for rhq data length of: "+metricsData.length);
-                determineScale();
-                createStackedBars();
+            scope.render = function (dataPoints) {
+                console.debug(" ** Render for rhq data length of: "+dataPoints.length);
+                determineScale(dataPoints);
+                createStackedBars(chartDataService.getLowBound(), chartDataService.getHighBound());
                 //updateDateRangeDisplay(moment(metricsData.mintimestamp), moment(metricsData.maxtimestamp));
             };
 
-            scope.$watch(attributes.data, function () {
+            scope.$watch('data', function () {
                 console.debug("watcher for rhq Data fired");
                 scope.render(scope.data);
             }, true);
 
+//            scope.$watchCollection(attributes.data, function (values) {
+//                console.debug("watcher for rhq Data fired for #: "+values.length);
+//                dataPoints = values;
+//                scope.render(scope.data);
+//            } );
         }
 
         return {
             link: link,
             restrict: 'EA',
             replace: true,
-            scope: { data: '@',
+            scope: {
+                data: '@',
                 chartHeight: '@',
                 yAxisUnits: '@',
                 buttonbarDatetimeFormat: '@',

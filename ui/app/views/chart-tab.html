@@ -102,8 +102,9 @@
     <!--interactive="true">-->
     <!--</nvd3-line-chart>-->
 
+        <div>{{chartData.dataPoints|json}}</div>
 
-    <div id="stackedBarChart" style="height:270px">
+    <div id="stackedBarChart" style="height:270px" >
         <rhqm-stacked-bar-chart
                 data="{{chartData.dataPoints}}"
                 yaxis-units=""
