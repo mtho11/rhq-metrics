@@ -107,7 +107,7 @@
         <rhqm-stacked-bar-chart
                 data="{{chartData.dataPoints}}"
                 yaxis-units=""
-                chart-title="{{'Metrics Chart'}}"
+                chart-title="{{'Metrics Id: '+restParams.searchId}}"
                 chart-height="250"
                 chart-hover-date-format="%m/%d/%y"
                 chart-hover-time-format="%I:%M:%S %p"
@@ -137,8 +137,8 @@
             </thead>
             <tbody>
             <tr ng-repeat="chartPoint in chartData.dataPoints">
-                <td>{{chartPoint.moment.format('MMMM Do YYYY, h:mm:ss a')}}</td>
-                <td style="float:right;">{{chartPoint.value}}</td>
+                <td>{{chartPoint.date | date: 'medium'}}</td>
+                <td style="float:right;">{{chartPoint.avg}}</td>
             </tr>
 
             </tbody>

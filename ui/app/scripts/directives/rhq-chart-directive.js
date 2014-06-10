@@ -550,14 +550,14 @@ angular.module('chartingApp')
            // updateDateRangeDisplay(moment(metricsData.starttimestamp), moment(metricsData.endtimestamp));
 
 
-            scope.render = function (rhqData) {
-                console.debug("Render for rhq data length of: "+rhqData.length);
+            scope.render = function (metricsData) {
+                console.debug("Render for rhq data length of: "+metricsData.length);
                 determineScale();
                 createStackedBars();
                 //updateDateRangeDisplay(moment(metricsData.mintimestamp), moment(metricsData.maxtimestamp));
             };
 
-            scope.$watch('rhqData', function () {
+            scope.$watch(attributes.data, function () {
                 console.debug("watcher for rhq Data fired");
                 scope.render(scope.data);
             }, true);
@@ -568,7 +568,7 @@ angular.module('chartingApp')
             link: link,
             restrict: 'EA',
             replace: true,
-            scope: { rhqData: '@',
+            scope: { data: '@',
                 chartHeight: '@',
                 yAxisUnits: '@',
                 buttonbarDatetimeFormat: '@',

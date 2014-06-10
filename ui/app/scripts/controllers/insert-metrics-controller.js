@@ -84,7 +84,6 @@ angular.module('chartingApp')
 
             for(var i = 0; i < numberOfDays * 24* intervalInMinutes; i = i+ intervalInMinutes) {
 
-                console.log("offset minutes: "+i);
                 var calculatedTimeInMillis =  currentTimeMoment.subtract('minutes', i).valueOf();
                 randomValue = metricDataService.createRandomValue($scope.rangeInsertData.startNumber, $scope.rangeInsertData.endNumber );
                 intervalTimestamps.push({timestamp: calculatedTimeInMillis, value : randomValue});

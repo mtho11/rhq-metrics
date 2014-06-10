@@ -48,33 +48,29 @@ angular.module('chartingApp')
                 {
                     params: {
                         start: moment($scope.restParams.startTimeStamp).valueOf(),
-                        end: moment($scope.restParams.endTimeStamp).valueOf()
+                        end: moment($scope.restParams.endTimeStamp).valueOf(),
+                        buckets: 60
                     }
                 }
             ).success(function (response) {
                     // we want to isolate the response from the data we are feeding to the chart
-                    var newDataPoints = $.map(response, function (point) {
-                        return {
-                            "timestamp": point.timestamp,
-                            "value": point.value === 'NaN' ? 0 : point.value,
-                            "moment": moment(point.timestamp)
-                        };
-                    });
+                    var bucketizedDataPoints = formatBucketizedOutput(response);
 
-                    if (newDataPoints.length !== 0) {
+                    if (bucketizedDataPoints.length !== 0) {
 
-                        console.info("# Transformed DataPoints: " + newDataPoints.length);
-                        console.dir(newDataPoints);
+                        console.info("# Transformed DataPoints: "+ bucketizedDataPoints.length);
+                        console.dir(bucketizedDataPoints);
 
                         // this is basically the DTO for the chart
                         $scope.chartData = {
                             id: $scope.restParams.id,
                             startTimeStamp: $scope.restParams.startTimeStamp,
                             endTimeStamp: $scope.restParams.endTimeStamp,
-                            dataPoints: newDataPoints
+                            dataPoints: bucketizedDataPoints
                             //nvd3DataPoints: formatForNvD3(response),
                             //rickshawDataPoints: formatForRickshaw(response)
                         };
+
                     } else {
                         console.warn('No Data found for id: ' + $scope.restParams.searchId);
                         toastr.warn('No Data found for id: ' + $scope.restParams.searchId);
@@ -85,6 +81,23 @@ angular.module('chartingApp')
                     toastr.error('Error loading graph data', 'Status: ' + status);
                 });
         };
+
+        function formatBucketizedOutput(response){
+            //  The schema is different for bucketized output
+            var bucketizedDataPoints = $.map(response, function (point) {
+                return {
+                    timestamp: point.timestamp,
+                    date: new Date(point.timestamp),
+                    value: angular.isUndefined(point.value)  ? 0 : point.value,
+                    avg: (point.empty) ? 0 : point.avg,
+                    low: angular.isUndefined(point.low)  ? 0 : point.low,
+                    high: angular.isUndefined(point.high)  ? 0 : point.high,
+                    empty: point.empty
+                };
+            });
+
+            return bucketizedDataPoints;
+        }
 
 //        function formatForNvD3(dataPoints) {
 //
