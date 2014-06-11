@@ -545,7 +545,7 @@ angular.module('chartingApp')
                 //updateDateRangeDisplay(moment(metricsData.mintimestamp), moment(metricsData.maxtimestamp));
             };
 
-            scope.$watch('data', function () {
+            scope.$watch(attributes.data, function () {
                 console.debug("watcher for rhq Data fired");
                 scope.render(scope.data);
             }, true);
