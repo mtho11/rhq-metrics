@@ -1,0 +1,17 @@
+= RHQ-Metrics UI Module
+
+== What does it do?
+The UI provides an easy UI way of inserting and viewing data in either rhq-metrics datastore: Cassandra or In-Memory.
+
+== Install
+This is a standard Grunt project generated from yeoman. 
+1. Install Node.js(and npm) if not already installed
+2. npm install grunt-cli bower
+3. npm install
+4. bower install
+5. grunt serve
+
+Grunt will automatically launch a url for you in your browser and will reload any changes to the dev environment.
+
+
+
