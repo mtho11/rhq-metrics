@@ -9,29 +9,6 @@
 angular.module('chartingApp')
     .controller('ChartController', ['$scope', '$http', 'BASE_URL', function ($scope, $http, BASE_URL) {
 
-//        $scope.text = "Angular Rickshaw stuff";
-//        $scope.title = "Angular Rickshaw";
-//        $scope.inputColor = "steelblue";
-//        $scope.graphcolor = "steelblue";
-//        $scope.inputHeight = 200;
-//        $scope.graphheight = 200;
-//        $scope.inputWidth = 200;
-//        $scope.graphwidth = 200;
-//        $scope.graphIndex = 1;
-//        $scope.inputData = 0;
-//        $scope.changeColor = function () {
-//            if (($scope.inputColor != null) && ($scope.inputColor !== "")) {
-//                $scope.graphcolor = $scope.inputColor;
-//            }
-//        };
-//        $scope.addData = function () {
-//            if (($scope.inputData != null) && ($scope.inputData !== "")) {
-//                $scope.graphdata.push({x: $scope.graphIndex, y: parseInt($scope.inputData, 10)});
-//                $scope.graphIndex++;
-//            }
-//        };
-
-
         $scope.restParams = {
             searchId: "",
             endTimeStamp: new Date(),
@@ -58,8 +35,7 @@ angular.module('chartingApp')
 
                     if (bucketizedDataPoints.length !== 0) {
 
-                        console.info("# Transformed DataPoints: "+ bucketizedDataPoints.length);
-                        console.dir(bucketizedDataPoints);
+                        console.debug("# Transformed DataPoints: "+ bucketizedDataPoints.length);
 
                         // this is basically the DTO for the chart
                         $scope.chartData = {

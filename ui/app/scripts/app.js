@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('chartingApp', [ 'ui.bootstrap', 'ui.bootstrap.datetimepicker','nvd3ChartDirectives'])
+angular.module('chartingApp', [ 'ui.bootstrap', 'ui.bootstrap.datetimepicker'])
     .constant('BASE_URL', 'http://localhost:8080/rhq-metrics/metrics')
     .constant('DATE_TIME_FORMAT', 'MM/DD/YYYY h:mm a')
     .config(function ($httpProvider) {
