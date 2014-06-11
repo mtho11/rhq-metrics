@@ -511,7 +511,7 @@ angular.module('chartingApp')
 
                 function brushMove() {
                     var s = brush.extent();
-                    //updateDateRangeDisplay(moment(s[0]), moment(s[1]));
+                    publishDateRangeChangeEvent(s[0], s[1]);
                 }
 
                 function brushEnd() {
@@ -522,8 +522,14 @@ angular.module('chartingApp')
                     // ignore selections less than 1 minute
                     if (endTime - startTime >= 60000) {
                         console.debug("Refresh Graph with new Range");
-                        //updateDateRangeDisplay(moment(s[0]), moment(s[1]));
+                        publishDateRangeChangeEvent(s[0], s[1]);
                     }
+                }
+
+                function publishDateRangeChangeEvent(startDateTime, endDateTime) {
+                    var dateRangeChangedEvent = [startDateTime, endDateTime];
+                    $emit('DateRangeChanged', dateRangeChangedEvent);
+                    $broadcast('DateRangeChanged', dateRangeChangedEvent);
                 }
             }
 
@@ -535,14 +541,12 @@ angular.module('chartingApp')
             createStackedBars(chartDataService.getLowBound(), chartDataService.getHighBound());
             createXandYAxes();
             createAvgLines();
-           // updateDateRangeDisplay(moment(metricsData.starttimestamp), moment(metricsData.endtimestamp));
 
 
             scope.render = function (dataPoints) {
                 console.debug(" ** Render for rhq data length of: "+dataPoints.length);
                 determineScale(dataPoints);
                 createStackedBars(chartDataService.getLowBound(), chartDataService.getHighBound());
-                //updateDateRangeDisplay(moment(metricsData.mintimestamp), moment(metricsData.maxtimestamp));
             };
 
             scope.$watch(attributes.data, function () {
