@@ -7,8 +7,8 @@
  * @param {expression} rhqmStackedBarChart
  */
 angular.module('chartingApp')
-    .directive('rhqmStackedBarChart', ['chartDataService', function (chartDataService) {
-        var  tempData = [{"timestamp":1402500552827,"date":"2014-06-11T15:29:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402501032827,"date":"2014-06-11T15:37:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402501512827,"date":"2014-06-11T15:45:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402501992827,"date":"2014-06-11T15:53:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402502472827,"date":"2014-06-11T16:01:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402502952827,"date":"2014-06-11T16:09:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402503432827,"date":"2014-06-11T16:17:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402503912827,"date":"2014-06-11T16:25:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402504392827,"date":"2014-06-11T16:33:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402504872827,"date":"2014-06-11T16:41:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402505352827,"date":"2014-06-11T16:49:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402505832827,"date":"2014-06-11T16:57:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402506312827,"date":"2014-06-11T17:05:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402506792827,"date":"2014-06-11T17:13:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402507272827,"date":"2014-06-11T17:21:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402507752827,"date":"2014-06-11T17:29:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402508232827,"date":"2014-06-11T17:37:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402508712827,"date":"2014-06-11T17:45:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402509192827,"date":"2014-06-11T17:53:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402509672827,"date":"2014-06-11T18:01:12.827Z","value":0,"avg":18,"low":0,"high":0,"empty":false},{"timestamp":1402510152827,"date":"2014-06-11T18:09:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402510632827,"date":"2014-06-11T18:17:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402511112827,"date":"2014-06-11T18:25:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402511592827,"date":"2014-06-11T18:33:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402512072827,"date":"2014-06-11T18:41:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402512552827,"date":"2014-06-11T18:49:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402513032827,"date":"2014-06-11T18:57:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402513512827,"date":"2014-06-11T19:05:12.827Z","value":0,"avg":12,"low":0,"high":0,"empty":false},{"timestamp":1402513992827,"date":"2014-06-11T19:13:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402514472827,"date":"2014-06-11T19:21:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402514952827,"date":"2014-06-11T19:29:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402515432827,"date":"2014-06-11T19:37:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402515912827,"date":"2014-06-11T19:45:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402516392827,"date":"2014-06-11T19:53:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402516872827,"date":"2014-06-11T20:01:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402517352827,"date":"2014-06-11T20:09:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402517832827,"date":"2014-06-11T20:17:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402518312827,"date":"2014-06-11T20:25:12.827Z","value":0,"avg":14,"low":0,"high":0,"empty":false},{"timestamp":1402518792827,"date":"2014-06-11T20:33:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402519272827,"date":"2014-06-11T20:41:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402519752827,"date":"2014-06-11T20:49:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402520232827,"date":"2014-06-11T20:57:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402520712827,"date":"2014-06-11T21:05:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402521192827,"date":"2014-06-11T21:13:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402521672827,"date":"2014-06-11T21:21:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402522152827,"date":"2014-06-11T21:29:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402522632827,"date":"2014-06-11T21:37:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402523112827,"date":"2014-06-11T21:45:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402523592827,"date":"2014-06-11T21:53:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402524072827,"date":"2014-06-11T22:01:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402524552827,"date":"2014-06-11T22:09:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402525032827,"date":"2014-06-11T22:17:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402525512827,"date":"2014-06-11T22:25:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402525992827,"date":"2014-06-11T22:33:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402526472827,"date":"2014-06-11T22:41:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402526952827,"date":"2014-06-11T22:49:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402527432827,"date":"2014-06-11T22:57:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402527912827,"date":"2014-06-11T23:05:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402528392827,"date":"2014-06-11T23:13:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402528872827,"date":"2014-06-11T23:21:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true}]
+    .directive('rhqmStackedBarChart',  function () {
+        var  tempData = [{"timestamp":1402500552827,"date":"2014-06-11T15:29:12.827Z","value":0,"avg":10,"min":5,"max":15,"empty":false},{"timestamp":1402501032827,"date":"2014-06-11T15:37:12.827Z","value":0,"avg":0,"min":0,"max":0,"empty":true},{"timestamp":1402501512827,"date":"2014-06-11T15:45:12.827Z","value":0,"avg":0,"min":0,"max":0,"empty":true},{"timestamp":1402501992827,"date":"2014-06-11T15:53:12.827Z","value":0,"avg":0,"min":0,"max":0,"empty":true},{"timestamp":1402502472827,"date":"2014-06-11T16:01:12.827Z","value":0,"avg":8,"min":7,"max":9,"empty":false},{"timestamp":1402502952827,"date":"2014-06-11T16:09:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402503432827,"date":"2014-06-11T16:17:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402503912827,"date":"2014-06-11T16:25:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402504392827,"date":"2014-06-11T16:33:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402504872827,"date":"2014-06-11T16:41:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402505352827,"date":"2014-06-11T16:49:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402505832827,"date":"2014-06-11T16:57:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402506312827,"date":"2014-06-11T17:05:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402506792827,"date":"2014-06-11T17:13:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402507272827,"date":"2014-06-11T17:21:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402507752827,"date":"2014-06-11T17:29:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402508232827,"date":"2014-06-11T17:37:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402508712827,"date":"2014-06-11T17:45:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402509192827,"date":"2014-06-11T17:53:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402509672827,"date":"2014-06-11T18:01:12.827Z","value":0,"avg":18,"low":0,"high":0,"empty":false},{"timestamp":1402510152827,"date":"2014-06-11T18:09:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402510632827,"date":"2014-06-11T18:17:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402511112827,"date":"2014-06-11T18:25:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402511592827,"date":"2014-06-11T18:33:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402512072827,"date":"2014-06-11T18:41:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402512552827,"date":"2014-06-11T18:49:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402513032827,"date":"2014-06-11T18:57:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402513512827,"date":"2014-06-11T19:05:12.827Z","value":0,"avg":12,"low":0,"high":0,"empty":false},{"timestamp":1402513992827,"date":"2014-06-11T19:13:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402514472827,"date":"2014-06-11T19:21:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402514952827,"date":"2014-06-11T19:29:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402515432827,"date":"2014-06-11T19:37:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402515912827,"date":"2014-06-11T19:45:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402516392827,"date":"2014-06-11T19:53:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402516872827,"date":"2014-06-11T20:01:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402517352827,"date":"2014-06-11T20:09:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402517832827,"date":"2014-06-11T20:17:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402518312827,"date":"2014-06-11T20:25:12.827Z","value":0,"avg":14,"low":0,"high":0,"empty":false},{"timestamp":1402518792827,"date":"2014-06-11T20:33:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402519272827,"date":"2014-06-11T20:41:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402519752827,"date":"2014-06-11T20:49:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402520232827,"date":"2014-06-11T20:57:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402520712827,"date":"2014-06-11T21:05:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402521192827,"date":"2014-06-11T21:13:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402521672827,"date":"2014-06-11T21:21:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402522152827,"date":"2014-06-11T21:29:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402522632827,"date":"2014-06-11T21:37:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402523112827,"date":"2014-06-11T21:45:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402523592827,"date":"2014-06-11T21:53:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402524072827,"date":"2014-06-11T22:01:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402524552827,"date":"2014-06-11T22:09:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402525032827,"date":"2014-06-11T22:17:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402525512827,"date":"2014-06-11T22:25:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402525992827,"date":"2014-06-11T22:33:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402526472827,"date":"2014-06-11T22:41:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402526952827,"date":"2014-06-11T22:49:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402527432827,"date":"2014-06-11T22:57:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402527912827,"date":"2014-06-11T23:05:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402528392827,"date":"2014-06-11T23:13:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402528872827,"date":"2014-06-11T23:21:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true}]
 
         function link(scope, element, attributes) {
             console.debug("Draw Metrics Stacked Bar chart for title: " + attributes.chartTitle);
@@ -51,7 +51,13 @@ angular.module('chartingApp')
                 timeScaleForBrush,
                 chart,
                 context,
-                svg;
+                svg,
+                lowBound,
+                newLow = 0,
+                highBound,
+                avg,
+                peak,
+                min;
 
 //            if (attributes.data === "") {
 //                console.warn("No Data");
@@ -61,7 +67,7 @@ angular.module('chartingApp')
             //dataPoints = attributes.data;
             dataPoints = tempData;
 
-            console.log("dataPoints-->"+typeof dataPoints);
+            console.log("dataPoints-->" + typeof dataPoints);
             console.dir(dataPoints);
 
             function getChartWidth() {
@@ -77,6 +83,9 @@ angular.module('chartingApp')
             function oneTimeChartSetup() {
                 console.debug("oneTimeChartSetup");
                 // create the actual chart group
+                if(angular.isDefined(chart)){
+                    chart.selectAll('*').remove();
+                }
                 chart = d3.select(element[0]).append("svg");
 
                 createSvgDefs(chart);
@@ -104,12 +113,44 @@ angular.module('chartingApp')
 
             }
 
+
+            // adjust the min scale so blue low line is not in axis
+            function determineLowBound(min) {
+                newLow = min;
+                if (newLow < 0) {
+                    return 0;
+                }
+                else {
+                    return newLow;
+                }
+            }
+
+            function setupFilteredData (dataPoints) {
+                console.log("SetupFilteredData");
+                avg = d3.mean(dataPoints.map(function (d) {
+                    return !d.empty ? d.avg : 0;
+                }));
+
+                peak = d3.max(dataPoints.map(function (d) {
+                    return !d.empty ? d.max : 0;
+                }));
+
+                min = d3.min(dataPoints.map(function (d) {
+                    return !d.empty ? d.min : 0;
+                }));
+                lowBound = determineLowBound(min);
+                highBound = peak + ((peak - min) * 0.1);
+                console.log("Highbound = "+highBound);
+                console.log("peak = "+peak);
+
+            }
+
             function determineScale(dataPoints) {
                 var xTicks, xTickSubDivide, numberOfBarsForSmallGraph = 20;
                 console.debug(" *** DetermineScale");
-                console.debug("dataPoints type: "+ typeof dataPoints);
+                console.debug("dataPoints type: " + typeof dataPoints);
                 console.dir(dataPoints);
-                console.debug("#dataPoints: "+ dataPoints.length);
+                console.debug("#dataPoints: " + dataPoints.length);
 
                 if (dataPoints.length > 0) {
 
@@ -129,7 +170,7 @@ angular.module('chartingApp')
                         chartData = dataPoints;
                     }
 
-                    chartDataService.setupFilteredData(dataPoints);
+                    setupFilteredData(dataPoints);
 
                     calcBarWidth = function () {
                         return (width / chartData.length - barOffset  );
@@ -176,12 +217,13 @@ angular.module('chartingApp')
             }
 
             function isEmptyDataBar(d) {
-                return  d.empty ;
+                return  d.empty;
             }
 
             function isRawMetric(d) {
-                return  d.value ;
+                return  d.value;
             }
+
 
             function buildHover(d) {
                 var hover,
@@ -541,20 +583,20 @@ angular.module('chartingApp')
                 }
             }
 
-            oneTimeChartSetup();
-            determineScale(dataPoints);
-            createHeader(attributes.chartTitle);
-            createYAxisGridLines();
-            createXAxisBrush();
-            createStackedBars(chartDataService.getLowBound(), chartDataService.getHighBound());
-            createXandYAxes();
-            createAvgLines();
-
-
             scope.render = function (dataPoints) {
-                console.debug(" ** Render for rhq data length of: "+dataPoints.length);
+                console.debug(" ** Render for rhq data length of: " + dataPoints.length);
+                // firstly, remove all previous renderings
+//                determineScale(dataPoints);
+//                createStackedBars(chartDataService.getLowBound(), chartDataService.getHighBound());
+
+                oneTimeChartSetup();
                 determineScale(dataPoints);
-                createStackedBars(chartDataService.getLowBound(), chartDataService.getHighBound());
+                createHeader(attributes.chartTitle);
+                createYAxisGridLines();
+                createXAxisBrush();
+                createStackedBars(lowBound, highBound);
+                createXandYAxes();
+                createAvgLines();
             };
 
             scope.$watch(attributes.data, function () {
@@ -594,4 +636,4 @@ angular.module('chartingApp')
                 avgLabel: '@',
                 chartTitle: '@'}
         };
-    }]);
+    });
