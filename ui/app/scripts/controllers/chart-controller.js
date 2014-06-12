@@ -46,6 +46,7 @@ angular.module('chartingApp')
                             //nvd3DataPoints: formatForNvD3(response),
                             //rickshawDataPoints: formatForRickshaw(response)
                         };
+                        console.log("Done getting chart data");
 
                     } else {
                         console.warn('No Data found for id: ' + $scope.restParams.searchId);
@@ -60,7 +61,7 @@ angular.module('chartingApp')
 
         function formatBucketizedOutput(response){
             //  The schema is different for bucketized output
-            var bucketizedDataPoints = $.map(response, function (point) {
+            return $.map(response, function (point) {
                 return {
                     timestamp: point.timestamp,
                     date: new Date(point.timestamp),
@@ -72,7 +73,6 @@ angular.module('chartingApp')
                 };
             });
 
-            return bucketizedDataPoints;
         }
 
 //        function formatForNvD3(dataPoints) {
