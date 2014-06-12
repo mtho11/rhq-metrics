@@ -66,8 +66,8 @@ angular.module('chartingApp')
                     date: new Date(point.timestamp),
                     value: angular.isUndefined(point.value)  ? 0 : point.value,
                     avg: (point.empty) ? 0 : point.avg,
-                    low: angular.isUndefined(point.low)  ? 0 : point.low,
-                    high: angular.isUndefined(point.high)  ? 0 : point.high,
+                    min: angular.isUndefined(point.min)  ? 0 : point.min,
+                    max: angular.isUndefined(point.max)  ? 0 : point.max,
                     empty: point.empty
                 };
             });

@@ -8,6 +8,7 @@
  */
 angular.module('chartingApp')
     .directive('rhqmStackedBarChart', ['chartDataService', function (chartDataService) {
+        var  tempData = [{"timestamp":1402500552827,"date":"2014-06-11T15:29:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402501032827,"date":"2014-06-11T15:37:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402501512827,"date":"2014-06-11T15:45:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402501992827,"date":"2014-06-11T15:53:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402502472827,"date":"2014-06-11T16:01:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402502952827,"date":"2014-06-11T16:09:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402503432827,"date":"2014-06-11T16:17:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402503912827,"date":"2014-06-11T16:25:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402504392827,"date":"2014-06-11T16:33:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402504872827,"date":"2014-06-11T16:41:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402505352827,"date":"2014-06-11T16:49:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402505832827,"date":"2014-06-11T16:57:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402506312827,"date":"2014-06-11T17:05:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402506792827,"date":"2014-06-11T17:13:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402507272827,"date":"2014-06-11T17:21:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402507752827,"date":"2014-06-11T17:29:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402508232827,"date":"2014-06-11T17:37:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402508712827,"date":"2014-06-11T17:45:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402509192827,"date":"2014-06-11T17:53:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402509672827,"date":"2014-06-11T18:01:12.827Z","value":0,"avg":18,"low":0,"high":0,"empty":false},{"timestamp":1402510152827,"date":"2014-06-11T18:09:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402510632827,"date":"2014-06-11T18:17:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402511112827,"date":"2014-06-11T18:25:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402511592827,"date":"2014-06-11T18:33:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402512072827,"date":"2014-06-11T18:41:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402512552827,"date":"2014-06-11T18:49:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402513032827,"date":"2014-06-11T18:57:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402513512827,"date":"2014-06-11T19:05:12.827Z","value":0,"avg":12,"low":0,"high":0,"empty":false},{"timestamp":1402513992827,"date":"2014-06-11T19:13:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402514472827,"date":"2014-06-11T19:21:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402514952827,"date":"2014-06-11T19:29:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402515432827,"date":"2014-06-11T19:37:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402515912827,"date":"2014-06-11T19:45:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402516392827,"date":"2014-06-11T19:53:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402516872827,"date":"2014-06-11T20:01:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402517352827,"date":"2014-06-11T20:09:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402517832827,"date":"2014-06-11T20:17:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402518312827,"date":"2014-06-11T20:25:12.827Z","value":0,"avg":14,"low":0,"high":0,"empty":false},{"timestamp":1402518792827,"date":"2014-06-11T20:33:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402519272827,"date":"2014-06-11T20:41:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402519752827,"date":"2014-06-11T20:49:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402520232827,"date":"2014-06-11T20:57:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402520712827,"date":"2014-06-11T21:05:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402521192827,"date":"2014-06-11T21:13:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402521672827,"date":"2014-06-11T21:21:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402522152827,"date":"2014-06-11T21:29:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402522632827,"date":"2014-06-11T21:37:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402523112827,"date":"2014-06-11T21:45:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402523592827,"date":"2014-06-11T21:53:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402524072827,"date":"2014-06-11T22:01:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402524552827,"date":"2014-06-11T22:09:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402525032827,"date":"2014-06-11T22:17:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402525512827,"date":"2014-06-11T22:25:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402525992827,"date":"2014-06-11T22:33:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402526472827,"date":"2014-06-11T22:41:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402526952827,"date":"2014-06-11T22:49:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402527432827,"date":"2014-06-11T22:57:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402527912827,"date":"2014-06-11T23:05:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402528392827,"date":"2014-06-11T23:13:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true},{"timestamp":1402528872827,"date":"2014-06-11T23:21:12.827Z","value":0,"avg":0,"low":0,"high":0,"empty":true}]
 
         function link(scope, element, attributes) {
             console.debug("Draw Metrics Stacked Bar chart for title: " + attributes.chartTitle);
@@ -57,7 +58,9 @@ angular.module('chartingApp')
 //                return;
 //            }
 
-            dataPoints = attributes.data;
+            //dataPoints = attributes.data;
+            dataPoints = tempData;
+
             console.log("dataPoints-->"+typeof dataPoints);
             console.dir(dataPoints);
 
@@ -72,7 +75,7 @@ angular.module('chartingApp')
 
 
             function oneTimeChartSetup() {
-                console.debug("Graph one-time setup");
+                console.debug("oneTimeChartSetup");
                 // create the actual chart group
                 chart = d3.select(element[0]).append("svg");
 
@@ -107,6 +110,7 @@ angular.module('chartingApp')
                 console.debug("dataPoints type: "+ typeof dataPoints);
                 console.dir(dataPoints);
                 console.debug("#dataPoints: "+ dataPoints.length);
+
                 if (dataPoints.length > 0) {
 
                     // if window is too small server up small chart
@@ -135,9 +139,9 @@ angular.module('chartingApp')
                         .clamp(true)
                         .rangeRound([height, 0])
                         .domain([d3.min(dataPoints, function (d) {
-                            return d.low;
+                            return d.min;
                         }), d3.max(dataPoints, function (d) {
-                            return d.high;
+                            return d.max;
                         })]);
 
                     yAxis = d3.svg.axis()
@@ -171,20 +175,24 @@ angular.module('chartingApp')
 
             }
 
-            function isNotDataBar(d) {
-                return d.down || d.unknown || d.empty;
+            function isEmptyDataBar(d) {
+                return  d.empty ;
+            }
+
+            function isRawMetric(d) {
+                return  d.value ;
             }
 
             function buildHover(d) {
                 var hover,
                     formattedDateTime = moment(d.timestamp).format(buttonBarDateTimeFormat);
 
-                if (isNotDataBar(d)) {
+                if (isEmptyDataBar(d)) {
                     // nodata
                     hover = "<small>" + noDataLabel + "</small><hr/>" +
                         '<div><small><span style="color: #d3d3d3;">timestamp: </span>' + '<span>' + formattedDateTime + '</span>' + '</small></div>';
                 } else {
-                    if (+d.high === +d.low) {
+                    if (+d.max === +d.min) {
                         // raw single value from raw table
                         hover = '<div><small><span style="color: #d3d3d3;">timestamp: </span>' + '<span>' + formattedDateTime + '</span>' + '</small></div><hr/>' +
                             '<div><small><span style="color: #d3d3d3;">' + singleValueLabel + '</span><span>: </span><span>' + d.value + '</span></small> </div> ';
@@ -272,21 +280,21 @@ angular.module('chartingApp')
                         return timeScale(d.timestamp);
                     })
                     .attr("y", function (d) {
-                        if (isNotDataBar(d)) {
+                        if (!isEmptyDataBar(d)) {
                             console.log("d -->" + highBound);
                             return yScale(highBound);
                         }
                         else {
-                            console.log("d ***" + d.low);
-                            return yScale(d.low);
+                            console.log("d ***" + d.min);
+                            return yScale(d.min);
                         }
                     })
                     .attr("height", function (d) {
-                        if (isNotDataBar(d)) {
+                        if (!isEmptyDataBar(d)) {
                             return height - yScale(highBound) - pixelsOffHeight;
                         }
                         else {
-                            return height - yScale(d.low) - pixelsOffHeight;
+                            return height - yScale(d.min) - pixelsOffHeight;
                         }
                     })
                     .attr("width", function () {
@@ -295,7 +303,7 @@ angular.module('chartingApp')
 
                     .attr("opacity", ".9")
                     .attr("fill", function (d) {
-                        if (isNotDataBar(d)) {
+                        if (isEmptyDataBar(d)) {
                             return  "url(#noDataStripes)";
                         }
                         else {
@@ -317,14 +325,14 @@ angular.module('chartingApp')
                         return timeScale(d.timestamp);
                     })
                     .attr("y", function (d) {
-                        return isNaN(d.high) ? yScale(lowBound) : yScale(d.high);
+                        return isNaN(d.max) ? yScale(lowBound) : yScale(d.max);
                     })
                     .attr("height", function (d) {
-                        if (isNotDataBar(d)) {
+                        if (isEmptyDataBar(d)) {
                             return 0;
                         }
                         else {
-                            return  yScale(d.value) - yScale(d.high);
+                            return  yScale(d.value) - yScale(d.max);
                         }
                     })
                     .attr("width", function () {
@@ -353,11 +361,11 @@ angular.module('chartingApp')
                         return isNaN(d.value) ? height : yScale(d.value);
                     })
                     .attr("height", function (d) {
-                        if (isNotDataBar(d)) {
+                        if (isEmptyDataBar(d)) {
                             return 0;
                         }
                         else {
-                            return  yScale(d.low) - yScale(d.value);
+                            return  yScale(d.min) - yScale(d.value);
                         }
                     })
                     .attr("width", function () {
@@ -382,12 +390,12 @@ angular.module('chartingApp')
                         return isNaN(d.value) ? height : yScale(d.value) - 2;
                     })
                     .attr("height", function (d) {
-                        if (isNotDataBar(d)) {
+                        if (isEmptyDataBar(d)) {
                             return 0;
                         }
                         else {
-                            if (d.low === d.high) {
-                                return  yScale(d.low) - yScale(d.value) + 2;
+                            if (d.min === d.max) {
+                                return  yScale(d.min) - yScale(d.value) + 2;
                             }
                             else {
                                 return  0;
@@ -399,7 +407,7 @@ angular.module('chartingApp')
                     })
                     .attr("opacity", 0.9)
                     .attr("fill", function (d) {
-                        if (d.low === d.high) {
+                        if (d.min === d.max) {
                             return  "#50505a";
                         }
                         else {
@@ -511,7 +519,7 @@ angular.module('chartingApp')
 
                 function brushMove() {
                     var s = brush.extent();
-                    publishDateRangeChangeEvent(s[0], s[1]);
+                    //publishDateRangeChangeEvent(s[0], s[1]);
                 }
 
                 function brushEnd() {
@@ -522,7 +530,7 @@ angular.module('chartingApp')
                     // ignore selections less than 1 minute
                     if (endTime - startTime >= 60000) {
                         console.debug("Refresh Graph with new Range");
-                        publishDateRangeChangeEvent(s[0], s[1]);
+                        //publishDateRangeChangeEvent(startTime, endTime);
                     }
                 }
 
@@ -550,8 +558,9 @@ angular.module('chartingApp')
             };
 
             scope.$watch(attributes.data, function () {
-                console.debug("watcher for rhq Data fired");
-                scope.render(scope.data);
+                console.debug("watcher for rhq chart Data fired");
+                //scope.render(scope.data);
+                scope.render(tempData);
             }, true);
 
 //            scope.$watchCollection(attributes.data, function (values) {

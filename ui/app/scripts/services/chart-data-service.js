@@ -5,11 +5,8 @@ angular.module('chartingApp')
         var lowBound,
             newLow = 0,
             highBound,
-            avgFiltered,
             avg,
             peak,
-            peakFiltered,
-            minFiltered,
             min;
 
         // adjust the min scale so blue low line is not in axis
@@ -26,34 +23,22 @@ angular.module('chartingApp')
         // Public API here
         return {
             setupFilteredData: function (dataPoints) {
-                avgFiltered = dataPoints.filter(function (d) {
-                    if (d.nodata !== 'true') {
-                        return d.value;
-                    }
-                });
-                avg = d3.mean(avgFiltered.map(function (d) {
+                console.log("SetupFilteredData");
+                avg = d3.mean(dataPoints.map(function (d) {
                     return d.value;
                 }));
 
-                peakFiltered = dataPoints.filter(function (d) {
-                    if (d.nodata !== 'true') {
-                        return d.high;
-                    }
-                });
-                peak = d3.max(peakFiltered.map(function (d) {
-                    return d.high;
+                peak = d3.max(dataPoints.map(function (d) {
+                    return d.max;
                 }));
 
-                minFiltered = dataPoints.filter(function (d) {
-                    if (d.nodata !== 'true') {
-                        return d.low;
-                    }
-                });
-                min = d3.min(minFiltered.map(function (d) {
-                    return d.low;
+                min = d3.min(dataPoints.map(function (d) {
+                    return d.min;
                 }));
                 lowBound = determineLowBound(min);
                 highBound = peak + ((peak - min) * 0.1);
+                console.log("Highbound = "+highBound);
+                console.log("peak = "+peak);
 
             },
             getLowBound: function () {
