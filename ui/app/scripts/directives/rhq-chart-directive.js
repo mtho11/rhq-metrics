@@ -38,7 +38,7 @@ angular.module('chartingApp')
                 height = adjustedChartHeight - margin.top - margin.bottom,
                 smallChartThresholdInPixels = 600,
                 titleHeight = 30, titleSpace = 10,
-                newChartHeight = height + margin.top - titleHeight - titleSpace + margin.bottom,
+                innerChartHeight = height + margin.top - titleHeight - titleSpace + margin.bottom,
                 adjustedChartHeight2 = +titleHeight + titleSpace + margin.top,
                 barOffset = 2,
                 chartData,
@@ -52,6 +52,7 @@ angular.module('chartingApp')
                 brushGroup,
                 timeScaleForBrush,
                 chart,
+                chartParent,
                 context,
                 svg,
                 lowBound,
@@ -84,11 +85,12 @@ angular.module('chartingApp')
 
             function oneTimeChartSetup() {
                 console.debug("oneTimeChartSetup");
-                // create the actual chart group
+                // destroy any previous charts
                 if (angular.isDefined(chart)) {
-                    chart.selectAll('*').remove();
+                    chartParent.selectAll('*').remove();
                 }
-                chart = d3.select(element[0]).append("svg");
+                chartParent = d3.select(element[0]);
+                chart = chartParent.append("svg");
 
                 createSvgDefs(chart);
 
@@ -99,10 +101,9 @@ angular.module('chartingApp')
                         return buildHover(d);
                     });
 
-
                 svg = chart.append("g")
                     .attr("width", width + margin.left + margin.right)
-                    .attr("height", newChartHeight)
+                    .attr("height", innerChartHeight)
                     .attr("transform", "translate(" + margin.left + "," + (adjustedChartHeight2) + ")");
 
                 context = svg.append("g")
@@ -593,7 +594,6 @@ angular.module('chartingApp')
                     return scope.render(processedNewValues);
                 }
             }, true);
-
 
 
             scope.render = function (dataPoints) {
