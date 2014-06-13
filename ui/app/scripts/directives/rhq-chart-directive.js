@@ -38,6 +38,8 @@ angular.module('chartingApp')
                 height = adjustedChartHeight - margin.top - margin.bottom,
                 smallChartThresholdInPixels = 600,
                 titleHeight = 30, titleSpace = 10,
+                newChartHeight = height + margin.top - titleHeight - titleSpace + margin.bottom,
+                adjustedChartHeight2 = +titleHeight + titleSpace + margin.top,
                 barOffset = 2,
                 chartData,
                 calcBarWidth,
@@ -100,14 +102,14 @@ angular.module('chartingApp')
 
                 svg = chart.append("g")
                     .attr("width", width + margin.left + margin.right)
-                    .attr("height", height + margin.top - titleHeight - titleSpace + margin.bottom)
-                    .attr("transform", "translate(" + margin.left + "," + (+titleHeight + titleSpace + margin.top) + ")");
+                    .attr("height", newChartHeight)
+                    .attr("transform", "translate(" + margin.left + "," + (adjustedChartHeight2) + ")");
 
                 context = svg.append("g")
                     .attr("class", "context")
                     .attr("width", width + margin.left + margin.right)
                     .attr("height", chartHeight)
-                    .attr("transform", "translate(" + margin2.left + "," + (+titleHeight + titleSpace + margin.top + 90) + ")");
+                    .attr("transform", "translate(" + margin2.left + "," + (adjustedChartHeight2 + 90) + ")");
 
                 svg.call(tip);
 
@@ -585,9 +587,14 @@ angular.module('chartingApp')
 
             scope.$watch('data', function (newValues) {
                 console.debug("watcher for rhq chart Data fired");
-                var processedNewValues = angular.fromJson(newValues);
-                return scope.render(processedNewValues);
+                if (angular.isDefined(newValues)) {
+                    var processedNewValues = angular.fromJson(newValues);
+                    console.log("Watcher Values:"+newValues);
+                    return scope.render(processedNewValues);
+                }
             }, true);
+
+
 
             scope.render = function (dataPoints) {
                 oneTimeChartSetup();
@@ -602,8 +609,6 @@ angular.module('chartingApp')
                     createAvgLines();
                 }
             };
-
-
         }
 
         return {
