@@ -26,13 +26,18 @@ angular.module('chartingApp')
                 minLabel = attributes.minLabel || "Min",
                 maxLabel = attributes.maxLabel || "Max",
                 avgLabel = attributes.avgLabel || "Avg",
+                timestampLabel = attributes.timestampLabel || "Timestamp",
+                highBarColor = attributes.highBarColor || "#1794bc",
+                lowBarColor = attributes.lowBarColor || "#70c4e2",
+                leaderBarColor = attributes.leaderBarColor || "#d3d3d6",
+                avgLineColor = attributes.avgLineColor || "#2e376a",
                 chartHoverDateFormat = attributes.chartHoverDateFormat || "%m/%d/%y",
                 chartHoverTimeFormat = attributes.chartHoverTimeFormat || "%I:%M:%S %p",
                 buttonBarDateTimeFormat = attributes.buttonbarDatetimeFormat || "MM/DD/YYYY h:mm a";
 
             // chart specific vars
             var margin = {top: 10, right: 5, bottom: 5, left: 90},
-                margin2 = {top: 150, right: 5, bottom: 5, left: 90},
+                contextMargin = {top: 150, right: 5, bottom: 5, left: 90},
                 width = 750 - margin.left - margin.right,
                 adjustedChartHeight = chartHeight - 50,
                 height = adjustedChartHeight - margin.top - margin.bottom,
@@ -105,7 +110,7 @@ angular.module('chartingApp')
                     .attr("class", "context")
                     .attr("width", width + margin.left + margin.right)
                     .attr("height", chartHeight)
-                    .attr("transform", "translate(" + margin2.left + "," + (adjustedChartHeight2 + 90) + ")");
+                    .attr("transform", "translate(" + contextMargin.left + "," + (adjustedChartHeight2 + 90) + ")");
 
                 svg.call(tip);
 
@@ -323,7 +328,6 @@ angular.module('chartingApp')
                     })
                     .attr("y", function (d) {
                         if (!isEmptyDataBar(d)) {
-                            console.log("d -->" + lowBound);
                             return yScale(d.min);
                         }
                         else {
@@ -342,7 +346,7 @@ angular.module('chartingApp')
                         return  calcBarWidth();
                     })
 
-                    .attr("opacity", ".8")
+                    .attr("opacity", ".6")
                     .attr("fill", function (d) {
                         if (isEmptyDataBar(d)) {
                             return  "url(#noDataStripes)";
@@ -628,6 +632,11 @@ angular.module('chartingApp')
                 minLabel: '@',
                 maxLabel: '@',
                 avgLabel: '@',
+                timestampLabel: '@',
+                highBarColor: '@',
+                lowBarColor: '@',
+                leaderBarColor: '@',
+                avgLineColor: '@',
                 chartTitle: '@'}
         };
     });
