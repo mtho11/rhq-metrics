@@ -5,11 +5,11 @@ The UI provides an easy UI way of inserting and viewing data in either rhq-metri
 
 == Install
 This is a standard Grunt project generated from yeoman. 
-1. Install Node.js(and npm) if not already installed
-2. npm install grunt-cli bower
-3. npm install
-4. bower install
-5. grunt serve
+1. Install http://nodejs.org[Node.js, role="external" window="_blank"] (and npm) if not already installed
+2. npm install grunt-cli bower -g
+3. Install npm packages: npm install
+4. Install Bower packages: bower install
+5. Start the Server: grunt serve
 
 Grunt will automatically launch a url for you in your browser and will reload any changes to the dev environment.
 

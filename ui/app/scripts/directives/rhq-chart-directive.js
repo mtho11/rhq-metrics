@@ -325,17 +325,18 @@ angular.module('chartingApp')
                         return timeScale(d.timestamp);
                     })
                     .attr("y", function (d) {
-                        if (!isEmptyDataBar(d)) {
-                            console.log("d -->" + highBound);
-                            return yScale(highBound);
-                        }
-                        else {
-                            console.log("d ***" + d.min);
-                            return yScale(d.min);
-                        }
+                        return 0;
+//                        if (!isEmptyDataBar(d)) {
+//                            console.log("d -->" + highBound);
+//                            return yScale(highBound);
+//                        }
+//                        else {
+//                            console.log("d ***" + d.min);
+//                            return yScale(d.min);
+//                        }
                     })
                     .attr("height", function (d) {
-                        if (!isEmptyDataBar(d)) {
+                        if (isEmptyDataBar(d)) {
                             return height - yScale(highBound) - pixelsOffHeight;
                         }
                         else {
@@ -597,8 +598,8 @@ angular.module('chartingApp')
 
 
             scope.render = function (dataPoints) {
-                oneTimeChartSetup();
                 if (angular.isDefined(dataPoints)) {
+                    oneTimeChartSetup();
                     console.debug(" ** Render for rhq data length of: " + dataPoints.length);
                     determineScale(dataPoints);
                     createHeader(attributes.chartTitle);
