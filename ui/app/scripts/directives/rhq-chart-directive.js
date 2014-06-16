@@ -117,16 +117,6 @@ angular.module('chartingApp')
             }
 
 
-//            // adjust the min scale so blue low line is not in axis
-//            function determineLowBound(min) {
-//                newLow = min;
-//                if (newLow < 0) {
-//                    return 0;
-//                }
-//                else {
-//                    return newLow;
-//                }
-//            }
 
             function setupFilteredData(dataPoints) {
                 console.log("SetupFilteredData");
@@ -139,9 +129,9 @@ angular.module('chartingApp')
                 }));
 
                 min = d3.min(dataPoints.map(function (d) {
-                    return !d.empty ? d.min : 0;
+                    return !d.empty ? d.min : undefined ;
                 }));
-                lowBound = min;
+                lowBound = min - (min * 0.1);
                 highBound = peak + ((peak - min) * 0.1);
                 console.log("HighBound = " + highBound);
                 console.log("peak = " + peak);
@@ -183,11 +173,7 @@ angular.module('chartingApp')
                     yScale = d3.scale.linear()
                         .clamp(true)
                         .rangeRound([height, 0])
-                        .domain([d3.min(dataPoints, function (d) {
-                            return d.min;
-                        }), d3.max(dataPoints, function (d) {
-                            return d.max;
-                        })]);
+                        .domain([lowBound,highBound]);
 
                     yAxis = d3.svg.axis()
                         .scale(yScale)
@@ -424,45 +410,45 @@ angular.module('chartingApp')
                     });
 
                 // if high == low put a "cap" on the bar to show raw value, non-aggregated bar
-//                svg.selectAll("rect.singleValue")
-//                    .data(chartData)
-//                    .enter().append("rect")
-//                    .attr("class", "singleValue")
-//                    .attr("x", function (d) {
-//                        return timeScale(d.timestamp);
-//                    })
-//                    .attr("y", function (d) {
-//                        return isNaN(d.value) ? height : yScale(d.value) - 2;
-//                    })
-//                    .attr("height", function (d) {
-//                        if (isEmptyDataBar(d)) {
-//                            return 0;
-//                        }
-//                        else {
-//                            if (d.min === d.max) {
-//                                return  yScale(d.min) - yScale(d.value) + 2;
-//                            }
-//                            else {
-//                                return  0;
-//                            }
-//                        }
-//                    })
-//                    .attr("width", function () {
-//                        return  calcBarWidth();
-//                    })
-//                    .attr("opacity", 0.9)
-//                    .attr("fill", function (d) {
-//                        if (d.min === d.max) {
-//                            return  "#50505a";
-//                        }
-//                        else {
-//                            return  "#70c4e2";
-//                        }
-//                    }).on("mouseover", function (d) {
-//                        tip.show(d);
-//                    }).on("mouseout", function () {
-//                        tip.hide();
-//                    });
+                svg.selectAll("rect.singleValue")
+                    .data(chartData)
+                    .enter().append("rect")
+                    .attr("class", "singleValue")
+                    .attr("x", function (d) {
+                        return timeScale(d.timestamp);
+                    })
+                    .attr("y", function (d) {
+                        return isNaN(d.value) ? height : yScale(d.value) - 2;
+                    })
+                    .attr("height", function (d) {
+                        if (isEmptyDataBar(d)) {
+                            return 0;
+                        }
+                        else {
+                            if (d.min === d.max) {
+                                return  yScale(d.min) - yScale(d.value) + 2;
+                            }
+                            else {
+                                return  0;
+                            }
+                        }
+                    })
+                    .attr("width", function () {
+                        return  calcBarWidth();
+                    })
+                    .attr("opacity", 0.9)
+                    .attr("fill", function (d) {
+                        if (d.min === d.max) {
+                            return  "#50505a";
+                        }
+                        else {
+                            return  "#70c4e2";
+                        }
+                    }).on("mouseover", function (d) {
+                        tip.show(d);
+                    }).on("mouseout", function () {
+                        tip.hide();
+                    });
             }
 
             function createYAxisGridLines() {
@@ -520,7 +506,7 @@ angular.module('chartingApp')
                         })
                         .y(function (d) {
                             if (showBarAvgTrendline) {
-                                return yScale(d.value);
+                                return isRawMetric(d) ? yScale(d.value) : yScale(d.avg);
                             }
                             else {
                                 return NaN;
@@ -531,10 +517,6 @@ angular.module('chartingApp')
                 svg.append("path")
                     .datum(chartData)
                     .attr("class", "barAvgLine")
-                    .attr("fill", "none")
-                    .attr("stroke", "#2e376a")
-                    .attr("stroke-width", "1.5")
-                    .attr("stroke-opacity", ".7")
                     .attr("d", barAvgLine);
 
             }
