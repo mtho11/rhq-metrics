@@ -115,6 +115,13 @@ rect.low {
     stroke-opacity: 0.7;
 }
 
+.titleName {
+    font-size: 12;
+    font-weight: bold;
+    text-anchor: left;
+    fill: #003168;
+}
+
 .d3-tip {
     line-height: 1;
     font-weight: bold;

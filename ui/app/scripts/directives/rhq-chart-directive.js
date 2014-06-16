@@ -30,6 +30,7 @@ angular.module('chartingApp')
                 highBarColor = attributes.highBarColor || "#1794bc",
                 lowBarColor = attributes.lowBarColor || "#70c4e2",
                 leaderBarColor = attributes.leaderBarColor || "#d3d3d6",
+                rawValueBarColor = attributes.rawValueBarColor || "#50505a",
                 avgLineColor = attributes.avgLineColor || "#2e376a",
                 chartHoverDateFormat = attributes.chartHoverDateFormat || "%m/%d/%y",
                 chartHoverTimeFormat = attributes.chartHoverTimeFormat || "%I:%M:%S %p",
@@ -253,11 +254,7 @@ angular.module('chartingApp')
                     .attr("class", "titleName")
                     .attr("x", 40)
                     .attr("y", 37)
-                    .attr("font-size", "12")
-                    .attr("font-weight", "bold")
-                    .attr("text-anchor", "left")
                     .text(titleName)
-                    .attr("fill", "#003168");
 
                 return title;
 
@@ -338,7 +335,7 @@ angular.module('chartingApp')
                             return  "url(#noDataStripes)";
                         }
                         else {
-                            return  "#d3d3d6";
+                            return  leaderBarColor;
                         }
                     }).on("mouseover", function (d) {
                         tip.show(d);
@@ -439,7 +436,7 @@ angular.module('chartingApp')
                     .attr("opacity", 0.9)
                     .attr("fill", function (d) {
                         if (d.min === d.max) {
-                            return  "#50505a";
+                            return  rawValueBarColor;
                         }
                         else {
                             return  "#70c4e2";
@@ -618,6 +615,7 @@ angular.module('chartingApp')
                 highBarColor: '@',
                 lowBarColor: '@',
                 leaderBarColor: '@',
+                rawValueBarColor: '@',
                 avgLineColor: '@',
                 chartTitle: '@'}
         };
