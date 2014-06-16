@@ -234,17 +234,19 @@ angular.module('chartingApp')
 
                 if (isEmptyDataBar(d)) {
                     // nodata
-                    hover = "<small>" + noDataLabel + "</small><hr/>" +
-                        '<div><small><span style="color: #d3d3d3;">timestamp: </span>' + '<span>' + formattedDateTime + '</span>' + '</small></div>';
+                    hover = "<div class='chartHover'><small class='chartHoverLabel'>" + noDataLabel + "</small><hr/>" +
+                        "<div><small><span class='chartHoverLabel'>Timestamp: </span><span class='chartHoverValue'>" + formattedDateTime + "</span></small></div></div>";
                 } else {
-                    if (+d.max === +d.min) {
+                    if (isRawMetric(d)) {
                         // raw single value from raw table
-                        hover = '<div><small><span style="color: #d3d3d3;">timestamp: </span>' + '<span>' + formattedDateTime + '</span>' + '</small></div><hr/>' +
-                            '<div><small><span style="color: #d3d3d3;">' + singleValueLabel + '</span><span>: </span><span>' + d.value + '</span></small> </div> ';
+                        hover = "<div class='chartHover'><div><small><span class='chartHoverLabel'>Timestamp: </span><span class='chartHoverValue'>" + formattedDateTime + "</span></small></div><hr/>" +
+                            "<div><small><span class='chartHoverLabel'>" + singleValueLabel + "</span><span>: </span><span class='chartHoverValue'>" + d.value + "</span></small> </div></div> ";
                     } else {
-                        //@todo: finish aggregates once in C*
                         // aggregate with min/avg/max
-                        hover = "<strong>Aggregate:</strong>";
+                        hover = "<div class='chartHover'><div><small><span class='chartHoverLabel'>Timestamp: </span><span class='chartHoverValue'>" + formattedDateTime + "</span></small></div><hr/>" +
+                            "<div><small><span class='chartHoverLabel'>" + maxLabel + "</span><span>: </span><span class='chartHoverValue'>" + d.max + "</span></small> </div> "+
+                            "<div><small><span class='chartHoverLabel'>" + avgLabel + "</span><span>: </span><span class='chartHoverValue'>" + d.avg + "</span></small> </div> " +
+                            "<div><small><span class='chartHoverLabel'>" + minLabel + "</span><span>: </span><span class='chartHoverValue'>" + d.min + "</span></small> </div></div> ";
                     }
                 }
                 return hover;

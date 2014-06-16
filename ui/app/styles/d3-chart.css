@@ -136,3 +136,16 @@ rect.low {
     top: 100%;
     left: 0;
 }
+
+.chartHover{
+}
+
+.chartHoverValue{
+    color: #fff981;
+}
+
+.chartHoverLabel{
+    color: #fff981;
+}
+
+
