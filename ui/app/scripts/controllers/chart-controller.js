@@ -7,7 +7,7 @@
  * @param {expression} chartController
  */
 angular.module('chartingApp')
-    .controller('ChartController', ['$scope', '$http', 'BASE_URL', function ($scope, $http, BASE_URL) {
+    .controller('ChartController', ['$scope', '$http', '$log', 'BASE_URL',  function ($scope, $http, $log, BASE_URL ) {
 
         $scope.restParams = {
             searchId: "",
@@ -18,8 +18,8 @@ angular.module('chartingApp')
 
         $scope.refreshChartData = function () {
 
-            console.log("Retrieving metrics data for id: " + $scope.restParams.searchId);
-            console.log("Date Range: " + $scope.restParams.startTimeStamp + " - " + $scope.restParams.endTimeStamp);
+            $log.info("Retrieving metrics data for id: " + $scope.restParams.searchId);
+            $log.info("Date Range: " + $scope.restParams.startTimeStamp + " - " + $scope.restParams.endTimeStamp);
 
             $http.get(BASE_URL + '/' + $scope.restParams.searchId,
                 {
@@ -35,7 +35,7 @@ angular.module('chartingApp')
 
                     if (bucketizedDataPoints.length !== 0) {
 
-                        console.debug("# Transformed DataPoints: "+ bucketizedDataPoints.length);
+                        $log.debug("# Transformed DataPoints: "+ bucketizedDataPoints.length);
 
                         // this is basically the DTO for the chart
                         $scope.chartData = {
@@ -46,15 +46,14 @@ angular.module('chartingApp')
                             //nvd3DataPoints: formatForNvD3(response),
                             //rickshawDataPoints: formatForRickshaw(response)
                         };
-                        console.log("Done getting chart data");
 
                     } else {
-                        console.warn('No Data found for id: ' + $scope.restParams.searchId);
+                        $log.warn('No Data found for id: ' + $scope.restParams.searchId);
                         toastr.warn('No Data found for id: ' + $scope.restParams.searchId);
                     }
 
                 }).error(function (response, status) {
-                    console.error('Error loading graph data: ' + response);
+                    $log.error('Error loading graph data: ' + response);
                     toastr.error('Error loading graph data', 'Status: ' + status);
                 });
         };

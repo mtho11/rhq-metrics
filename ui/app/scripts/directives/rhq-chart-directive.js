@@ -11,7 +11,6 @@ angular.module('chartingApp')
 
 
         function link(scope, element, attributes) {
-            console.debug("Draw Metrics Stacked Bar chart for title: " + attributes.chartTitle);
 
             var dataPoints,
                 chartHeight = +attributes.chartHeight || 250,
@@ -70,9 +69,6 @@ angular.module('chartingApp')
 
             dataPoints = attributes.data;
 
-            console.log("dataPoints-->" + typeof dataPoints);
-            console.dir(dataPoints);
-
 
             function getChartWidth() {
                 //return angular.element("#" + chartContext.chartHandle).width();
@@ -85,7 +81,6 @@ angular.module('chartingApp')
 
 
             function oneTimeChartSetup() {
-                console.debug("oneTimeChartSetup");
                 // destroy any previous charts
                 if (angular.isDefined(chart)) {
                     chartParent.selectAll('*').remove();
@@ -120,7 +115,6 @@ angular.module('chartingApp')
 
 
             function setupFilteredData(dataPoints) {
-                console.log("SetupFilteredData");
                 avg = d3.mean(dataPoints.map(function (d) {
                     return !d.empty ? d.avg : 0;
                 }));
@@ -134,31 +128,21 @@ angular.module('chartingApp')
                 }));
                 lowBound = min - (min * 0.1);
                 highBound = peak + ((peak - min) * 0.1);
-                console.log("HighBound = " + highBound);
-                console.log("peak = " + peak);
-                console.log("lowBound = " + lowBound);
-
             }
 
             function determineScale(dataPoints) {
                 var xTicks, xTickSubDivide, numberOfBarsForSmallGraph = 20;
-                console.debug(" *** DetermineScale");
-                console.debug("dataPoints type: " + typeof dataPoints);
-                console.dir(dataPoints);
-                console.debug("#dataPoints: " + dataPoints.length);
 
                 if (dataPoints.length > 0) {
 
                     // if window is too small server up small chart
                     if (useSmallCharts()) {
-                        //console.log("Using Small Charts Profile for width: "+getChartWidth());
                         width = 250;
                         xTicks = 3;
                         xTickSubDivide = 2;
                         chartData = dataPoints.slice(dataPoints.length - numberOfBarsForSmallGraph, dataPoints.length);
                     }
                     else {
-                        //console.log("Using Large Charts Profile, width: "+ width);
                         //  we use the width already defined above
                         xTicks = 8;
                         xTickSubDivide = 5;
@@ -552,7 +536,6 @@ angular.module('chartingApp')
                     svg.classed("selecting", !d3.event.target.empty());
                     // ignore selections less than 1 minute
                     if (endTime - startTime >= 60000) {
-                        console.debug("Refresh Graph with new Range");
                         //publishDateRangeChangeEvent(startTime, endTime);
                     }
                 }
@@ -565,10 +548,8 @@ angular.module('chartingApp')
             }
 
             scope.$watch('data', function (newValues) {
-                console.debug("watcher for rhq chart Data fired");
                 if (angular.isDefined(newValues)) {
                     var processedNewValues = angular.fromJson(newValues);
-                    console.log("Watcher Values:"+newValues);
                     return scope.render(processedNewValues);
                 }
             }, true);
@@ -577,7 +558,6 @@ angular.module('chartingApp')
             scope.render = function (dataPoints) {
                 if (angular.isDefined(dataPoints)) {
                     oneTimeChartSetup();
-                    console.debug(" ** Render for rhq data length of: " + dataPoints.length);
                     determineScale(dataPoints);
                     createHeader(attributes.chartTitle);
                     createYAxisGridLines();
