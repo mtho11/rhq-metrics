@@ -10,7 +10,6 @@ angular.module('chartingApp')
     .controller('InsertMetricsController', ['$scope',  'metricDataService', function ($scope,  metricDataService) {
 
         $scope.timeIntervalInMinutes = [1, 5, 10, 15, 30, 60];
-        $scope.selectedTimeInterval = 5;
         $scope.showOpenGroup = true;
 
         $scope.quickInsertData = {
@@ -65,31 +64,6 @@ angular.module('chartingApp')
         };
 
 
-        $scope.rangeInsert = function () {
-            var  jsonPayload,
-                currentTimeMoment = moment();
 
-            console.log("range insert for: " + $scope.rangeInsertData.id);
-            console.dir($scope.rangeInsertData);
-
-            jsonPayload = calculateTimestamps($scope.rangeInsertData.selectedDuration,
-                $scope.rangeInsertData.selectedIntervalInMinutes, currentTimeMoment);
-            console.debug("JsonPayload: "+ jsonPayload);
-            metricDataService.insertPayload($scope.rangeInsertData.id, jsonPayload);
-
-        };
-
-        function calculateTimestamps(numberOfDays, intervalInMinutes, currentTimeMoment){
-            var intervalTimestamps = [], randomValue;
-
-            for(var i = 0; i < numberOfDays * 24* intervalInMinutes; i = i+ intervalInMinutes) {
-
-                var calculatedTimeInMillis =  currentTimeMoment.subtract('minutes', i).valueOf();
-                randomValue = metricDataService.createRandomValue($scope.rangeInsertData.startNumber, $scope.rangeInsertData.endNumber );
-                intervalTimestamps.push({timestamp: calculatedTimeInMillis, value : randomValue});
-            }
-            return angular.toJson(intervalTimestamps);
-
-        }
 
     }]);

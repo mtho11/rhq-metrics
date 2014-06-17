@@ -73,7 +73,7 @@
                 <textarea id="jsonText" ng-model="multiInsertData.jsonPayload" rows="6"
                           class="form-control" placeholder="Enter Json here..."
                         ></textarea>
-                <span class="help-block">Example:  {"value": 33, "timestamp":1400178146614}, {"value": 40, "timestamp":1400178149615} </span>
+                <span class="help-block">Example:  {"value": 33, "timestamp":1402969658681}, {"value": 40, "timestamp":1402966107760} </span>
             </div>
         </div>
 
@@ -89,141 +89,15 @@
 
 
 <accordion-group heading="Advanced Range Insert" >
-    <p class="text-muted">Create Historical data by inserting random values of data for a date range every X
+    <p class="text-muted">Under construction. Create Historical data by inserting random values of data for a date range every X
         minutes/hours</p>
 
-    <form class="form-horizontal" role="form">
-        <div class="form-group">
-            <label class="col-sm-2 control-label">ID</label>
-
-            <div class="col-sm-4">
-                <input type="text" class="form-control" ng-model="rangeInsertData.id"
-                       placeholder="Enter Id...">
-                <span class="help-block">Example: 100, apache3.cpu  </span>
-            </div>
-        </div>
-
-        <h5>Random Values </h5>
-
-        <div class="form-group">
-            <label class="col-sm-2 control-label">From </label>
-
-            <div class="col-sm-2">
-                <input type="number" min="0" max="100" step="5" required class="form-control"
-                       ng-model="rangeInsertData.startNumber">
-            </div>
-
-            <label class="col-sm-1 control-label">To</label>
-
-            <div class="col-sm-2">
-                <input type="number" min="10" max="1000" step="25" required class="form-control"
-                       ng-model="rangeInsertData.endNumber">
-            </div>
-        </div>
-
-
-        <div class="form-group">
-            <label class="col-sm-2 control-label">Every</label>
-
-            <div class="col-sm-5">
-                <select ng-model="selectedTimeInterval"
-                        ng-options="value for value in timeIntervalInMinutes"></select>
-                <span class="help-block"> (Time Interval In Minutes.)</span>
-            </div>
-            <div class="col-sm-2">
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="col-sm-2 control-label">For</label>
-
-            <div class="col-sm-5">
-                <select ng-model="rangeInsertData.selectedDuration"
-                        ng-options="duration for duration in rangeDurations"></select>
-                <span class="help-block"> (In Days.)</span>
-            </div>
-            <div class="col-sm-2">
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <button type="button" ng-click="rangeInsert()" class="btn btn-primary">Insert Data
-                </button>
-            </div>
-        </div>
-
-
-    </form>
 </accordion-group>
 
 
-<accordion-group heading="Streaming Metrics" ng-controller="StreamingController">
-    <p class="text-muted">Create streaming metrics for the future that generate random numbers every X minutes </p>
+<accordion-group heading="Streaming Metrics" >
+    <p class="text-muted">Under construction. Create streaming metrics into the future that generate random numbers every X minutes </p>
 
-    <form class="form-horizontal" role="form">
-        <div class="form-group">
-            <label for="streamingInsertId" class="col-sm-2 control-label">ID</label>
-
-            <div class="col-sm-4">
-                <input type="text" class="form-control" id="streamingInsertId" ng-model="streamingInsertData.id"
-                       placeholder="Enter Id...">
-                <span class="help-block">Example: 100, apache3.cpu  </span>
-            </div>
-        </div>
-
-        <h5>Random Values </h5>
-
-        <div class="form-group">
-            <label class="col-sm-2 control-label">From </label>
-
-            <div class="col-sm-2">
-                <input type="number" min="0" max="100" step="5" class="form-control" name="startNumber"
-                       ng-model="streamingInsertData.startNumber" required>
-            </div>
-
-            <label class="col-sm-1 control-label">To</label>
-
-            <div class="col-sm-2">
-                <input type="number" min="10" max="1000" step="25" class="form-control" name="endNumber"
-                       ng-model="streamingInsertData.endNumber" required>
-            </div>
-        </div>
-
-
-        <div class="form-group">
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Every</label>
-
-                <div class="col-sm-5">
-                    <select ng-model="selectedTimeInterval"
-                            ng-options="value for value in timeIntervalInMinutes"></select>
-                    <span class="help-block"> (Time Interval In Minutes.)</span>
-                </div>
-                <div class="col-sm-2">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-sm-offset-3 col-sm-1">
-                    <button type="button" ng-click="startStreaming()" class="btn btn-primary">Start</button>
-                </div>
-                <div class="col-sm-1">
-                    <button type="button" ng-click="stopStreaming()" class="btn btn-danger">Stop</button>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-sm-3 control-label">Streamed Count:</label>
-
-                <!-- Maybe hover over this to get tooltip of last value produced -->
-                <div class="col-sm-2">
-                    <input type="text" class="form-control" readonly ng-model="rangeInsertData.lastStreamedValue">
-                </div>
-            </div>
-        </div>
-
-    </form>
 </accordion-group>
 
 </accordion>
